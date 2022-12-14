@@ -54,7 +54,7 @@ export default function HomeScreen() {
           separator={true} 
           separatorColour={colours.grey} 
           separatorHeight={125}
-          headerText='Welcome To Artker'
+          headerText='WELCOME TO ARTKER!'
           descText='An application where you can find artists who live around around a desired area and hire them all in the palm of your hands.'
           />
         <AppCards HGT={300}/>
