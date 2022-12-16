@@ -12,9 +12,8 @@ import { useNavigation } from '@react-navigation/native'
 import * as SQLite from 'expo-sqlite'
 
 
-export default function CreateProfileScreen() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+export default function CreateProfileScreen({ route }) {
+  const { username } = route.params;
 
   const db = SQLite.openDatabase('Artker')
 

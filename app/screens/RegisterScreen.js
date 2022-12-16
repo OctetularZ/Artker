@@ -54,7 +54,7 @@ export default function RegisterScreen() {
                     if (email.includes('@')) {
                       db.transaction(tx => {
                         tx.executeSql(`REPLACE INTO Account (Username, Email, Password) VALUES ('${username}', '${email}', '${password}')`)
-                        navigation.navigate('ConfirmEmail')
+                        navigation.navigate('CreateProfile', {usernamePassed: username})
                       })
                     }
                     else{
