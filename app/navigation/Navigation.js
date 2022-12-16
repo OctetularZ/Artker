@@ -9,6 +9,7 @@ import ConfirmEmailScreen from '../screens/ConfirmEmailScreen';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import ResetPasswordScreen from '../screens/ResetPasswordScreen';
 import HomeScreen from '../screens/HomeScreen';
+import CreateProfileScreen from '../screens/CreateProfileScreen';
 import StarterScreen from '../screens/StarterScreen';
 import AppBottomBarNavigation from '../components/AppBottomBarNavigation';
 
@@ -25,6 +26,7 @@ export default function Navigation() {
         <Stack.Screen name='ResetPassword' component={ResetPasswordScreen}/>
         <Stack.Screen name='Home' component={AppBottomBarNavigation}/>
         <Stack.Screen name='StarterScreen' component={StarterScreen}/>
+        <Stack.Screen name='CreateProfile' component={CreateProfileScreen}/>
     </Stack.Navigator>
     </NavigationContainer>
   )

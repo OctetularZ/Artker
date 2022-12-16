@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native'
 import * as SQLite from 'expo-sqlite'
 
 
-export default function LoginScreen() {
+export default function CreateProfileScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -20,7 +20,7 @@ export default function LoginScreen() {
 
   useEffect(() => {
     db.transaction(tx => {
-      tx.executeSql('CREATE TABLE IF NOT EXISTS Artker (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, Email TEXT, Password TEXT)')
+      tx.executeSql('CREATE TABLE IF NOT EXISTS Profile (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, Email TEXT, Password TEXT)')
     });
   })
 
@@ -45,6 +45,7 @@ export default function LoginScreen() {
         </View>
       </Screen>
     </ScrollView>
+    // Navigate to the 'StarterScreen'
   )
 }
 

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import HomeScreen from '../screens/HomeScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 
 import { Entypo, Feather, AntDesign, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
@@ -25,7 +25,7 @@ export default function AppBottomBarNavigation() {
           <Entypo name='home' size={24} color={color}/>
         )
       }}/>
-      <Bar.Screen name="Settings" component={SettingsScreen} options={{
+      <Bar.Screen name="Profile" component={ProfileScreen} options={{
         tabBarLabel: 'Settings',
         tabBarIcon: ({ color }) => (
           <MaterialCommunityIcons name='account-box' size={24} color={color}/>

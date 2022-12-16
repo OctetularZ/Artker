@@ -14,7 +14,7 @@ export default function ConfirmEmailScreen() {
   const navigation = useNavigation();
 
   const onConfirmPressed = () => {
-    navigation.navigate('StarterScreen');
+    navigation.navigate('CreateProfile');
   }
 
   const onBackToSignInPressed = () => {
