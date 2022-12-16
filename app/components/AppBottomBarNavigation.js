@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, {createContext} from 'react'
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 
@@ -43,3 +43,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8
   }
 })
+
+//Learn how about React Context to pass data between tab components
