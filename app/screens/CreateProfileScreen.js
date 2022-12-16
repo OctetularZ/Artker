@@ -45,7 +45,7 @@ export default function CreateProfileScreen() {
         </View>
       </Screen>
     </ScrollView>
-    // Navigate to the 'StarterScreen'
+    // Navigate to the 'StarterScreen' when done designing
   )
 }
 
