@@ -40,7 +40,7 @@ export default function LoginScreen() {
           let userObj = results[0]
           let userPassword = userObj['Password']
           if (userPassword == password) {
-            navigation.navigate('Home')
+            navigation.navigate('Home', { usernamePassed: username })
           }
           else {
             console.log('Wrong Password')

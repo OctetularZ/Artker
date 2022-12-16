@@ -13,7 +13,8 @@ import * as SQLite from 'expo-sqlite'
 
 
 export default function CreateProfileScreen({ route }) {
-  const { username } = route.params;
+  const { usernamePassed } = route.params;
+  let username = JSON.stringify(usernamePassed)
 
   const db = SQLite.openDatabase('Artker')
 

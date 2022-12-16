@@ -13,7 +13,7 @@ import AppCardsSeparatedDesc from '../components/AppCardsSeperatedDescription'
 
 const Tab = createMaterialBottomTabNavigator();
 
-export default function HomeScreen() {
+export default function HomeScreen({ route }) {
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -25,6 +25,8 @@ export default function HomeScreen() {
   ]);
 
   const navigation = useNavigation();
+  const { usernamePassed } = route.params;
+  let username = JSON.stringify(usernamePassed)
 
   const {width, height} = Dimensions.get('screen')
 
