@@ -20,7 +20,7 @@ export default function LoginScreen() {
 
   useEffect(() => {
     db.transaction(tx => {
-      tx.executeSql('CREATE TABLE IF NOT EXISTS Artker (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, Email TEXT, Password TEXT)')
+      tx.executeSql('CREATE TABLE IF NOT EXISTS Account (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, Email TEXT, Password TEXT)')
     });
   })
 
@@ -29,7 +29,7 @@ export default function LoginScreen() {
 
   const onSignInPressed = () => {
     db.transaction(tx => {
-      tx.executeSql(`SELECT Password FROM Artker WHERE Username = '${username}'`,
+      tx.executeSql(`SELECT Password FROM Account WHERE Username = '${username}'`,
       null,
       (txObj, resultSet) => {
         let results = resultSet.rows._array

@@ -30,7 +30,7 @@ export default function RegisterScreen() {
 
   useEffect(() => {
     db.transaction(tx => {
-      tx.executeSql('CREATE TABLE IF NOT EXISTS Artker (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, Email TEXT, Password TEXT)')
+      tx.executeSql('CREATE TABLE IF NOT EXISTS Account (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, Email TEXT, Password TEXT)')
     });
   })
 
@@ -38,13 +38,13 @@ export default function RegisterScreen() {
 
   const onRegisterPressed = () => {
     db.transaction(tx => {
-      tx.executeSql(`SELECT Username FROM Artker WHERE Username = '${username}'`,
+      tx.executeSql(`SELECT Username FROM Account WHERE Username = '${username}'`,
       null,
       (txObj, resultSet) => {
         let results = resultSet.rows._array
         if (results.length == 0) {
           db.transaction(tx => {
-            tx.executeSql(`SELECT Email FROM Artker WHERE Email = '${email}'`,
+            tx.executeSql(`SELECT Email FROM Account WHERE Email = '${email}'`,
             null,
             (txObj, resultSet) => {
               let results = resultSet.rows._array
@@ -53,7 +53,7 @@ export default function RegisterScreen() {
                   if ((containsSpecialChars(password)) && (containsNumbers(password))) {
                     if (email.includes('@')) {
                       db.transaction(tx => {
-                        tx.executeSql(`REPLACE INTO Artker (Username, Email, Password) VALUES ('${username}', '${email}', '${password}')`)
+                        tx.executeSql(`REPLACE INTO Account (Username, Email, Password) VALUES ('${username}', '${email}', '${password}')`)
                         navigation.navigate('ConfirmEmail')
                       })
                     }
