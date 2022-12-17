@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native'
 import DropDownPicker from 'react-native-dropdown-picker'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 
-import { testProvider, TestContext } from '../components/Global/testContext'
+import { valueProvider, ValuesContext } from '../components/Global/valuesContext'
 import AppCards from '../components/AppCards'
 import Screen from '../components/Screen'
 import AppCardsSeparated from '../components/AppCardsSeparated'
@@ -29,7 +29,8 @@ export default function HomeScreen({ route }) {
   const { usernamePassed } = route.params;
   let username = JSON.stringify(usernamePassed)
 
-  const {usernameValue, setUsernameValue} = useContext(TestContext);
+  const {usernameValue, setUsernameValue} = useContext(ValuesContext);
+  setUsernameValue = username
 
   const {width, height} = Dimensions.get('screen')
 

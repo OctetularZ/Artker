@@ -3,7 +3,7 @@ import React, {createContext} from 'react'
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 
-import { testProvider } from './Global/testContext';
+import { valueProvider } from './Global/valuesContext';
 import { Entypo, Feather, AntDesign, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import colours from '../config/colours';
@@ -19,7 +19,7 @@ logging in/signing up.
 
 export default function AppBottomBarNavigation() {
   return (
-    <testProvider>
+    <valueProvider>
       <Bar.Navigator shifting={true} activeColor={colours.secondary} inactiveColor={colours.secondary} barStyle={styles.bottomBar}>
         <Bar.Screen name="Home" component={HomeScreen} options={{
           tabBarLabel: 'Home',
@@ -34,7 +34,7 @@ export default function AppBottomBarNavigation() {
           )
         }}/>
       </Bar.Navigator>
-    </testProvider>
+    </valueProvider>
   )
 }
 

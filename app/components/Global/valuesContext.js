@@ -1,16 +1,16 @@
 import React, {useState, createContext} from "react";
 
-const TestContext = createContext();
+const ValuesContext = createContext();
 
-const testProvider = ({children}) => {
+const valueProvider = ({children}) => {
   const [usernameValue, setUsernameValue] = useState(0);
   return(
-    <TestContext.Provider value={{
+    <ValuesContext.Provider value={{
       usernameValue, setUsernameValue
     }}>
       {children}
-    </TestContext.Provider>
+    </ValuesContext.Provider>
   )
 }
 
-export {testProvider, TestContext};
+export {valueProvider, ValuesContext};
