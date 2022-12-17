@@ -53,7 +53,7 @@ export default function RegisterScreen() {
                   if ((containsSpecialChars(password)) && (containsNumbers(password))) {
                     if (email.includes('@')) {
                       db.transaction(tx => {
-                        tx.executeSql(`REPLACE INTO Account (Username, Email, Password) VALUES ('${username}', '${email}', '${password}')`)
+                        tx.executeSql(`INSERT INTO Account (Username, Email, Password) VALUES ('${username}', '${email}', '${password}')`)
                         navigation.navigate('CreateProfile', {usernamePassed: username})
                       })
                     }
