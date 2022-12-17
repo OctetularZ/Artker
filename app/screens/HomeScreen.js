@@ -1,11 +1,12 @@
 import { Image, Dimensions, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, FlatList, Animated } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import colours from '../config/colours'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import DropDownPicker from 'react-native-dropdown-picker'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 
+import { testProvider, TestContext } from '../components/Global/testContext'
 import AppCards from '../components/AppCards'
 import Screen from '../components/Screen'
 import AppCardsSeparated from '../components/AppCardsSeparated'
@@ -27,6 +28,8 @@ export default function HomeScreen({ route }) {
   const navigation = useNavigation();
   const { usernamePassed } = route.params;
   let username = JSON.stringify(usernamePassed)
+
+  const {usernameValue, setUsernameValue} = useContext(TestContext);
 
   const {width, height} = Dimensions.get('screen')
 

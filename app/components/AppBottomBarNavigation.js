@@ -3,6 +3,7 @@ import React, {createContext} from 'react'
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 
+import { testProvider } from './Global/testContext';
 import { Entypo, Feather, AntDesign, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import colours from '../config/colours';
@@ -18,20 +19,22 @@ logging in/signing up.
 
 export default function AppBottomBarNavigation() {
   return (
-    <Bar.Navigator shifting={true} activeColor={colours.secondary} inactiveColor={colours.secondary} barStyle={styles.bottomBar}>
-      <Bar.Screen name="Home" component={HomeScreen} options={{
-        tabBarLabel: 'Home',
-        tabBarIcon: ({ color }) => (
-          <Entypo name='home' size={24} color={color}/>
-        )
-      }}/>
-      <Bar.Screen name="Profile" component={ProfileScreen} options={{
-        tabBarLabel: 'Settings',
-        tabBarIcon: ({ color }) => (
-          <MaterialCommunityIcons name='account-box' size={24} color={color}/>
-        )
-      }}/>
-    </Bar.Navigator>
+    <testProvider>
+      <Bar.Navigator shifting={true} activeColor={colours.secondary} inactiveColor={colours.secondary} barStyle={styles.bottomBar}>
+        <Bar.Screen name="Home" component={HomeScreen} options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({ color }) => (
+            <Entypo name='home' size={24} color={color}/>
+          )
+        }}/>
+        <Bar.Screen name="Profile" component={ProfileScreen} options={{
+          tabBarLabel: 'Settings',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name='account-box' size={24} color={color}/>
+          )
+        }}/>
+      </Bar.Navigator>
+    </testProvider>
   )
 }
 
