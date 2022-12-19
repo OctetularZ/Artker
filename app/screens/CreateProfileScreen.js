@@ -15,7 +15,7 @@ export default function CreateProfileScreen({ route }) {
 
   useEffect(() => {
     db.transaction(tx => {
-      tx.executeSql('CREATE TABLE IF NOT EXISTS Profile (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT)')
+      tx.executeSql('CREATE TABLE IF NOT EXISTS Profile (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, pfp TEXT)')
     });
     db.transaction(tx => {
       tx.executeSql(`INSERT INTO Profile (Username) VALUES ('${username}')`)
