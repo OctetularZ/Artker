@@ -5,6 +5,8 @@ import Screen from '../components/Screen'
 import colours from '../config/colours'
 import CustomInput from '../components/CustomInput'
 import CustomButton1 from '../components/CustomButton1'
+import PfpDisplay from '../components/PfpDisplay'
+
 import { ScrollView } from 'react-native-gesture-handler'
 import * as SQLite from 'expo-sqlite'
 
@@ -18,13 +20,13 @@ export default function CreateProfileScreen({ route }) {
   const [phone, setPhone] = useState('');
   const [expertise, setExpertise] = useState('');
   
-  const db = SQLite.openDatabase('Artker')
+  // const db = SQLite.openDatabase('Artker')
 
-  useEffect(() => {
-    db.transaction(tx => {
-      tx.executeSql('CREATE TABLE IF NOT EXISTS Profile (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, pfp TEXT)')
-    });
-  })
+  // useEffect(() => {
+  //   db.transaction(tx => {
+  //     tx.executeSql('CREATE TABLE IF NOT EXISTS Profile (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, pfp TEXT)')
+  //   });
+  // })
 
 
   const onCreateProfilePressed = () => {
@@ -37,6 +39,7 @@ export default function CreateProfileScreen({ route }) {
   return (
     <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>
       <Screen style={styles.container}>
+        <PfpDisplay/>
         <CustomInput placeholder='Name' value={Name} setValue={setName}/>
 
         <CustomButton1 onPress={onCreateProfilePressed} text='Create Profile' type='Primary'/>
