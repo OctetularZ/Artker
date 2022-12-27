@@ -7,6 +7,7 @@ import CustomInput from '../components/CustomInput'
 import CustomButton1 from '../components/CustomButton1'
 import PfpDisplay from '../components/PfpDisplay'
 
+import AppDate from '../components/AppDate'
 import { ScrollView } from 'react-native-gesture-handler'
 import * as SQLite from 'expo-sqlite'
 
@@ -16,8 +17,9 @@ export default function CreateProfileScreen({ route }) {
   let usernameDB = JSON.stringify(usernamePassed)
 
   const [Name, setName] = useState('');
+  const [Nationality, setNationality] = useState('');
+  const [DOB, setDOB] = useState('');
   const [pfp, setPfp] = useState('');
-  const [phone, setPhone] = useState('');
   const [expertise, setExpertise] = useState('');
   
   // const db = SQLite.openDatabase('Artker')
@@ -41,7 +43,7 @@ export default function CreateProfileScreen({ route }) {
       <Screen style={styles.container}>
         <PfpDisplay/>
         <CustomInput placeholder='Name' value={Name} setValue={setName}/>
-
+        <AppDate/>
         <CustomButton1 onPress={onCreateProfilePressed} text='Create Profile' type='Primary'/>
       </Screen>
     </ScrollView>
