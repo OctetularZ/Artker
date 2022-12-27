@@ -18,7 +18,7 @@ export default function CreateProfileScreen({ route }) {
 
   const [Name, setName] = useState('');
   const [Nationality, setNationality] = useState('');
-  const [DOB, setDOB] = useState('');
+  const [DOB, setDOB] = useState(new Date());
   const [pfp, setPfp] = useState('');
   const [expertise, setExpertise] = useState('');
   
@@ -43,7 +43,8 @@ export default function CreateProfileScreen({ route }) {
       <Screen style={styles.container}>
         <PfpDisplay/>
         <CustomInput placeholder='Name' value={Name} setValue={setName}/>
-        <AppDate/>
+        <CustomInput placeholder='Nationality' value={Nationality} setValue={setNationality}/>
+        <AppDate value={DOB}/>
         <CustomButton1 onPress={onCreateProfilePressed} text='Create Profile' type='Primary'/>
       </Screen>
     </ScrollView>

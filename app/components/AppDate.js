@@ -3,11 +3,13 @@ import React from 'react'
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import colours from '../config/colours';
 
-export default function AppDate() {
+export default function AppDate({ value }) {
   return (
     <TouchableOpacity style={styles.container}>
-      <DateTimePicker mode='date'/>
+      <Text style={styles.DOBStyle}>Date of birth:</Text>
+      <DateTimePicker mode='date' value={value} themeVariant='dark' style={styles.pickerStyle}/>
     </TouchableOpacity>
   )
 }
@@ -19,8 +21,16 @@ const styles = StyleSheet.create({
     borderColor: '#e8e8e8',
     borderWidth: 1,
     borderRadius: 8,
-    paddingHorizontal: 15,
+    paddingHorizontal: 112,
     paddingVertical: 15,
     marginVertical: 5
+  },
+  pickerStyle: {
+
+  },
+  DOBStyle: {
+    color: '#8a8a8a',
+    textAlign: 'center',
+    paddingBottom: 10
   }
 })
