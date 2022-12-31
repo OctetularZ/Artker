@@ -1,4 +1,4 @@
-import { SafeAreaView, useWindowDimensions, StyleSheet, Text, TextInput, View, Image } from 'react-native'
+import { SafeAreaView, useWindowDimensions, StyleSheet, Text, TextInput, View, Image, Modal } from 'react-native'
 import React, { useState, useEffect } from 'react'
 
 import Screen from '../components/Screen'
@@ -21,6 +21,8 @@ export default function CreateProfileScreen({ route }) {
   const [DOB, setDOB] = useState(new Date());
   const [pfp, setPfp] = useState('');
   const [expertise, setExpertise] = useState('');
+
+  const [modalVisible, setModalVisible] = useState(false);
   
   // const db = SQLite.openDatabase('Artker')
 
@@ -37,13 +39,21 @@ export default function CreateProfileScreen({ route }) {
     })
   }
 
+  const nationalityPressed = () => {
+    return (
+      <Modal visible={modalVisible} animationType='slide' onRequestClose={() => {setModalVisible(!modalVisible)}}>
+        
+      </Modal>
+    )
+  }
+
 
   return (
     <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>
       <Screen style={styles.container}>
         <PfpDisplay/>
         <CustomInput placeholder='Name' value={Name} setValue={setName}/>
-        <CustomInput placeholder='Nationality' value={Nationality} setValue={setNationality}/>
+        <CustomInput placeholder='Nationality' value={Nationality} setValue={setNationality} onPress={nationalityPressed}/>
         <AppDate value={DOB}/>
         <CustomButton1 onPress={onCreateProfilePressed} text='Create Profile' type='Primary'/>
       </Screen>
