@@ -17,11 +17,11 @@ export default function AppDate({ value }) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colours.primary,
-    width: '90%',
+    width: '100%',
     borderColor: '#e8e8e8',
     borderWidth: 1,
     borderRadius: 8,
-    paddingHorizontal: 112,
+    paddingHorizontal: 120,
     paddingVertical: 15,
     marginVertical: 5
   },

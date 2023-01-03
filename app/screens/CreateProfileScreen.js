@@ -6,10 +6,12 @@ import colours from '../config/colours'
 import CustomInput from '../components/CustomInput'
 import CustomButton1 from '../components/CustomButton1'
 import PfpDisplay from '../components/PfpDisplay'
+import InstrumentList from './InstrumentList'
 
 import AppDate from '../components/AppDate'
 import { ScrollView } from 'react-native-gesture-handler'
 import * as SQLite from 'expo-sqlite'
+import CustomBox from '../components/CustomBox'
 
 
 export default function CreateProfileScreen({ route }) {
@@ -42,7 +44,7 @@ export default function CreateProfileScreen({ route }) {
   const nationalityPressed = () => {
     return (
       <Modal visible={modalVisible} animationType='slide' onRequestClose={() => {setModalVisible(!modalVisible)}}>
-        
+        <InstrumentList/>
       </Modal>
     )
   }
@@ -53,7 +55,7 @@ export default function CreateProfileScreen({ route }) {
       <Screen style={styles.container}>
         <PfpDisplay/>
         <CustomInput placeholder='Name' value={Name} setValue={setName}/>
-        <CustomInput placeholder='Nationality' value={Nationality} setValue={setNationality} onPress={nationalityPressed}/>
+        <CustomBox placeholder='Nationality' onPress={nationalityPressed}/>
         <AppDate value={DOB}/>
         <CustomButton1 onPress={onCreateProfilePressed} text='Create Profile' type='Primary'/>
       </Screen>
