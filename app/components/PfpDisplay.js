@@ -1,12 +1,16 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 
 export default function PfpDisplay() {
   return (
-    <View>
-      
-    </View>
+    <TouchableOpacity style={styles.pfp}>
+
+    </TouchableOpacity>
   )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  pfp: {
+    
+  }
+})

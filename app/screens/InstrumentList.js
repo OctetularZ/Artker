@@ -1,11 +1,22 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Modal } from 'react-native'
+import React, { useState } from 'react'
 import colours from '../config/colours'
 
 export default function InstrumentList() {
+  const [modalVisible, setModalVisible] = useState(false)
   return (
     <View style={styles.container}>
-      <Text>InstrumentList</Text>
+      <Modal
+        animationType='slide'
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+          <View>
+            <Text>EEE</Text>
+          </View>
+
+        </Modal>
     </View>
   )
 }
