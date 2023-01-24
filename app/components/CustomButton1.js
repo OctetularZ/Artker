@@ -8,9 +8,9 @@ This function creates a custom button for easy reproduceability. This will mainl
 and screens related to these screens. Multiple instances of conditions are used to allow/extend functionality.
 */
 
-export default function CustomButton1({ onPress, text, type, bgColour, fgColour, fontSZ }) {
+export default function CustomButton1({ onPress, text, type, bgColour, fgColour, fontSZ, marginLeft }) {
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.container, styles[`container${type}`], bgColour ? {backgroundColor: bgColour} : {}]}>
+    <TouchableOpacity onPress={onPress} style={[styles.container, styles[`container${type}`], bgColour ? {backgroundColor: bgColour} : {}, marginLeft ? {marginLeft: marginLeft} : {}]}>
       <Text style={[styles.text, styles[`text${type}`], fgColour ? {color: fgColour} : {}, fontSZ ? {fontSize: fontSZ} : {}]}>{text}</Text>
     </TouchableOpacity>
   )

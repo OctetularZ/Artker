@@ -3,10 +3,17 @@ import React from 'react'
 import colours from '../config/colours'
 
 import { AntDesign } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
 
-export default function PfpDisplay() {
+export default function PfpDisplay({ username }) {
+  const navigation = useNavigation();
+
+  const onAvatarIconPressed = () => {
+    navigation.navigate('ImgurL', {usernamePassed: username})
+  }
+
   return (
-    <TouchableOpacity style={styles.pfp}>
+    <TouchableOpacity style={styles.pfp} onPress={onAvatarIconPressed}>
       <AntDesign name='plus' size={40} color='grey'/>
     </TouchableOpacity>
   )

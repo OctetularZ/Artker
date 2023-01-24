@@ -14,11 +14,14 @@ import { ScrollView } from 'react-native-gesture-handler'
 import * as SQLite from 'expo-sqlite'
 import CustomBox from '../components/CustomBox'
 import {Ionicons} from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
 
 
 export default function CreateProfileScreen({ route }) {
   const { usernamePassed } = route.params;
   let usernameDB = JSON.stringify(usernamePassed)
+
+  const navigation = useNavigation();
 
   const [Name, setName] = useState('');
   const [Nationality, setNationality] = useState('');
@@ -51,10 +54,14 @@ export default function CreateProfileScreen({ route }) {
     setDOB(currentDate); // Date must be converted to a suitable format when being worked with
   };
 
+  const onBackToRegister = () => {
+    navigation.navigate('Register')
+  }
+
   return (
     <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>
       <Screen style={styles.container}>
-        <PfpDisplay/>
+        <PfpDisplay username={usernameDB}/>
         <CustomInput placeholder='Name' value={Name} setValue={setName}/>
         <CustomBox placeholder='Nationality' onPress={() => setShow(true)}/>
         <AppDate value={DOB} onDateChange={onDateChange}/>
@@ -100,8 +107,10 @@ export default function CreateProfileScreen({ route }) {
           setShow(false);
         }}
       />
+      <CustomButton1 text='Back to Register' onPress={onBackToRegister} type='Tertiary' marginLeft={20}/>
     </ScrollView>
     // Navigate to the 'StarterScreen' when done designing
+    // Custombutton1 may need to be modified if not in correct position
   )
 }
 

@@ -11,6 +11,7 @@ import HomeScreen from '../screens/HomeScreen';
 import CreateProfileScreen from '../screens/CreateProfileScreen';
 import StarterScreen from '../screens/StarterScreen';
 import AppBottomBarNavigation from '../components/AppBottomBarNavigation';
+import ImgurLink from '../components/ImgurLink';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,7 @@ export default function Navigation() {
         <Stack.Screen name='Home' component={AppBottomBarNavigation}/>
         <Stack.Screen name='StarterScreen' component={StarterScreen}/>
         <Stack.Screen name='CreateProfile' component={CreateProfileScreen}/>
+        <Stack.Screen name='ImgurL' component={ImgurLink}/>
     </Stack.Navigator>
     </NavigationContainer>
   )
