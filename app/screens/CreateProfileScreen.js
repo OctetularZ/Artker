@@ -24,13 +24,13 @@ export default function CreateProfileScreen({ route }) {
   const navigation = useNavigation();
 
   const [Name, setName] = useState('');
-  const [Nationality, setNationality] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
   const [DOB, setDOB] = useState(new Date());
-  const [pfp, setPfp] = useState('');
-  const [expertise, setExpertise] = useState('');
+  let specialities = ''
+  const [skills, setSkills] = useState(specialities);
+  const [country, setCountry] = useState('Nationality');
   
-  const [show, setShow] = useState(false);
-  const [country, setCountry] = useState('');
+  const [show, setShow] = useState(false); // For modal state
   
   // const db = SQLite.openDatabase('Artker')
 
@@ -63,8 +63,9 @@ export default function CreateProfileScreen({ route }) {
       <Screen style={styles.container}>
         <PfpDisplay username={usernameDB}/>
         <CustomInput placeholder='Name' value={Name} setValue={setName}/>
-        <CustomBox placeholder='Nationality' onPress={() => setShow(true)}/>
+        <CustomBox placeholder={country} onPress={() => setShow(true)}/>
         <AppDate value={DOB} onDateChange={onDateChange}/>
+        <CustomBox placeholder='Skills' onPress={() => setModalVisible(true)}/>
         <CustomButton1 onPress={onCreateProfilePressed} text='Create Profile' type='Primary'/>
       </Screen>
       <CountryPicker
@@ -107,7 +108,26 @@ export default function CreateProfileScreen({ route }) {
           setShow(false);
         }}
       />
-      <CustomButton1 text='Back to Register' onPress={onBackToRegister} type='Tertiary' marginLeft={20}/>
+      <CustomButton1 text='Back to Register' onPress={onBackToRegister} type='Tertiary' marginLeft={16}/>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          console.log('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.modalView}>
+          <Pressable
+            style={styles.closeModalButton}
+            onPress={() => setModalVisible(!modalVisible)}>
+            <Ionicons name='close-outline' size={35} color='white'/>
+          </Pressable>
+          <FlatList>
+
+          </FlatList>
+        </View>
+      </Modal>
     </ScrollView>
     // Navigate to the 'StarterScreen' when done designing
     // Custombutton1 may need to be modified if not in correct position
@@ -119,5 +139,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     backgroundColor: colours.primary
+  },
+  modalView: {
+    backgroundColor: colours.primary,
+    flex: 1,
+    paddingTop: 50,
+    paddingLeft: 30
+  },
+  closeModalButton: {
+    paddingBottom: 25
   }
 })

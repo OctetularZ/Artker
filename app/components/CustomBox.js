@@ -8,6 +8,7 @@ and screens related to those. Security is also used on the password to ensure sa
 */
 
 export default function CustomBox({placeholder, onPress}) {
+  // Make both functions to work on the onPress function
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <Text style={styles.placeholderText}>{placeholder}</Text>
