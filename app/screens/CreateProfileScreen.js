@@ -20,6 +20,8 @@ import { useNavigation } from '@react-navigation/native'
 export default function CreateProfileScreen({ route }) {
   const { usernamePassed } = route.params;
   let usernameDB = JSON.stringify(usernamePassed)
+  usernameDB = usernameDB.replace(/\\/g, '')
+  usernameDB = usernameDB.replace(/"/g, '')
 
   const navigation = useNavigation();
 

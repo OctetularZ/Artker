@@ -28,6 +28,8 @@ export default function HomeScreen({ route }) {
   const navigation = useNavigation();
   const { usernamePassed } = route.params;
   let username = JSON.stringify(usernamePassed)
+  username = username.replace(/\\/g, '')
+  username = username.replace(/"/g, '')
 
   const {usernameValue, setUsernameValue} = useContext(ValuesContext);
   setUsernameValue = username

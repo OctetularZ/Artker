@@ -7,11 +7,14 @@ import CustomInput from '../components/CustomInput'
 import CustomButton1 from '../components/CustomButton1'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
+import * as SQLite from 'expo-sqlite'
 
 
 export default function ImgurLink({ route }) {
   const { usernamePassed } = route.params;
   let usernameDB = JSON.stringify(usernamePassed)
+  usernameDB = usernameDB.replace(/\\/g, '')
+  usernameDB = usernameDB.replace(/"/g, '')
   
   const [link, setLink] = useState('');
 
@@ -19,11 +22,11 @@ export default function ImgurLink({ route }) {
 
   const onSubmit = () => {
     console.log('Put imgur link into database and substitute icon in createprofilescreen for the imgur picture')
-    navigation.navigate('CreateProfile', { usernameHere: usernameDB });
+    navigation.navigate('CreateProfile', { usernamePassed: usernameDB });
   }
 
   const onBackToProfilePressed = () => {
-    navigation.navigate('CreateProfile', { usernameHere: usernameDB });
+    navigation.navigate('CreateProfile', { usernamePassed: usernameDB });
   }
 
   return (
