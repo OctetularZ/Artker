@@ -6,7 +6,7 @@ import colours from '../config/colours'
 import CustomInput from '../components/CustomInput'
 import CustomButton1 from '../components/CustomButton1'
 import PfpDisplay from '../components/PfpDisplay'
-import {Skills} from './SkillsList'
+import {expertises} from './Expertise'
 
 import {CountryPicker} from "react-native-country-codes-picker";
 import AppDate from '../components/AppDate'
@@ -28,9 +28,9 @@ export default function CreateProfileScreen({ route }) {
   const [Name, setName] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [DOB, setDOB] = useState(new Date());
-  let specialities = ''
-  let specialitiesList = []
-  const [skills, setSkills] = useState(specialities);
+  let expertiseDisplay = ''
+  let expertiseList = [] // Create flatlist for instruments and make searchable
+  const [skills, setSkills] = useState(specialitiesDisplay);
   const [country, setCountry] = useState('Nationality');
   
   const [show, setShow] = useState(false); // For modal state
@@ -39,7 +39,7 @@ export default function CreateProfileScreen({ route }) {
 
   // useEffect(() => {
   //   db.transaction(tx => {
-  //     tx.executeSql('CREATE TABLE IF NOT EXISTS Profile (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, Name TEXT, Pfp TEXT, Dob TEXT, Country TEXT, Skills TEXT)')
+  //     tx.executeSql('CREATE TABLE IF NOT EXISTS Profile (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, Name TEXT, Pfp TEXT, Dob TEXT, Country TEXT, Expertise TEXT, About TEXT)')
   //   });
   // })
 
