@@ -18,10 +18,36 @@ export default function ImgurLink({ route }) {
   
   const [link, setLink] = useState('');
 
+  const db = SQLite.openDatabase('Artker')
+
   const navigation = useNavigation();
 
   const onSubmit = () => {
     console.log('Put imgur link into database and substitute icon in createprofilescreen for the imgur picture')
+
+    // db.transaction(tx => {
+    //   tx.executeSql(`SELECT Password FROM Account WHERE Username = '${username}'`,
+    //   null,
+    //   (txObj, resultSet) => {
+    //     let results = resultSet.rows._array
+    //     if (results.length == 0) {
+    //       console.log('No results')
+    //     }
+    //     else{
+    //       let userObj = results[0]
+    //       let userPassword = userObj['Password']
+    //       if (userPassword == password) {
+    //         navigation.navigate('Home', { usernamePassed: username })
+    //       }
+    //       else {
+    //         console.log('Wrong Password')
+    //       }
+    //     }
+    //   },
+    //   (txObj, error) => console.log(error)
+    //   )
+    // })
+
     navigation.navigate('CreateProfile', { usernamePassed: usernameDB });
   }
 

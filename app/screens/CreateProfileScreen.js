@@ -6,7 +6,7 @@ import colours from '../config/colours'
 import CustomInput from '../components/CustomInput'
 import CustomButton1 from '../components/CustomButton1'
 import PfpDisplay from '../components/PfpDisplay'
-import InstrumentList from './InstrumentList'
+import {Skills} from './SkillsList'
 
 import {CountryPicker} from "react-native-country-codes-picker";
 import AppDate from '../components/AppDate'
@@ -29,6 +29,7 @@ export default function CreateProfileScreen({ route }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [DOB, setDOB] = useState(new Date());
   let specialities = ''
+  let specialitiesList = []
   const [skills, setSkills] = useState(specialities);
   const [country, setCountry] = useState('Nationality');
   
@@ -38,7 +39,7 @@ export default function CreateProfileScreen({ route }) {
 
   // useEffect(() => {
   //   db.transaction(tx => {
-  //     tx.executeSql('CREATE TABLE IF NOT EXISTS Profile (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, pfp TEXT)')
+  //     tx.executeSql('CREATE TABLE IF NOT EXISTS Profile (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, Name TEXT, Pfp TEXT, Dob TEXT, Country TEXT, Skills TEXT)')
   //   });
   // })
 
@@ -124,6 +125,7 @@ export default function CreateProfileScreen({ route }) {
             style={styles.closeModalButton}
             onPress={() => setModalVisible(!modalVisible)}>
             <Ionicons name='close-outline' size={35} color='white'/>
+            <FlatList/>
           </Pressable>
           <FlatList>
 
