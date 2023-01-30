@@ -1,4 +1,4 @@
-import { SafeAreaView, useWindowDimensions, StyleSheet, Text, TextInput, View, Image, Modal, Pressable, FlatList } from 'react-native'
+import { SafeAreaView, useWindowDimensions, StyleSheet, Text, TextInput, View, Image, Modal, Pressable, FlatList, TouchableOpacity } from 'react-native'
 import React, { useState, useEffect } from 'react'
 
 import Screen from '../components/Screen'
@@ -30,7 +30,7 @@ export default function CreateProfileScreen({ route }) {
   const [DOB, setDOB] = useState(new Date());
   let expertiseDisplay = ''
   let expertiseList = [] // Create flatlist for instruments and make searchable
-  const [skills, setSkills] = useState(specialitiesDisplay);
+  const [skills, setSkills] = useState(expertiseDisplay);
   const [country, setCountry] = useState('Nationality');
   
   const [show, setShow] = useState(false); // For modal state
@@ -42,6 +42,12 @@ export default function CreateProfileScreen({ route }) {
   //     tx.executeSql('CREATE TABLE IF NOT EXISTS Profile (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, Name TEXT, Pfp TEXT, Dob TEXT, Country TEXT, Expertise TEXT, About TEXT)')
   //   });
   // })
+
+  const FlatlistItem = ({value}) => (
+    <TouchableOpacity style={styles.flatlistItem}>
+      <Text style={styles.itemValue}>{value}</Text>
+    </TouchableOpacity>
+  )
 
 
   const onCreateProfilePressed = () => {
@@ -125,11 +131,11 @@ export default function CreateProfileScreen({ route }) {
             style={styles.closeModalButton}
             onPress={() => setModalVisible(!modalVisible)}>
             <Ionicons name='close-outline' size={35} color='white'/>
-            <FlatList/>
           </Pressable>
-          <FlatList>
-
-          </FlatList>
+          <FlatList
+          data={expertises}
+          renderItem={({item}) => <FlatlistItem value={item}/>}
+          />
         </View>
       </Modal>
     </ScrollView>
@@ -152,5 +158,12 @@ const styles = StyleSheet.create({
   },
   closeModalButton: {
     paddingBottom: 25
+  },
+  flatlistItem: {
+    marginVertical: 10,
+    marginLeft: 10
+  },
+  itemValue: {
+    color: 'white'
   }
 })
