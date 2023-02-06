@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     marginVertical: 5
   },
   placeholderText: {
-    color: 'grey'
+    color: 'grey',
+    overflow: 'visible'
   }
 })

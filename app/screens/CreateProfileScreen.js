@@ -13,8 +13,13 @@ import AppDate from '../components/AppDate'
 import { ScrollView } from 'react-native-gesture-handler'
 import * as SQLite from 'expo-sqlite'
 import CustomBox from '../components/CustomBox'
-import {Ionicons} from '@expo/vector-icons'
+import {Ionicons, AntDesign} from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
+import {
+  useFonts,
+  Poppins_400Regular
+} from '@expo-google-fonts/poppins';
+import AppLoading from 'expo-app-loading'
 
 
 export default function CreateProfileScreen({ route }) {
@@ -43,11 +48,32 @@ export default function CreateProfileScreen({ route }) {
   //   });
   // })
 
-  const FlatlistItem = ({value}) => (
-    <TouchableOpacity style={styles.flatlistItem}>
-      <Text style={styles.itemValue}>{value}</Text>
-    </TouchableOpacity>
-  )
+  const FlatlistItem = ({value}) => {
+    const [selected, setSelected] = useState(false);
+    if (selected) {
+      expertiseList.push(value)
+      expertiseDisplay = expertiseList.join(', ')
+      return(
+      <TouchableOpacity style={styles.flatlistItem} onPress={() => {(setSelected(false), console.log(selected))}}>
+        <Text style={styles.itemValue}>{value}</Text>
+        {selected && <AntDesign name='check' size={24} color='white' style={styles.checkStyles}/>}
+      </TouchableOpacity>
+    )
+    }
+  else {
+    let index = expertiseList.indexOf(value);
+    if (index !== -1) {
+      expertiseList.splice(index, 1);
+      expertiseDisplay = expertiseList.join(', ')
+    }
+    return(
+      <TouchableOpacity style={styles.flatlistItem} onPress={() => {(setSelected(true), console.log(selected))}}>
+        <Text style={styles.itemValue}>{value}</Text>
+        {selected && <AntDesign name='check' size={18} color='white'/>}
+      </TouchableOpacity>
+    )
+  }
+  }
 
 
   const onCreateProfilePressed = () => {
@@ -67,14 +93,22 @@ export default function CreateProfileScreen({ route }) {
     navigation.navigate('Register')
   }
 
-  return (
-    <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>
+  let [fontsLoaded] = useFonts({
+    Poppins_400Regular
+  });
+  
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
+  else {
+    return (
+      <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>
       <Screen style={styles.container}>
         <PfpDisplay username={usernameDB}/>
         <CustomInput placeholder='Name' value={Name} setValue={setName}/>
         <CustomBox placeholder={country} onPress={() => setShow(true)}/>
         <AppDate value={DOB} onDateChange={onDateChange}/>
-        <CustomBox placeholder='Skills' onPress={() => setModalVisible(true)}/>
+        <CustomBox placeholder={skills} onPress={() => setModalVisible(true)}/>
         <CustomButton1 onPress={onCreateProfilePressed} text='Create Profile' type='Primary'/>
       </Screen>
       <CountryPicker
@@ -129,8 +163,8 @@ export default function CreateProfileScreen({ route }) {
         <View style={styles.modalView}>
           <Pressable
             style={styles.closeModalButton}
-            onPress={() => setModalVisible(!modalVisible)}>
-            <Ionicons name='close-outline' size={35} color='white'/>
+            onPress={() => (setModalVisible(!modalVisible), setSkills(expertiseDisplay))}>
+            <Ionicons name='close-outline' size={30} color='white'/>
           </Pressable>
           <FlatList
           data={expertises}
@@ -141,7 +175,8 @@ export default function CreateProfileScreen({ route }) {
     </ScrollView>
     // Navigate to the 'StarterScreen' when done designing
     // Custombutton1 may need to be modified if not in correct position
-  )
+    )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -154,16 +189,22 @@ const styles = StyleSheet.create({
     backgroundColor: colours.primary,
     flex: 1,
     paddingTop: 50,
-    paddingLeft: 30
+    paddingLeft: 25
   },
   closeModalButton: {
-    paddingBottom: 25
+    paddingBottom: 15
   },
   flatlistItem: {
     marginVertical: 10,
-    marginLeft: 10
+    marginLeft: 10,
+    display: 'flex',
+    flexDirection: 'row'
   },
   itemValue: {
-    color: 'white'
+    color: 'white',
+    fontFamily: 'Poppins_400Regular'
+  },
+  checkStyles: {
+    marginLeft: 10
   }
 })
