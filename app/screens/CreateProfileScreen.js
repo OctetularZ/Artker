@@ -35,8 +35,9 @@ export default function CreateProfileScreen({ route }) {
   const [DOB, setDOB] = useState(new Date());
   let expertiseDisplay = ''
   let expertiseList = [] // Create flatlist for instruments and make searchable
-  const [skills, setSkills] = useState(expertiseDisplay);
+  const [skills, setSkills] = useState('Expertises');
   const [country, setCountry] = useState('Nationality');
+  const [description, setDescription] = useState('');
   
   const [show, setShow] = useState(false); // For modal state
   
@@ -44,7 +45,7 @@ export default function CreateProfileScreen({ route }) {
 
   // useEffect(() => {
   //   db.transaction(tx => {
-  //     tx.executeSql('CREATE TABLE IF NOT EXISTS Profile (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, Name TEXT, Pfp TEXT, Dob TEXT, Country TEXT, Expertise TEXT, About TEXT)')
+  //     tx.executeSql('CREATE TABLE IF NOT EXISTS Profile (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, Name TEXT, Pfp TEXT, Dob TEXT, Nationality TEXT, Expertise TEXT, About TEXT)')
   //   });
   // })
 
@@ -109,6 +110,7 @@ export default function CreateProfileScreen({ route }) {
         <CustomBox placeholder={country} onPress={() => setShow(true)}/>
         <AppDate value={DOB} onDateChange={onDateChange}/>
         <CustomBox placeholder={skills} onPress={() => setModalVisible(true)}/>
+        <CustomInput placeholder='Description' value={description} setValue={setDescription}/>
         <CustomButton1 onPress={onCreateProfilePressed} text='Create Profile' type='Primary'/>
       </Screen>
       <CountryPicker
