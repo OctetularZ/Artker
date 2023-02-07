@@ -1,20 +1,55 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
 import React from 'react'
 import colours from '../config/colours'
 
 import { AntDesign } from '@expo/vector-icons'
+import * as SQLite from 'expo-sqlite'
 import { useNavigation } from '@react-navigation/native'
 
 export default function PfpDisplay({ username }) {
   const navigation = useNavigation();
 
+  const db = SQLite.openDatabase('Artker')
+
   const onAvatarIconPressed = () => {
     navigation.navigate('ImgurL', {usernamePassed: username})
   }
 
+  let pfpLink;
+
+  const ProfilePictureCheck = () => {
+    db.transaction(tx => {
+      tx.executeSql(`SELECT Pfp FROM Profile WHERE Username = '${username}'`,
+      null,
+      (txObj, resultSet) => {
+        let results = resultSet.rows._array
+        if (results.length == 0) {
+          console.log('No results')
+          return false
+        }
+        else{
+          let userObj = results[0]
+          let userPfp = userObj['Pfp']
+          if (userPfp == 'None') {
+            console.log('None')
+            return false
+          }
+          else {
+            pfpLink = userPfp
+            return true
+          }
+        }
+      },
+      (txObj, error) => console.log(error)
+      )
+    })
+  }
+
+  const checkResults = ProfilePictureCheck();
+
   return (
     <TouchableOpacity style={styles.pfp} onPress={onAvatarIconPressed}>
-      <AntDesign name='plus' size={40} color='grey'/>
+      {!checkResults ? <AntDesign name='plus' size={40} color='grey'/> : <Image source={{uri: pfpLink}} style={styles.imagePfp}/>}
     </TouchableOpacity>
   )
 }
@@ -33,5 +68,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  imagePfp:{
+
   }
 })

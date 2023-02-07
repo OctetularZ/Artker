@@ -22,7 +22,7 @@ export default function ImgurLink({ route }) {
 
   const navigation = useNavigation();
 
-  const isUrl = (URLstring) => {
+  const isUrl = (URLstring) => { // From: https://stackoverflow.com/questions/1701898/how-to-detect-whether-a-string-is-in-url-format-using-javascript
     var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
     return regexp.test(URLstring);
   }
