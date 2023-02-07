@@ -22,33 +22,24 @@ export default function ImgurLink({ route }) {
 
   const navigation = useNavigation();
 
+  const isUrl = (URLstring) => {
+    var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+    return regexp.test(URLstring);
+  }
+
   const onSubmit = () => {
     console.log('Put imgur link into database and substitute icon in createprofilescreen for the imgur picture')
+    if (isUrl(link)) {
+      db.transaction(tx => {
+      tx.executeSql(`UPDATE Profile SET Pfp = '${link}' WHERE Username = '${usernameDB}'`)
+      })
 
-    // db.transaction(tx => {
-    //   tx.executeSql(`SELECT Password FROM Account WHERE Username = '${username}'`,
-    //   null,
-    //   (txObj, resultSet) => {
-    //     let results = resultSet.rows._array
-    //     if (results.length == 0) {
-    //       console.log('No results')
-    //     }
-    //     else{
-    //       let userObj = results[0]
-    //       let userPassword = userObj['Password']
-    //       if (userPassword == password) {
-    //         navigation.navigate('Home', { usernamePassed: username })
-    //       }
-    //       else {
-    //         console.log('Wrong Password')
-    //       }
-    //     }
-    //   },
-    //   (txObj, error) => console.log(error)
-    //   )
-    // })
-
-    navigation.navigate('CreateProfile', { usernamePassed: usernameDB });
+      navigation.navigate('CreateProfile', { usernamePassed: usernameDB });
+      console.log('valid')
+    }
+    else {
+      console.log('invalid')
+    }
   }
 
   const onBackToProfilePressed = () => {

@@ -41,13 +41,13 @@ export default function CreateProfileScreen({ route }) {
   
   const [show, setShow] = useState(false); // For modal state
   
-  // const db = SQLite.openDatabase('Artker')
+  const db = SQLite.openDatabase('Artker')
 
-  // useEffect(() => {
-  //   db.transaction(tx => {
-  //     tx.executeSql('CREATE TABLE IF NOT EXISTS Profile (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, Name TEXT, Pfp TEXT, Dob TEXT, Nationality TEXT, Expertise TEXT, About TEXT)')
-  //   });
-  // })
+  useEffect(() => {
+    db.transaction(tx => {
+      tx.executeSql('CREATE TABLE IF NOT EXISTS Profile (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, Name TEXT, Pfp TEXT, Dob TEXT, Nationality TEXT, Expertises TEXT, Description TEXT)')
+    });
+  })
 
   const FlatlistItem = ({value}) => {
     const [selected, setSelected] = useState(false);
@@ -79,7 +79,7 @@ export default function CreateProfileScreen({ route }) {
 
   const onCreateProfilePressed = () => {
     db.transaction(tx => {
-      tx.executeSql(`INSERT INTO Profile (Username, ProfileUsername, Pfp, Phone, Rating, Expertise) VALUES ('${usernameDB}', '${Name}')`)
+      tx.executeSql(`INSERT INTO Profile (Username, Name, Pfp, Dob, Nationality, Expertises, Description) VALUES ('${usernameDB}', '${Name}', 'None', '${DOB}', '${country}', '${expertiseDisplay}', '${description}')`)
     })
   }
 
