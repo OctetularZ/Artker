@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import colours from '../config/colours'
 
 import { AntDesign } from '@expo/vector-icons'
@@ -9,13 +9,14 @@ import { useNavigation } from '@react-navigation/native'
 export default function PfpDisplay({ username }) {
   const navigation = useNavigation();
 
+  const [pfpLink, setPfpLink] = useState('');
+  const [pfpBool, setpfpBool] = useState(false);
+
   const db = SQLite.openDatabase('Artker')
 
   const onAvatarIconPressed = () => {
     navigation.navigate('ImgurL', {usernamePassed: username})
   }
-
-  let pfpLink;
 
   const ProfilePictureCheck = () => {
     db.transaction(tx => {
@@ -25,18 +26,18 @@ export default function PfpDisplay({ username }) {
         let results = resultSet.rows._array
         if (results.length == 0) {
           console.log('No results')
-          return false
+          setpfpBool(false)
         }
         else{
           let userObj = results[0]
           let userPfp = userObj['Pfp']
           if (userPfp == 'None') {
             console.log('None')
-            return false
+            setpfpBool(false)
           }
           else {
-            pfpLink = userPfp
-            return true
+            setPfpLink(userPfp)
+            setpfpBool(true)
           }
         }
       },
@@ -45,11 +46,11 @@ export default function PfpDisplay({ username }) {
     })
   }
 
-  const checkResults = ProfilePictureCheck();
+  ProfilePictureCheck();
 
   return (
     <TouchableOpacity style={styles.pfp} onPress={onAvatarIconPressed}>
-      {!checkResults ? <AntDesign name='plus' size={40} color='grey'/> : <Image source={{uri: pfpLink}} style={styles.imagePfp}/>}
+      {!pfpBool ? <AntDesign name='plus' size={40} color='grey'/> : <Image source={{uri: pfpLink}} style={styles.imagePfp}/>}
     </TouchableOpacity>
   )
 }
@@ -70,6 +71,6 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   imagePfp:{
-
+    resizeMode: 'contain'
   }
 })

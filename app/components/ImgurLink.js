@@ -33,8 +33,6 @@ export default function ImgurLink({ route }) {
       db.transaction(tx => {
       tx.executeSql(`UPDATE Profiles SET Pfp = '${link}' WHERE Username = '${usernameDB}'`)
       })
-
-      console.log(link)
       navigation.navigate('CreateProfile', { usernamePassed: usernameDB });
       console.log('valid')
     }

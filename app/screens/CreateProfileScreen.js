@@ -47,6 +47,9 @@ export default function CreateProfileScreen({ route }) {
     db.transaction(tx => {
       tx.executeSql('CREATE TABLE IF NOT EXISTS Profiles (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, Name TEXT, Pfp TEXT, Dob TEXT, Nationality TEXT, Expertises TEXT, Description TEXT)')
     });
+    db.transaction(tx => {
+      tx.executeSql(`INSERT INTO Profiles (Username, Name, Pfp, Dob, Nationality, Expertises, Description) VALUES ('${usernameDB}', 'None', 'None', 'None', 'None', 'None', 'None')`)
+    });
   })
 
   const FlatlistItem = ({value}) => {
@@ -74,12 +77,12 @@ export default function CreateProfileScreen({ route }) {
       </TouchableOpacity>
     )
   }
-  } // Preset 'None' into sql table for pfp then the pfp should work/update
+  }
 
 
   const onCreateProfilePressed = () => {
     db.transaction(tx => {
-      tx.executeSql(`INSERT INTO Profiles (Username, Name, Pfp, Dob, Nationality, Expertises, Description) VALUES ('${usernameDB}', '${Name}', 'None', '${DOB}', '${country}', '${expertiseDisplay}', '${description}')`)
+      tx.executeSql(`UPDATE Profiles SET Name = '${Name}', Dob = '${DOB}', Nationality = '${country}', Expertises = '${expertiseDisplay}', Description = '${description}' WHERE Username = '${usernameDB}')`)
     })
   }
 
