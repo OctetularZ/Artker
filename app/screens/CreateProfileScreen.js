@@ -45,7 +45,7 @@ export default function CreateProfileScreen({ route }) {
 
   useEffect(() => {
     db.transaction(tx => {
-      tx.executeSql('CREATE TABLE IF NOT EXISTS Profile (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, Name TEXT, Pfp TEXT, Dob TEXT, Nationality TEXT, Expertises TEXT, Description TEXT)')
+      tx.executeSql('CREATE TABLE IF NOT EXISTS Profiles (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, Name TEXT, Pfp TEXT, Dob TEXT, Nationality TEXT, Expertises TEXT, Description TEXT)')
     });
   })
 
@@ -74,12 +74,12 @@ export default function CreateProfileScreen({ route }) {
       </TouchableOpacity>
     )
   }
-  }
+  } // Preset 'None' into sql table for pfp then the pfp should work/update
 
 
   const onCreateProfilePressed = () => {
     db.transaction(tx => {
-      tx.executeSql(`INSERT INTO Profile (Username, Name, Pfp, Dob, Nationality, Expertises, Description) VALUES ('${usernameDB}', '${Name}', 'None', '${DOB}', '${country}', '${expertiseDisplay}', '${description}')`)
+      tx.executeSql(`INSERT INTO Profiles (Username, Name, Pfp, Dob, Nationality, Expertises, Description) VALUES ('${usernameDB}', '${Name}', 'None', '${DOB}', '${country}', '${expertiseDisplay}', '${description}')`)
     })
   }
 
@@ -110,7 +110,7 @@ export default function CreateProfileScreen({ route }) {
         <CustomBox placeholder={country} onPress={() => setShow(true)}/>
         <AppDate value={DOB} onDateChange={onDateChange}/>
         <CustomBox placeholder={skills} onPress={() => setModalVisible(true)}/>
-        <CustomInput placeholder='Description' value={description} setValue={setDescription}/>
+        <CustomInput placeholder='Description - Write stuff about you...' value={description} setValue={setDescription}/>
         <CustomButton1 onPress={onCreateProfilePressed} text='Create Profile' type='Primary'/>
       </Screen>
       <CountryPicker

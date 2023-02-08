@@ -19,7 +19,7 @@ export default function PfpDisplay({ username }) {
 
   const ProfilePictureCheck = () => {
     db.transaction(tx => {
-      tx.executeSql(`SELECT Pfp FROM Profile WHERE Username = '${username}'`,
+      tx.executeSql(`SELECT Pfp FROM Profiles WHERE Username = '${username}'`,
       null,
       (txObj, resultSet) => {
         let results = resultSet.rows._array

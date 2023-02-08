@@ -31,9 +31,10 @@ export default function ImgurLink({ route }) {
     console.log('Put imgur link into database and substitute icon in createprofilescreen for the imgur picture')
     if (isUrl(link)) {
       db.transaction(tx => {
-      tx.executeSql(`UPDATE Profile SET Pfp = '${link}' WHERE Username = '${usernameDB}'`)
+      tx.executeSql(`UPDATE Profiles SET Pfp = '${link}' WHERE Username = '${usernameDB}'`)
       })
 
+      console.log(link)
       navigation.navigate('CreateProfile', { usernamePassed: usernameDB });
       console.log('valid')
     }
