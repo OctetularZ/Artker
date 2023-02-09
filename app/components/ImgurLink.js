@@ -28,13 +28,11 @@ export default function ImgurLink({ route }) {
   }
 
   const onSubmit = () => {
-    console.log('Put imgur link into database and substitute icon in createprofilescreen for the imgur picture')
     if (isUrl(link)) {
       db.transaction(tx => {
       tx.executeSql(`UPDATE Profiles SET Pfp = '${link}' WHERE Username = '${usernameDB}'`)
       })
       navigation.navigate('CreateProfile', { usernamePassed: usernameDB });
-      console.log('valid')
     }
     else {
       console.log('invalid')
@@ -48,7 +46,7 @@ export default function ImgurLink({ route }) {
   return (
     <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>
       <Screen style={styles.container}>
-        <Text style={styles.title}>Imgur Link</Text>
+        <Text style={styles.title}>Image Link</Text>
         
         <CustomInput placeholder='Link' value={link} setValue={setLink}/>
 
