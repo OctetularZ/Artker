@@ -40,6 +40,9 @@ export default function CreateProfileScreen({ route }) {
   const [description, setDescription] = useState('');
   
   const [show, setShow] = useState(false); // For modal state
+
+  const [amountX, setAmountX] = useState(0);
+  const [amountY, setAmountY] = useState(0);
   
   const db = SQLite.openDatabase('Artker')
 
@@ -51,6 +54,12 @@ export default function CreateProfileScreen({ route }) {
       tx.executeSql(`INSERT INTO Profiles (Username, Name, Pfp, Dob, Nationality, Expertises, Description) VALUES ('${usernameDB}', 'None', 'None', 'None', 'None', 'None', 'None')`)
     });
   })
+
+  const textInputFocused = (x, y) => {
+    setAmountX(x);
+    setAmountY(y);
+    return {amountX, amountY};
+  }
 
   const FlatlistItem = ({value}) => {
     const [selected, setSelected] = useState(false);
@@ -106,14 +115,14 @@ export default function CreateProfileScreen({ route }) {
   }
   else {
     return (
-      <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false} contentOffset={textInputFocused(0, 0)}>
       <Screen style={styles.container}>
         <PfpDisplay username={usernameDB}/>
         <CustomInput placeholder='Name' value={Name} setValue={setName}/>
         <CustomBox placeholder={country} onPress={() => setShow(true)}/>
         <AppDate value={DOB} onDateChange={onDateChange}/>
         <CustomBox placeholder={skills} onPress={() => setModalVisible(true)}/>
-        <CustomInput placeholder='Description - Write stuff about you...' value={description} setValue={setDescription}/>
+        <CustomInput placeholder='Description - Write stuff about you...' value={description} setValue={setDescription} onFocus={textInputFocused(5, 5)}/>
         <CustomButton1 onPress={onCreateProfilePressed} text='Create Profile' type='Primary'/>
       </Screen>
       <CountryPicker
