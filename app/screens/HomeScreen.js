@@ -1,12 +1,12 @@
 import { Image, Dimensions, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, FlatList, Animated } from 'react-native'
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import colours from '../config/colours'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import DropDownPicker from 'react-native-dropdown-picker'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
+import * as SQLite from 'expo-sqlite'
 
-import { valueProvider, ValuesContext } from '../components/Global/valuesContext'
 import AppCards from '../components/AppCards'
 import Screen from '../components/Screen'
 import AppCardsSeparated from '../components/AppCardsSeparated'
@@ -15,6 +15,15 @@ import AppCardsSeparatedDesc from '../components/AppCardsSeperatedDescription'
 const Tab = createMaterialBottomTabNavigator();
 
 export default function HomeScreen({ route }) {
+
+  const [id, setID] = useState(null);
+  const [usernameDB, setUsernameDB] = useState(null);
+  const [name, setName] = useState(null);
+  const [Pfp, setPfp] = useState(null);
+  const [nationality, setNationality] = useState(null);
+  const [expertises, setExpertises] = useState(null);
+  const [DOB, setDOB] = useState(null);
+  const [description, setDescription] = useState(null);
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -26,13 +35,33 @@ export default function HomeScreen({ route }) {
   ]);
 
   const navigation = useNavigation();
+  
   const { usernamePassed } = route.params;
   let username = JSON.stringify(usernamePassed)
   username = username.replace(/\\/g, '')
   username = username.replace(/"/g, '')
 
-  const {usernameValue, setUsernameValue} = useContext(ValuesContext);
-  setUsernameValue = username
+  const db = SQLite.openDatabase('Artker')
+
+  useEffect(() => {
+    db.transaction(tx => {
+      tx.executeSql('SELECT * FROM Profiles',
+      null,
+      (txObj , resultSet) => {
+        let results = resultSet.rows._array
+        let randNumbArr = [];
+        for (let i = 0; i < 10; i++) {
+          randNumbArr.push(Math.floor((Math.random()) * (results.length)))
+        }
+        let randUsersArr = [];
+        for (const randNumbers of randNumbArr) {
+          randUsersArr.push(results[randNumbers])
+        }
+      },
+      (txObj, error) => console.log(error)
+      )
+    });
+  })
 
   const {width, height} = Dimensions.get('screen')
 

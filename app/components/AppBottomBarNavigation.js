@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, {createContext} from 'react'
+import React from 'react'
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 
-import { valueProvider } from './Global/valuesContext';
+import { useNavigation } from '@react-navigation/native'
 import { Entypo, Feather, AntDesign, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import colours from '../config/colours';
@@ -17,24 +17,29 @@ modern user experience. This will be displayed on almost every screen, as it's t
 logging in/signing up.
 */
 
-export default function AppBottomBarNavigation() {
+export default function AppBottomBarNavigation({ route }) {
+  const { usernamePassed } = route.params;
+  let username = JSON.stringify(usernamePassed)
+  username = username.replace(/\\/g, '')
+  username = username.replace(/"/g, '')
+
+  const navigation = useNavigation();
+
   return (
-    <valueProvider>
       <Bar.Navigator shifting={true} activeColor={colours.secondary} inactiveColor={colours.secondary} barStyle={styles.bottomBar}>
-        <Bar.Screen name="Home" component={HomeScreen} options={{
+        <Bar.Screen name="Home" component={HomeScreen} initialParams={{ usernamePassed: username }} options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color }) => (
             <Entypo name='home' size={24} color={color}/>
           )
         }}/>
-        <Bar.Screen name="Profile" component={ProfileScreen} options={{
-          tabBarLabel: 'Settings',
+        <Bar.Screen name="Profile" component={ProfileScreen} initialParams={{ usernamePassed: username }} options={{
+          tabBarLabel: 'Profile',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name='account-box' size={24} color={color}/>
           )
         }}/>
       </Bar.Navigator>
-    </valueProvider>
   )
 }
 
