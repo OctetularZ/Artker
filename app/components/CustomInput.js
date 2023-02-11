@@ -7,10 +7,10 @@ This function will be used to take inputs from the users and will mainly be used
 and screens related to those. Security is also used on the password to ensure safety (password is blocked out).
 */
 
-export default function CustomInput({value, setValue, placeholder, secureTextEntry, onPress, onFocus}) {
+export default function CustomInput({value, setValue, placeholder, secureTextEntry, onPress, onFocus, onBlur, multiline, maxLength}) {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
-      <TextInput value={value} onChangeText={setValue} placeholder={placeholder} style={styles.input} secureTextEntry={secureTextEntry} placeholderTextColor='grey' onFocus={onFocus}/>
+      <TextInput value={value} onChangeText={setValue} placeholder={placeholder} style={styles.input} secureTextEntry={secureTextEntry} placeholderTextColor='grey' onFocus={onFocus} onBlur={onBlur} multiline={multiline} maxLength={maxLength}/>
     </TouchableOpacity>
   )
 }

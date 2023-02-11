@@ -1,5 +1,5 @@
 import { SafeAreaView, useWindowDimensions, StyleSheet, Text, TextInput, View, Image, Modal, Pressable, FlatList, TouchableOpacity } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 import Screen from '../components/Screen'
 import colours from '../config/colours'
@@ -58,7 +58,6 @@ export default function CreateProfileScreen({ route }) {
   const textInputFocused = (x, y) => {
     setAmountX(x);
     setAmountY(y);
-    return {amountX, amountY};
   }
 
   const FlatlistItem = ({value}) => {
@@ -92,7 +91,8 @@ export default function CreateProfileScreen({ route }) {
   const onCreateProfilePressed = () => {
     db.transaction(tx => {
       tx.executeSql(`UPDATE Profiles SET Name = '${Name}', Dob = '${DOB}', Nationality = '${country}', Expertises = '${expertiseDisplay}', Description = '${description}' WHERE Username = '${usernameDB}')`)
-    })
+    });
+    navigation.navigate('StarterScreen', {usernamePassed: usernameDB})
   }
 
   const onDateChange = (event, selectedDate) => {
@@ -115,14 +115,14 @@ export default function CreateProfileScreen({ route }) {
   }
   else {
     return (
-      <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false} contentOffset={textInputFocused(0, 0)}>
+      <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false} contentOffset={{x: amountX, y: amountY}}>
       <Screen style={styles.container}>
         <PfpDisplay username={usernameDB}/>
         <CustomInput placeholder='Name' value={Name} setValue={setName}/>
         <CustomBox placeholder={country} onPress={() => setShow(true)}/>
         <AppDate value={DOB} onDateChange={onDateChange}/>
         <CustomBox placeholder={skills} onPress={() => setModalVisible(true)}/>
-        <CustomInput placeholder='Description - Write stuff about you...' value={description} setValue={setDescription} onFocus={textInputFocused(5, 5)}/>
+        <CustomInput placeholder='Description - Write stuff about you...' value={description} setValue={setDescription} onFocus={() => textInputFocused(0, 350)} onBlur={() => textInputFocused(0, 0)} multiline={true} maxLength={500}/>
         <CustomButton1 onPress={onCreateProfilePressed} text='Create Profile' type='Primary'/>
       </Screen>
       <CountryPicker

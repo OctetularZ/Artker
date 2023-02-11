@@ -8,21 +8,25 @@ import Screen from '../components/Screen'
 import CustomButton1 from '../components/CustomButton1'
 import AppCards from '../components/AppCardsSeparated'
 
-export default function StarterScreen() {
+export default function StarterScreen({ route }) {
+  const { usernamePassed } = route.params;
+  let usernameDB = JSON.stringify(usernamePassed)
+  usernameDB = usernameDB.replace(/\\/g, '')
+  usernameDB = usernameDB.replace(/"/g, '')
 
   const HEIGHT = Dimensions.get('window').height;
   const WIDTH = Dimensions.get('window').width;
   const navigation = useNavigation();
 
   const onGetStartedPressed = () => {
-    navigation.navigate('Home')
+    navigation.navigate('Home', {usernamePassed: usernameDB})
   }
   
   return (
     <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>
       <StatusBar translucent backgroundColor={colours.transparent}/>
       <SafeAreaView>
-        <AppCards HGT={450}/>
+        <AppCards HGT={800}/>
       </SafeAreaView>
       <Screen style={styles.container}>
         <View style={styles.indicatorContainer}>
