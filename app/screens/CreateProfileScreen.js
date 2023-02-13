@@ -35,7 +35,7 @@ export default function CreateProfileScreen({ route }) {
   const [DOB, setDOB] = useState(new Date());
   let expertiseDisplay = ''
   let expertiseList = [] // Create flatlist for instruments and make searchable
-  const [skills, setSkills] = useState('Expertises');
+  const [skills, setSkills] = useState('Expertises - The first one selected will be your primary expertise and will be displayed on the short-hand of your profile');
   const [country, setCountry] = useState('Nationality');
   const [description, setDescription] = useState('');
   
