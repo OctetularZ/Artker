@@ -45,6 +45,10 @@ export default function HomeScreen({ route }) {
 
     const navigation = useNavigation();
 
+    const onCardPressed = (username) => {
+      navigation.navigate('UserDisp', {usernamePassed: username})
+    }
+
     const FlatlistItem = ({value}) => {
       let username = value['Username']
       let pfp = value['Pfp']
@@ -60,7 +64,7 @@ export default function HomeScreen({ route }) {
         }
       }
       return(
-        <AppCards HGT={400}>
+        <AppCards HGT={400} onPress={onCardPressed(username)}>
           <View style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <View style={styles.cardPfpBG}>
               <Image source={{uri: pfp}} style={styles.cardPfp}/>

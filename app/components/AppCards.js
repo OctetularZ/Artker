@@ -10,9 +10,9 @@ This functions will generate a card-like display where certain types of informat
 to the user. This will be used very commonly as it'll be a method of displaying information.
 */
 
-export default function AppCards({HGT, children}) {
+export default function AppCards({HGT, onPress, children}) {
   return (
-    <TouchableOpacity style={[styles.cardsStyle, {height: HGT}]}>
+    <TouchableOpacity style={[styles.cardsStyle, {height: HGT}]} onPress={onPress}>
       {children}
     </TouchableOpacity>
   )

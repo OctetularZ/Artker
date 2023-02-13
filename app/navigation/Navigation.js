@@ -12,6 +12,7 @@ import CreateProfileScreen from '../screens/CreateProfileScreen';
 import StarterScreen from '../screens/StarterScreen';
 import AppBottomBarNavigation from '../components/AppBottomBarNavigation';
 import ImgurLink from '../components/ImgurLink';
+import UserFullDisplay from '../screens/UserFullDisplay';
 
 const Stack = createStackNavigator();
 
@@ -27,6 +28,7 @@ export default function Navigation() {
         <Stack.Screen name='StarterScreen' component={StarterScreen}/>
         <Stack.Screen name='CreateProfile' component={CreateProfileScreen}/>
         <Stack.Screen name='ImgurL' component={ImgurLink}/>
+        <Stack.Screen name='UserDisp' component={UserFullDisplay}/>
     </Stack.Navigator>
     </NavigationContainer>
   )
