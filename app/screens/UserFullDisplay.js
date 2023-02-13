@@ -1,4 +1,4 @@
-import { SafeAreaView, useWindowDimensions, StyleSheet, Text, TextInput, View, Image } from 'react-native'
+import { SafeAreaView, useWindowDimensions, StyleSheet, Text, TextInput, View, Image, ScrollView } from 'react-native'
 import React, { useState, useEffect } from 'react'
 
 import colours from '../config/colours'
@@ -51,7 +51,7 @@ export default function UserFullDisplay({ route }) {
               expertises = expertises.substr(0, (firstIndexOfComma - 1))
             }
           }
-          
+
           setName(name);
           setNationality(nationality);
           setPfp(pfp);
@@ -66,10 +66,15 @@ export default function UserFullDisplay({ route }) {
   }, []);
 
   return (
-    <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>
+    <View style={{backgroundColor: colours.primary, alignItems: 'center'}}>
       <AntDesign name='arrow-back-ios' size={24} color='white'/>
+      <View style={styles.cardPfpBG}>
+        <Image source={{uri: Pfp}} style={styles.cardPfp}/>
+      </View>
+      <ScrollView style={styles.bottomHalf}>
 
-    </ScrollView>
+      </ScrollView>
+    </View>
   )
 }
 
@@ -78,5 +83,32 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     backgroundColor: colours.primary
+  },
+  cardPfpBG: {
+    height: 200,
+    width: 200,
+    backgroundColor: colours.secondaryBlack,
+    borderRadius: 100,
+    marginTop: 25,
+    marginBottom: 25,
+    shadowColor: colours.secondary,
+    shadowOffset: {height: 0, width: 0},
+    shadowRadius: 10,
+    shadowOpacity: 0.2,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  cardPfp: {
+    resizeMode: 'center',
+    width: 200,
+    height: 200,
+    borderRadius: 100
+  },
+  bottomHalf: {
+    backgroundColor: colours.secondaryBlack,
+    shadowColor: 'black',
+    shadowOffset: {height: 2, width: 0},
+    shadowRadius: 20,
+    shadowOpacity: 0.3
   }
 })
