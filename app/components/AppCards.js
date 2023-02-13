@@ -10,10 +10,10 @@ This functions will generate a card-like display where certain types of informat
 to the user. This will be used very commonly as it'll be a method of displaying information.
 */
 
-export default function AppCards({HGT}) {
+export default function AppCards({HGT, children}) {
   return (
     <TouchableOpacity style={[styles.cardsStyle, {height: HGT}]}>
-        
+      {children}
     </TouchableOpacity>
   )
 }
