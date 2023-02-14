@@ -64,7 +64,7 @@ export default function HomeScreen({ route }) {
         }
       }
       return(
-        <AppCards HGT={400} onPress={onCardPressed(username)}>
+        <AppCards HGT={400} onPress={() => onCardPressed(username)}>
           <View style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <View style={styles.cardPfpBG}>
               <Image source={{uri: pfp}} style={styles.cardPfp}/>

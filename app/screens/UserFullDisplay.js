@@ -1,4 +1,4 @@
-import { SafeAreaView, useWindowDimensions, StyleSheet, Text, TextInput, View, Image, ScrollView } from 'react-native'
+import { SafeAreaView, useWindowDimensions, StyleSheet, Text, TextInput, View, Image } from 'react-native'
 import React, { useState, useEffect } from 'react'
 
 import colours from '../config/colours'
@@ -32,7 +32,6 @@ export default function UserFullDisplay({ route }) {
       null,
       (txObj , resultSet) => {
         let results = resultSet.rows._array
-        console.log(results)
         if (results.length === 0) {}
         else {
           let userInfo = results[0]
@@ -55,9 +54,9 @@ export default function UserFullDisplay({ route }) {
           setName(name);
           setNationality(nationality);
           setPfp(pfp);
-          setDOB(dob)
+          setDOB(dob);
           setExpertises(expertises);
-          setDescription(description)
+          setDescription(description);
         }
       },
       (txObj, error) => console.log(error)
@@ -66,15 +65,15 @@ export default function UserFullDisplay({ route }) {
   }, []);
 
   return (
-    <View style={{backgroundColor: colours.primary, alignItems: 'center'}}>
-      <AntDesign name='arrow-back-ios' size={24} color='white'/>
+    <SafeAreaView style={{backgroundColor: colours.primary, alignItems: 'center'}}>
+      <MaterialIcons name='arrow-back-ios' size={24} color='white'/>
       <View style={styles.cardPfpBG}>
         <Image source={{uri: Pfp}} style={styles.cardPfp}/>
       </View>
       <ScrollView style={styles.bottomHalf}>
-
+        <Text>eee</Text>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   )
 }
 
@@ -105,9 +104,11 @@ const styles = StyleSheet.create({
     borderRadius: 100
   },
   bottomHalf: {
+    width: '100%',
+    height: '100%',
     backgroundColor: colours.secondaryBlack,
-    shadowColor: 'black',
-    shadowOffset: {height: 2, width: 0},
+    shadowColor: 'white',
+    shadowOffset: {height: 5, width: 0},
     shadowRadius: 20,
     shadowOpacity: 0.3
   }
