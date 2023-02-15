@@ -53,7 +53,7 @@ export default function CreateProfileScreen({ route }) {
     db.transaction(tx => {
       tx.executeSql(`INSERT INTO Profiles (Username, Name, Pfp, Dob, Nationality, Expertises, Description) VALUES ('${usernameDB}', 'None', 'None', 'None', 'None', 'None', 'None')`)
     });
-  })
+  }, [])
 
   const textInputFocused = (x, y) => {
     setAmountX(x);

@@ -1,4 +1,4 @@
-import { SafeAreaView, useWindowDimensions, StyleSheet, Text, TextInput, View, Image } from 'react-native'
+import { SafeAreaView, useWindowDimensions, StyleSheet, Text, TextInput, View, Image, TouchableHighlight } from 'react-native'
 import React, { useState, useEffect } from 'react'
 
 import colours from '../config/colours'
@@ -6,6 +6,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import * as SQLite from 'expo-sqlite'
 import { useNavigation } from '@react-navigation/native'
 import { MaterialIcons } from '@expo/vector-icons'
+import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
 
 
 export default function UserFullDisplay({ route }) {
@@ -62,17 +63,21 @@ export default function UserFullDisplay({ route }) {
       (txObj, error) => console.log(error)
       )
     });
-  }, []);
+  }, []); //Reduce padding between back icon and pfp
 
   return (
     <SafeAreaView style={{backgroundColor: colours.primary, alignItems: 'center'}}>
-      <MaterialIcons name='arrow-back-ios' size={24} color='white'/>
+      <View style={{marginRight: 300}}>
+        <MaterialIcons.Button name='arrow-back-ios' size={24} color='white' backgroundColor='transparent' style={{paddingHorizontal: 0}}/>
+      </View>
       <View style={styles.cardPfpBG}>
         <Image source={{uri: Pfp}} style={styles.cardPfp}/>
       </View>
-      <ScrollView style={styles.bottomHalf}>
-        <Text>eee</Text>
-      </ScrollView>
+      <View style={styles.bottomHalf}>
+        <ScrollView style={styles.bottomHalf}>
+          <Text>eee</Text>
+        </ScrollView>
+      </View>
     </SafeAreaView>
   )
 }
@@ -90,10 +95,10 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     marginTop: 25,
     marginBottom: 25,
-    shadowColor: colours.secondary,
+    shadowColor: 'black',
     shadowOffset: {height: 0, width: 0},
     shadowRadius: 10,
-    shadowOpacity: 0.2,
+    shadowOpacity: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -106,10 +111,11 @@ const styles = StyleSheet.create({
   bottomHalf: {
     width: '100%',
     height: '100%',
+    marginTop: 50,
     backgroundColor: colours.secondaryBlack,
-    shadowColor: 'white',
-    shadowOffset: {height: 5, width: 0},
+    shadowColor: 'black',
+    shadowOffset: {height: -10, width: 0},
     shadowRadius: 20,
-    shadowOpacity: 0.3
+    shadowOpacity: 0.5
   }
 })
