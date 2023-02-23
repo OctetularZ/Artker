@@ -69,18 +69,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: colours.secondary,
     margin: 10
-  },
-  bottomButtons: {
-    width: '100%',
-    alignItems: 'center',
-    marginTop: 60
-  },
-  text: {
-    color: 'grey',
-    marginVertical: 10,
-    marginHorizontal: 50
-  },
-  link: {
-    color: colours.menuColour
   }
 })

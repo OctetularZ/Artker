@@ -8,6 +8,14 @@ import { useNavigation } from '@react-navigation/native'
 import { MaterialIcons } from '@expo/vector-icons'
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
 
+import {
+  useFonts,
+  Poppins_500Medium,
+  Poppins_400Regular
+} from '@expo-google-fonts/poppins';
+
+import AppLoading from 'expo-app-loading';
+
 
 export default function UserFullDisplay({ route }) {
   const { usernamePassed } = route.params;
@@ -63,23 +71,34 @@ export default function UserFullDisplay({ route }) {
       (txObj, error) => console.log(error)
       )
     });
-  }, []); //Reduce padding between back icon and pfp
+  }, []);
 
-  return (
-    <SafeAreaView style={{backgroundColor: colours.primary, alignItems: 'center'}}>
-      <View style={{marginRight: 300}}>
-        <MaterialIcons.Button name='arrow-back-ios' size={24} color='white' backgroundColor='transparent' style={{paddingHorizontal: 0}}/>
-      </View>
-      <View style={styles.cardPfpBG}>
-        <Image source={{uri: Pfp}} style={styles.cardPfp}/>
-      </View>
-      <View style={styles.bottomHalf}>
-        <ScrollView style={styles.bottomHalf}>
-          <Text>eee</Text>
-        </ScrollView>
-      </View>
-    </SafeAreaView>
-  )
+  let [fontsLoaded] = useFonts({
+      Poppins_400Regular,
+      Poppins_500Medium
+    });
+  
+    if (!fontsLoaded) {
+      return <AppLoading />;
+    }
+    else {
+      return (
+      <SafeAreaView style={{backgroundColor: colours.primary, alignItems: 'center'}}>
+        <View style={{marginRight: 300}}>
+          <MaterialIcons.Button name='arrow-back-ios' size={24} color='white' backgroundColor='transparent' style={{paddingHorizontal: 0}}/>
+        </View>
+        <View style={styles.cardPfpBG}>
+          <Image source={{uri: Pfp}} style={styles.cardPfp}/>
+        </View>
+        <Text style={styles.usernameBelowPfp}>{username}</Text>
+        <View style={styles.bottomHalf}>
+          <ScrollView style={styles.bottomHalf}>
+            <Text>eee</Text>
+          </ScrollView>
+        </View>
+      </SafeAreaView>
+      )
+    }
 }
 
 const styles = StyleSheet.create({
@@ -93,7 +112,7 @@ const styles = StyleSheet.create({
     width: 200,
     backgroundColor: colours.secondaryBlack,
     borderRadius: 100,
-    marginTop: 25,
+    marginTop: 15,
     marginBottom: 25,
     shadowColor: 'black',
     shadowOffset: {height: 0, width: 0},
@@ -117,5 +136,10 @@ const styles = StyleSheet.create({
     shadowOffset: {height: -10, width: 0},
     shadowRadius: 20,
     shadowOpacity: 0.5
+  },
+  usernameBelowPfp: {
+    color: 'white',
+    fontFamily: 'Poppins_500Medium',
+    fontSize: 20
   }
 })

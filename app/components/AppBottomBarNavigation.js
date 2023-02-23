@@ -52,4 +52,3 @@ const styles = StyleSheet.create({
   }
 })
 
-//Learn how about React Context to pass data between tab components

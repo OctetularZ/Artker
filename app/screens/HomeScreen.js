@@ -21,8 +21,6 @@ import {
 
 import AppLoading from 'expo-app-loading';
 
-const Tab = createMaterialBottomTabNavigator();
-
 export default function HomeScreen({ route }) {
     const [id, setID] = useState(null);
     const [usernameDB, setUsernameDB] = useState(null);
