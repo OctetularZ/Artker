@@ -58,7 +58,7 @@ export default function HomeScreen({ route }) {
         let firstIndexOfComma = expertises.indexOf(',')
         if (firstIndexOfComma === -1) {}
         else {
-          expertises = expertises.substr(0, (firstIndexOfComma - 1))
+          expertises = expertises.substr(0, (firstIndexOfComma))
         }
       }
       return(
@@ -70,7 +70,7 @@ export default function HomeScreen({ route }) {
             <Text style={styles.cardUsername}>{username}</Text>
             <Text style={styles.cardName}>{name}</Text>
             <View style={{display: 'flex', flexDirection: 'row'}}>
-              <View style={{marginRight: 150, alignItems: 'center'}}>
+              <View style={{marginRight: 100, alignItems: 'center'}}>
                 <AntDesign name='flag' size={24} color='white'/>
                 <Text style={styles.cardTextAfterIcon}>{nationality}</Text>
               </View>
@@ -204,10 +204,11 @@ const styles = StyleSheet.create({
   },
   cardName: {
     color: '#e1d9d1',
-    fontFamily: 'Poppins_400Regular'
+    fontFamily: 'Poppins_400Regular',
+    marginBottom: 20
   },
   cardTextAfterIcon: {
     color: 'white',
-    fontFamily: 'Poppins_500Medium'
+    fontFamily: 'Poppins_500Medium',
   }
 })

@@ -5,7 +5,7 @@ import colours from '../config/colours'
 import { ScrollView } from 'react-native-gesture-handler'
 import * as SQLite from 'expo-sqlite'
 import { useNavigation } from '@react-navigation/native'
-import { MaterialIcons, AntDesign } from '@expo/vector-icons'
+import { MaterialIcons, AntDesign, Feather } from '@expo/vector-icons'
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
 
 import {
@@ -41,7 +41,6 @@ export default function UserFullDisplay({ route }) {
       null,
       (txObj , resultSet) => {
         let results = resultSet.rows._array
-        console.log(results)
         if (results.length === 0) {}
         else {
           let userInfo = results[0]
@@ -50,31 +49,29 @@ export default function UserFullDisplay({ route }) {
           let name = userInfo['Name']
           let expertises = userInfo['Expertises']
           let description = userInfo['Description']
-          let dob = userInfo['Dob']
+          let dobNeedMod = userInfo['Dob']
 
-          console.log(expertises)
+          let dob = dobNeedMod.substr(4, 11)
 
           if (expertises === 'None') {}
           else {
-            let firstIndexOfComma = expertises.indexOf(',')
-            if (firstIndexOfComma === -1) {}
-            else {
-              expertises = expertises.substr(0, (firstIndexOfComma - 1))
-            }
+            setName(name);
+            setNationality(nationality);
+            setPfp(pfp);
+            setDOB(dob);
+            setExpertises(expertises);
+            setDescription(description);
           }
-
-          setName(name);
-          setNationality(nationality);
-          setPfp(pfp);
-          setDOB(dob);
-          setExpertises(expertises);
-          setDescription(description);
         }
       },
       (txObj, error) => console.log(error)
       )
     });
   }, []);
+
+  const onBackPressed = () => {
+    navigation.navigate('Home', {usernamePassed: username}) // Add both usernames to be passed from home screen then pass back to home screen when navigating
+  }
 
   let [fontsLoaded] = useFonts({
       Poppins_400Regular,
@@ -88,7 +85,7 @@ export default function UserFullDisplay({ route }) {
       return (
       <SafeAreaView style={{backgroundColor: colours.primary, alignItems: 'center'}}>
         <View style={{marginRight: 300}}>
-          <MaterialIcons.Button name='arrow-back-ios' size={24} color='white' backgroundColor='transparent' style={{paddingHorizontal: 0}}/>
+          <MaterialIcons.Button name='arrow-back-ios' size={24} color='white' backgroundColor='transparent' style={{paddingHorizontal: 0}} onPress={onBackPressed}/>
         </View>
         <View style={styles.cardPfpBG}>
           <Image source={{uri: Pfp}} style={styles.cardPfp}/>
@@ -97,13 +94,15 @@ export default function UserFullDisplay({ route }) {
         <Text style={styles.nameBelowPfp}>{name}</Text>
         <View style={styles.bottomHalf}>
           <ScrollView style={styles.bottomHalf}>
-            <View style={{marginLeft: 20}}>
+            <View style={{marginLeft: 20, marginBottom: 10}}>
               <Text style={styles.userDescTitle}>Description:</Text>
               <Text style={styles.userDesc}>{description}</Text>
             </View>
-            <View style={{marginLeft: 20, marginTop: 20}}>
-              <Text style={styles.userExpTitle}>Expertises:</Text>
-              <Text style={styles.userExp}>{expertises}</Text>
+            <View style={{display: 'flex', flexDirection: 'column', marginLeft: 20, marginTop: 20}}>
+              <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                <Feather name='music' size={20} color={colours.secondary}/>
+                <Text style={styles.userExp}>{expertises}</Text>
+              </View>
             </View>
             <View style={{display: 'flex', flexDirection: 'column', marginLeft: 20, marginTop: 20}}>
               <View style={{display: 'flex', flexDirection: 'row', marginBottom: 20}}>
@@ -186,7 +185,8 @@ const styles = StyleSheet.create({
   userExp: {
     color: 'white',
     fontFamily: 'Poppins_400Regular',
-    fontSize: 15
+    fontSize: 15,
+    marginLeft: 10
   },
   DOBText: {
     color: 'white',
