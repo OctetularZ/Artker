@@ -47,7 +47,7 @@ export default function LoginScreen() {
           }
         }
       },
-      (txObj, error) => console.log(error)
+      (txObj, error) => console.log(error),
       )
     })
   }

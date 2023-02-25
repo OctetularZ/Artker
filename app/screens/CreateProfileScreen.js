@@ -90,7 +90,7 @@ export default function CreateProfileScreen({ route }) {
 
   const onCreateProfilePressed = () => {
     db.transaction(tx => {
-      tx.executeSql(`UPDATE Profiles SET Name = '${Name}', Dob = '${DOB}', Nationality = '${country}', Expertises = '${expertiseDisplay}', Description = '${description}' WHERE Username = '${usernameDB}')`)
+      tx.executeSql(`UPDATE Profiles SET Name = '${Name}', Dob = '${DOB}', Nationality = '${country}', Expertises = '${skills}', Description = '${description}' WHERE Username = '${usernameDB}'`)
     });
     navigation.navigate('StarterScreen', {usernamePassed: usernameDB})
   }

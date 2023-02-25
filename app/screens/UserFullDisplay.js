@@ -5,7 +5,7 @@ import colours from '../config/colours'
 import { ScrollView } from 'react-native-gesture-handler'
 import * as SQLite from 'expo-sqlite'
 import { useNavigation } from '@react-navigation/native'
-import { MaterialIcons } from '@expo/vector-icons'
+import { MaterialIcons, AntDesign } from '@expo/vector-icons'
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
 
 import {
@@ -41,6 +41,7 @@ export default function UserFullDisplay({ route }) {
       null,
       (txObj , resultSet) => {
         let results = resultSet.rows._array
+        console.log(results)
         if (results.length === 0) {}
         else {
           let userInfo = results[0]
@@ -50,6 +51,8 @@ export default function UserFullDisplay({ route }) {
           let expertises = userInfo['Expertises']
           let description = userInfo['Description']
           let dob = userInfo['Dob']
+
+          console.log(expertises)
 
           if (expertises === 'None') {}
           else {
@@ -91,9 +94,27 @@ export default function UserFullDisplay({ route }) {
           <Image source={{uri: Pfp}} style={styles.cardPfp}/>
         </View>
         <Text style={styles.usernameBelowPfp}>{username}</Text>
+        <Text style={styles.nameBelowPfp}>{name}</Text>
         <View style={styles.bottomHalf}>
           <ScrollView style={styles.bottomHalf}>
-            <Text>eee</Text>
+            <View style={{marginLeft: 20}}>
+              <Text style={styles.userDescTitle}>Description:</Text>
+              <Text style={styles.userDesc}>{description}</Text>
+            </View>
+            <View style={{marginLeft: 20, marginTop: 20}}>
+              <Text style={styles.userExpTitle}>Expertises:</Text>
+              <Text style={styles.userExp}>{expertises}</Text>
+            </View>
+            <View style={{display: 'flex', flexDirection: 'column', marginLeft: 20, marginTop: 20}}>
+              <View style={{display: 'flex', flexDirection: 'row', marginBottom: 20}}>
+                <MaterialIcons name='date-range' size={20} color={colours.secondary}/>
+                <Text style={styles.DOBText}>{DOB}</Text>
+              </View>
+              <View style={{display: 'flex', flexDirection: 'row'}}>
+                <AntDesign name='flag' size={20} color={colours.secondary}/>
+                <Text style={styles.nationalityText}>{nationality}</Text>
+              </View>
+            </View>
           </ScrollView>
         </View>
       </SafeAreaView>
@@ -130,7 +151,7 @@ const styles = StyleSheet.create({
   bottomHalf: {
     width: '100%',
     height: '100%',
-    marginTop: 50,
+    marginTop: 45,
     backgroundColor: colours.secondaryBlack,
     shadowColor: 'black',
     shadowOffset: {height: -10, width: 0},
@@ -140,6 +161,43 @@ const styles = StyleSheet.create({
   usernameBelowPfp: {
     color: 'white',
     fontFamily: 'Poppins_500Medium',
-    fontSize: 20
+    fontSize: 25
+  },
+  nameBelowPfp: {
+    color: 'white',
+    fontFamily: 'Poppins_400Regular',
+    fontSize: 16
+  },
+  userDescTitle: {
+    color: colours.secondary,
+    fontFamily: 'Poppins_500Medium',
+    fontSize: 18
+  },
+  userDesc: {
+    color: 'white',
+    fontFamily: 'Poppins_400Regular',
+    fontSize: 15
+  },
+  userExpTitle: {
+    color: colours.secondary,
+    fontFamily: 'Poppins_500Medium',
+    fontSize: 18
+  },
+  userExp: {
+    color: 'white',
+    fontFamily: 'Poppins_400Regular',
+    fontSize: 15
+  },
+  DOBText: {
+    color: 'white',
+    fontFamily: 'Poppins_400Regular',
+    fontSize: 15,
+    marginLeft: 10
+  },
+  nationalityText: {
+    color: 'white',
+    fontFamily: 'Poppins_400Regular',
+    fontSize: 15,
+    marginLeft: 10
   }
 })
