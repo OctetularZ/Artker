@@ -18,10 +18,13 @@ import AppLoading from 'expo-app-loading';
 
 
 export default function UserFullDisplay({ route }) {
-  const { usernamePassed } = route.params;
+  const { usernamePassed, userUsernamePassed } = route.params;
   let usernameDB = JSON.stringify(usernamePassed)
   usernameDB = usernameDB.replace(/\\/g, '')
   usernameDB = usernameDB.replace(/"/g, '')
+  let usernameApp = JSON.stringify(userUsernamePassed)
+  usernameApp = usernameApp.replace(/\\/g, '')
+  usernameApp = usernameApp.replace(/"/g, '')
 
   const db = SQLite.openDatabase('Artker')
 
@@ -34,6 +37,7 @@ export default function UserFullDisplay({ route }) {
   const [expertises, setExpertises] = useState(null);
   const [DOB, setDOB] = useState(null);
   const [description, setDescription] = useState(null);
+  const [email, setEmail] = useState(null);
 
   useEffect(() => {
     db.transaction(tx => {
@@ -67,10 +71,27 @@ export default function UserFullDisplay({ route }) {
       (txObj, error) => console.log(error)
       )
     });
+    db.transaction(tx => {
+      tx.executeSql(`SELECT Email FROM Account WHERE Username = '${usernameDB}'`,
+      null,
+      (txObj , resultSet) => {
+        let results = resultSet.rows._array
+        if (results.length === 0) {
+          console.log('No results')
+        }
+        else {
+          let userObj = results[0]
+          let userEmail = userObj['Email']
+          setEmail(userEmail)
+        }
+      },
+      (txObj, error) => console.log(error)
+      )
+    });
   }, []);
 
   const onBackPressed = () => {
-    navigation.navigate('Home', {usernamePassed: username}) // Add both usernames to be passed from home screen then pass back to home screen when navigating
+    navigation.navigate('Home', {usernamePassed: usernameApp}) // Add both usernames to be passed from home screen then pass back to home screen when navigating
   }
 
   let [fontsLoaded] = useFonts({
@@ -97,6 +118,13 @@ export default function UserFullDisplay({ route }) {
             <View style={{marginLeft: 20, marginBottom: 10}}>
               <Text style={styles.userDescTitle}>Description:</Text>
               <Text style={styles.userDesc}>{description}</Text>
+            </View>
+            <View style={styles.separator}></View>
+            <View style={{display: 'flex', flexDirection: 'column', marginLeft: 20, marginTop: 20}}>
+              <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                <Feather name='mail' size={20} color={colours.secondary}/>
+                <Text style={styles.userEmail}>{email}</Text>
+              </View>
             </View>
             <View style={{display: 'flex', flexDirection: 'column', marginLeft: 20, marginTop: 20}}>
               <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
@@ -142,7 +170,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   cardPfp: {
-    resizeMode: 'center',
+    resizeMode: 'contain',
     width: 200,
     height: 200,
     borderRadius: 100
@@ -199,5 +227,18 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins_400Regular',
     fontSize: 15,
     marginLeft: 10
+  },
+  userEmail: {
+    color: 'white',
+    fontFamily: 'Poppins_400Regular',
+    fontSize: 15,
+    marginLeft: 10
+  },
+  separator: {
+    height: 1,
+    width: '90%',
+    backgroundColor: colours.secondary,
+    marginHorizontal: 20,
+    marginVertical: 10
   }
 })

@@ -22,8 +22,13 @@ import {
 import AppLoading from 'expo-app-loading';
 
 export default function HomeScreen({ route }) {
+    const { usernamePassed } = route.params;
+    let username = JSON.stringify(usernamePassed)
+    username = username.replace(/\\/g, '')
+    username = username.replace(/"/g, '')
+
     const [id, setID] = useState(null);
-    const [usernameDB, setUsernameDB] = useState(null);
+    const [usernameDB, setUsernameDB] = useState(username);
     const [name, setName] = useState(null);
     const [Pfp, setPfp] = useState(null);
     const [nationality, setNationality] = useState(null);
@@ -42,10 +47,6 @@ export default function HomeScreen({ route }) {
     ]);
 
     const navigation = useNavigation();
-
-    const onCardPressed = (username) => {
-      navigation.navigate('UserDisp', {usernamePassed: username})
-    }
 
     const FlatlistItem = ({value}) => {
       let username = value['Username']
@@ -83,11 +84,10 @@ export default function HomeScreen({ route }) {
         </AppCards>
       )
     }
-    
-    const { usernamePassed } = route.params;
-    let username = JSON.stringify(usernamePassed)
-    username = username.replace(/\\/g, '')
-    username = username.replace(/"/g, '')
+
+    const onCardPressed = (username) => {
+      navigation.navigate('UserDisp', {usernamePassed: username, userUsernamePassed: usernameDB})
+    }
 
     const db = SQLite.openDatabase('Artker')
 
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   cardPfp: {
-    resizeMode: 'center',
+    resizeMode: 'contain',
     width: 200,
     height: 200,
     borderRadius: 100

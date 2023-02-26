@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   imagePfp:{
-    resizeMode: 'center',
+    resizeMode: 'contain',
     width: 200,
     height: 200,
     borderRadius: 100
