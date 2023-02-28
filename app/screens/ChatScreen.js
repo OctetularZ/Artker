@@ -138,7 +138,7 @@ export default function ChatScreen({ route }) {
       }))
     ))
     return unsubscribe;
-  }, [])
+  }, []) // Need to style then done - remember to test
 
   const onSend = useCallback((messages = []) => {
     setMessages(previousMessages => GiftedChat.
