@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     shadowColor: 'black',
     shadowOffset: {height: 0, width: 0},
     shadowRadius: 10,
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.8,
     justifyContent: 'center',
     alignItems: 'center'
   },

@@ -25,7 +25,7 @@ export default function PfpDisplay({ username }) {
       }
       else {
         let userPfp = data[0]['Pfp']
-        if (userPfp == 'None') {
+        if (userPfp == 'none') {
           console.log('None')
           setpfpBool(false)
         }
