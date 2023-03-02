@@ -3,7 +3,6 @@ import React, { useEffect, useLayoutEffect, useState, useCallback } from 'react'
 
 import colours from '../config/colours'
 import { ScrollView } from 'react-native-gesture-handler'
-import * as SQLite from 'expo-sqlite'
 import { useNavigation } from '@react-navigation/native'
 import { MaterialIcons, AntDesign, Feather } from '@expo/vector-icons'
 import { GiftedChat } from 'react-native-gifted-chat'
@@ -15,7 +14,6 @@ import { getAllData, delDocs, getData } from '../database/dbScripts'
 
 export default function ChatScreen({ route }) {
   const navigation = useNavigation();
-  const db = SQLite.openDatabase('Artker')
   const [messages, setMessages] = useState([]);
 
   const { usernamePassed, otherUsernamePassed } = route.params;
@@ -83,7 +81,7 @@ export default function ChatScreen({ route }) {
   }, []);
 
   useLayoutEffect(() => {
-    const unsubscribe = fbDB.collection('chats').
+    const subscribe = fbDB.collection('chats').
     orderBy('CreatedAt', 'desc').
     onSnapshot(snapshot => setMessages(
       snapshot.docs.map(doc => ({
@@ -93,7 +91,7 @@ export default function ChatScreen({ route }) {
         user: doc.data().user
       }))
     ))
-    return unsubscribe;
+    return subscribe;
   }, []) // Need to style then done - remember to test
 
   const onSend = useCallback((messages = []) => {
