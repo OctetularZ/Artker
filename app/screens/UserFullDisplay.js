@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react'
 
 import colours from '../config/colours'
 import { ScrollView } from 'react-native-gesture-handler'
-import * as SQLite from 'expo-sqlite'
+import { db as fbDB } from '../../firebase'
+import { getAllData, delDocs, getData } from '../database/dbScripts'
 import { useNavigation } from '@react-navigation/native'
 import { MaterialIcons, AntDesign, Feather } from '@expo/vector-icons'
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
@@ -26,8 +27,6 @@ export default function UserFullDisplay({ route }) {
   usernameApp = usernameApp.replace(/\\/g, '')
   usernameApp = usernameApp.replace(/"/g, '')
 
-  const db = SQLite.openDatabase('Artker')
-
   const navigation = useNavigation();
 
   const [username, setUsername] = useState(usernameDB);
@@ -40,53 +39,40 @@ export default function UserFullDisplay({ route }) {
   const [email, setEmail] = useState(null);
 
   useEffect(() => {
-    db.transaction(tx => {
-      tx.executeSql(`SELECT * FROM Profiles WHERE Username = '${usernameDB}'`,
-      null,
-      (txObj , resultSet) => {
-        let results = resultSet.rows._array
-        if (results.length === 0) {}
+    getAllData('Profiles', 'Username', username).then((data) => {
+      if (data.length === 0) {}
+      else{
+        let userInfo = data[0]
+        let pfp = userInfo['Pfp']
+        let nationality = userInfo['Nationality']
+        let name = userInfo['Name']
+        let expertises = userInfo['Expertises']
+        let description = userInfo['Description']
+        let dobNeedMod = userInfo['Dob']
+        dobNeedMod = dobNeedMod.toDate()
+        dobNeedMod = dobNeedMod.toString()
+
+        let dob = dobNeedMod.substr(4, 11)
+
+        if (expertises === 'None') {}
         else {
-          let userInfo = results[0]
-          let pfp = userInfo['Pfp']
-          let nationality = userInfo['Nationality']
-          let name = userInfo['Name']
-          let expertises = userInfo['Expertises']
-          let description = userInfo['Description']
-          let dobNeedMod = userInfo['Dob']
-
-          let dob = dobNeedMod.substr(4, 11)
-
-          if (expertises === 'None') {}
-          else {
-            setName(name);
-            setNationality(nationality);
-            setPfp(pfp);
-            setDOB(dob);
-            setExpertises(expertises);
-            setDescription(description);
-          }
+          setName(name);
+          setNationality(nationality);
+          setPfp(pfp);
+          setDOB(dob);
+          setExpertises(expertises);
+          setDescription(description);
         }
-      },
-      (txObj, error) => console.log(error)
-      )
+      }
     });
-    db.transaction(tx => {
-      tx.executeSql(`SELECT Email FROM Account WHERE Username = '${usernameDB}'`,
-      null,
-      (txObj , resultSet) => {
-        let results = resultSet.rows._array
-        if (results.length === 0) {
-          console.log('No results')
-        }
-        else {
-          let userObj = results[0]
-          let userEmail = userObj['Email']
-          setEmail(userEmail)
-        }
-      },
-      (txObj, error) => console.log(error)
-      )
+    getAllData('Account', 'username', username).then((data) => {
+      if (data.length === 0) {
+        console.log('No results')
+      }
+      else {
+        let userEmail = data[0]['email']
+        setEmail(userEmail)
+      }
     });
   }, []);
 

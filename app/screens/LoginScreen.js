@@ -10,44 +10,30 @@ import { ScrollView } from 'react-native-gesture-handler'
 import SocialSignInButtons from '../components/SocialSignInButtons'
 import { useNavigation } from '@react-navigation/native'
 import { getAllData } from '../database/dbScripts'
-import * as SQLite from 'expo-sqlite'
 
 
 export default function LoginScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const db = SQLite.openDatabase('Artker')
-
   const {height} = useWindowDimensions();
   const navigation = useNavigation();
 
   const onSignInPressed = () => {
-    getAllData('username', username).then((data) => {
-      let userPassword = data[0]['password']
+    getAllData('Account', 'username', username).then((data) => {
+      if (data.length == 0) {
+        console.log('No results')
+      }
+      else{
+        let userPassword = data[0]['password']
+        if (userPassword == password) {
+          navigation.navigate('Home', { usernamePassed: username })
+        }
+        else {
+          console.log('Wrong Password')
+        }
+      }
     })
-    // db.transaction(tx => {
-    //   tx.executeSql(`SELECT Password FROM Account WHERE Username = '${username}'`,
-    //   null,
-    //   (txObj, resultSet) => {
-    //     let results = resultSet.rows._array
-    //     if (results.length == 0) {
-    //       console.log('No results')
-    //     }
-    //     else{
-    //       let userObj = results[0]
-    //       let userPassword = userObj['Password']
-    //       if (userPassword == password) {
-    //         navigation.navigate('Home', { usernamePassed: username })
-    //       }
-    //       else {
-    //         console.log('Wrong Password')
-    //       }
-    //     }
-    //   },
-    //   (txObj, error) => console.log(error),
-    //   )
-    // })
   }
 
   const onSignUpPressed = () => {

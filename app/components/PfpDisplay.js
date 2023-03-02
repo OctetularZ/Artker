@@ -3,7 +3,8 @@ import React, { useState } from 'react'
 import colours from '../config/colours'
 
 import { AntDesign } from '@expo/vector-icons'
-import * as SQLite from 'expo-sqlite'
+import { db as fbDB } from '../../firebase'
+import { getAllData, delDocs } from '../database/dbScripts'
 import { useNavigation } from '@react-navigation/native'
 
 export default function PfpDisplay({ username }) {
@@ -12,37 +13,27 @@ export default function PfpDisplay({ username }) {
   const [pfpLink, setPfpLink] = useState('');
   const [pfpBool, setpfpBool] = useState(false);
 
-  const db = SQLite.openDatabase('Artker')
-
   const onAvatarIconPressed = () => {
     navigation.navigate('ImgurL', {usernamePassed: username})
   }
 
   const ProfilePictureCheck = () => {
-    db.transaction(tx => {
-      tx.executeSql(`SELECT Pfp FROM Profiles WHERE Username = '${username}'`,
-      null,
-      (txObj, resultSet) => {
-        let results = resultSet.rows._array
-        if (results.length == 0) {
-          console.log('No results')
+    getAllData('Profiles', 'Username', username).then((data) => {
+      if (data.length == 0) {
+        console.log('No results')
+        setpfpBool(false)
+      }
+      else {
+        let userPfp = data[0]['Pfp']
+        if (userPfp == 'None') {
+          console.log('None')
           setpfpBool(false)
         }
-        else{
-          let userObj = results[0]
-          let userPfp = userObj['Pfp']
-          if (userPfp == 'None') {
-            console.log('None')
-            setpfpBool(false)
-          }
-          else {
-            setPfpLink(userPfp)
-            setpfpBool(true)
-          }
+        else {
+          setPfpLink(userPfp)
+          setpfpBool(true)
         }
-      },
-      (txObj, error) => console.log(error)
-      )
+      }
     })
   }
 

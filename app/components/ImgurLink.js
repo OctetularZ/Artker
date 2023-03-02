@@ -7,7 +7,8 @@ import CustomInput from '../components/CustomInput'
 import CustomButton1 from '../components/CustomButton1'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
-import * as SQLite from 'expo-sqlite'
+import { db as fbDB } from '../../firebase'
+import { getAllData, delDocs } from '../database/dbScripts'
 
 
 export default function ImgurLink({ route }) {
@@ -18,8 +19,6 @@ export default function ImgurLink({ route }) {
   
   const [link, setLink] = useState('');
 
-  const db = SQLite.openDatabase('Artker')
-
   const navigation = useNavigation();
 
   const isUrl = (URLstring) => { // From: https://stackoverflow.com/questions/1701898/how-to-detect-whether-a-string-is-in-url-format-using-javascript
@@ -29,8 +28,13 @@ export default function ImgurLink({ route }) {
 
   const onSubmit = () => {
     if (isUrl(link)) {
-      db.transaction(tx => {
-      tx.executeSql(`UPDATE Profiles SET Pfp = '${link}' WHERE Username = '${usernameDB}'`)
+      const updateQuery = fbDB.collection('Profiles').where('Username', '==', usernameDB);
+      updateQuery.get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        doc.ref.update({
+          Pfp: link
+          })
+        })
       })
       navigation.navigate('CreateProfile', { usernamePassed: usernameDB });
     }

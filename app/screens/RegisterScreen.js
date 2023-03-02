@@ -30,9 +30,9 @@ export default function RegisterScreen() {
   const navigation = useNavigation();
 
   const onRegisterPressed = () => {
-    getAllData('username', username).then((data) => {
+    getAllData('Account', 'username', username).then((data) => {
       if (data.length == 0) {
-        getAllData('email', email).then((data) => {
+        getAllData('Account', 'email', email).then((data) => {
           if (data.length == 0) {
             if (password == passwordConfirmation) {
               if ((containsSpecialChars(password)) && (containsNumbers(password))) {

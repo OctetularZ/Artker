@@ -11,7 +11,8 @@ import {expertises} from './Expertise'
 import {CountryPicker} from "react-native-country-codes-picker";
 import AppDate from '../components/AppDate'
 import { ScrollView } from 'react-native-gesture-handler'
-import * as SQLite from 'expo-sqlite'
+import { db as fbDB } from '../../firebase'
+import { getAllData, delDocs } from '../database/dbScripts'
 import CustomBox from '../components/CustomBox'
 import {Ionicons, AntDesign} from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
@@ -43,16 +44,17 @@ export default function CreateProfileScreen({ route }) {
 
   const [amountX, setAmountX] = useState(0);
   const [amountY, setAmountY] = useState(0);
-  
-  const db = SQLite.openDatabase('Artker')
 
   useEffect(() => {
-    db.transaction(tx => {
-      tx.executeSql('CREATE TABLE IF NOT EXISTS Profiles (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, Name TEXT, Pfp TEXT, Dob TEXT, Nationality TEXT, Expertises TEXT, Description TEXT)')
-    });
-    db.transaction(tx => {
-      tx.executeSql(`INSERT INTO Profiles (Username, Name, Pfp, Dob, Nationality, Expertises, Description) VALUES ('${usernameDB}', 'None', 'None', 'None', 'None', 'None', 'None')`)
-    });
+    let Username = usernameDB
+    let Dob = 'none'
+    let Description = 'none'
+    let Expertises = 'none'
+    let Name = 'none'
+    let Pfp = 'none'
+    let Nationality = 'none'
+
+    fbDB.collection('Profiles').add({Username, Dob, Description, Expertises, Name, Pfp, Nationality})
   }, [])
 
   const textInputFocused = (x, y) => {
@@ -89,9 +91,18 @@ export default function CreateProfileScreen({ route }) {
 
 
   const onCreateProfilePressed = () => {
-    db.transaction(tx => {
-      tx.executeSql(`UPDATE Profiles SET Name = '${Name}', Dob = '${DOB}', Nationality = '${country}', Expertises = '${skills}', Description = '${description}' WHERE Username = '${usernameDB}'`)
-    });
+    const updateQuery = fbDB.collection('Profiles').where('Username', '==', usernameDB);
+    updateQuery.get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+      doc.ref.update({
+        Name: Name,
+        Dob: DOB,
+        Nationality: country,
+        Expertises: skills,
+        Description: description
+        })
+      })
+    })
     navigation.navigate('StarterScreen', {usernamePassed: usernameDB})
   }
 

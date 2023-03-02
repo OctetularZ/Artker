@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native'
 import { MaterialIcons, AntDesign, Feather } from '@expo/vector-icons'
 import { GiftedChat } from 'react-native-gifted-chat'
 import { db as fbDB } from '../../firebase'
+import { getAllData, delDocs, getData } from '../database/dbScripts'
 
 //Add navigation to replace to ensure users can't slide screen back
 // navigation.canGoback to check if user has a back button or not then you can replace screen as above
@@ -36,95 +37,50 @@ export default function ChatScreen({ route }) {
   const [receiveremail, setReceiverEmail] = useState(null);
 
   useEffect(() => {
-    db.transaction(tx => {
-      tx.executeSql(`SELECT * FROM Profiles WHERE Username = '${username}'`,
-      null,
-      (txObj , resultSet) => {
-        let results = resultSet.rows._array
-        if (results.length === 0) {}
-        else {
-          let userInfo = results[0]
-          let pfp = userInfo['Pfp']
-          let name = userInfo['Name']
+    getAllData('Profiles', 'Username', username).then((data) => {
+      if (data.length === 0) {}
+      else{
+        let userInfo = data[0]
+        let pfp = userInfo['Pfp']
+        let name = userInfo['Name']
 
-          setName(name);
-          setPfp(pfp);
-        }
-      },
-      (txObj, error) => console.log(error)
-      )
+        setName(name);
+        setPfp(pfp);
+      }
     });
-    db.transaction(tx => {
-      tx.executeSql(`SELECT Email FROM Account WHERE Username = '${username}'`,
-      null,
-      (txObj , resultSet) => {
-        let results = resultSet.rows._array
-        if (results.length === 0) {
-          console.log('No results')
-        }
-        else {
-          let userObj = results[0]
-          let userEmail = userObj['Email']
-          setEmail(userEmail)
-        }
-      },
-      (txObj, error) => console.log(error)
-      )
+    getAllData('Account', 'username', username).then((data) => {
+      if (data.length === 0) {
+        console.log('No results')
+      }
+      else{
+        let userEmail = data[0]['Email']
+        setEmail(userEmail)
+      }
     });
   }, []);
 
   useEffect(() => {
-    db.transaction(tx => {
-      tx.executeSql(`SELECT * FROM Profiles WHERE Username = '${receiverUsername}'`,
-      null,
-      (txObj , resultSet) => {
-        let results = resultSet.rows._array
-        if (results.length === 0) {}
-        else {
-          let userInfo = results[0]
-          let pfp = userInfo['Pfp']
-          let name = userInfo['Name']
+    getAllData('Profiles', 'Username', receiverUsername).then((data) => {
+      if (data.length === 0) {}
+      else{
+        let userInfo = data[0]
+        let pfp = userInfo['Pfp']
+        let name = userInfo['Name']
 
-          setReceiverName(name);
-          setReceiverPfp(pfp);
-        }
-      },
-      (txObj, error) => console.log(error)
-      )
+        setReceiverName(name);
+        setReceiverPfp(pfp);
+      }
     });
-    db.transaction(tx => {
-      tx.executeSql(`SELECT Email FROM Account WHERE Username = '${receiverUsername}'`,
-      null,
-      (txObj , resultSet) => {
-        let results = resultSet.rows._array
-        if (results.length === 0) {
-          console.log('No results')
-        }
-        else {
-          let userObj = results[0]
-          let userEmail = userObj['Email']
-          setReceiverEmail(userEmail)
-        }
-      },
-      (txObj, error) => console.log(error)
-      )
+    getAllData('Account', 'username', receiverUsername).then((data) => {
+      if (data.length === 0) {
+        console.log('No results')
+      }
+      else{
+        let userEmail = data[0]['Email']
+        setReceiverEmail(userEmail)
+      }
     });
   }, []);
-
-  // useEffect(() => {
-  //   setMessages([
-  //     {
-  //       _id: 1,
-  //       text: 'Hello developer',
-  //       createdAt: new Date(),
-  //       user: {
-  //         _id: 2,
-  //         name: 'React Native',
-  //         avatar: 'https://placeimg.com/140/140/any',
-  //       },
-  //     },
-  //   ])
-  // }, [])
 
   useLayoutEffect(() => {
     const unsubscribe = fbDB.collection('chats').

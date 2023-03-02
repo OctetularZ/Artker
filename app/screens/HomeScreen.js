@@ -5,7 +5,8 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import DropDownPicker from 'react-native-dropdown-picker'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
-import * as SQLite from 'expo-sqlite'
+import { db as fbDB } from '../../firebase'
+import { getAllData, delDocs, getData } from '../database/dbScripts'
 import { AntDesign, Feather } from '@expo/vector-icons'
 
 import AppCards from '../components/AppCards'
@@ -89,27 +90,18 @@ export default function HomeScreen({ route }) {
       navigation.navigate('UserDisp', {usernamePassed: username, userUsernamePassed: usernameDB})
     }
 
-    const db = SQLite.openDatabase('Artker')
-
     useEffect(() => {
-      db.transaction(tx => {
-        tx.executeSql('SELECT * FROM Profiles',
-        null,
-        (txObj , resultSet) => {
-          let results = resultSet.rows._array
-          let randNumbArr = [];
-          for (let i = 0; i < 10; i++) {
-            randNumbArr.push(Math.floor((Math.random()) * (results.length)))
-          }
-          let randUsersArr = [];
-          for (const randNumbers of randNumbArr) {
-            randUsersArr.push(results[randNumbers])
-          }
-          setHomeUsersDisplay(randUsersArr)
-        },
-        (txObj, error) => console.log(error)
-        )
-      });
+      getData('Profiles').then((data) => {
+        let randNumbArr = [];
+        for (let i = 0; i < 10; i++) {
+          randNumbArr.push(Math.floor((Math.random()) * (data.length)))
+        }
+        let randUsersArr = [];
+        for (const randNumbers of randNumbArr) {
+          randUsersArr.push(data[randNumbers])
+        }
+        setHomeUsersDisplay(randUsersArr)
+      })
     }, []);
 
     const {width, height} = Dimensions.get('screen')
