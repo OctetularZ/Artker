@@ -9,6 +9,7 @@ import CustomButton1 from '../components/CustomButton1'
 import { ScrollView } from 'react-native-gesture-handler'
 import SocialSignInButtons from '../components/SocialSignInButtons'
 import { useNavigation } from '@react-navigation/native'
+import { getAllData } from '../database/dbScripts'
 import * as SQLite from 'expo-sqlite'
 
 
@@ -18,38 +19,35 @@ export default function LoginScreen() {
 
   const db = SQLite.openDatabase('Artker')
 
-  useEffect(() => {
-    db.transaction(tx => {
-      tx.executeSql('CREATE TABLE IF NOT EXISTS Account (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, Email TEXT, Password TEXT)')
-    });
-  })
-
   const {height} = useWindowDimensions();
   const navigation = useNavigation();
 
   const onSignInPressed = () => {
-    db.transaction(tx => {
-      tx.executeSql(`SELECT Password FROM Account WHERE Username = '${username}'`,
-      null,
-      (txObj, resultSet) => {
-        let results = resultSet.rows._array
-        if (results.length == 0) {
-          console.log('No results')
-        }
-        else{
-          let userObj = results[0]
-          let userPassword = userObj['Password']
-          if (userPassword == password) {
-            navigation.navigate('Home', { usernamePassed: username })
-          }
-          else {
-            console.log('Wrong Password')
-          }
-        }
-      },
-      (txObj, error) => console.log(error),
-      )
+    getAllData('username', username).then((data) => {
+      let userPassword = data[0]['password']
     })
+    // db.transaction(tx => {
+    //   tx.executeSql(`SELECT Password FROM Account WHERE Username = '${username}'`,
+    //   null,
+    //   (txObj, resultSet) => {
+    //     let results = resultSet.rows._array
+    //     if (results.length == 0) {
+    //       console.log('No results')
+    //     }
+    //     else{
+    //       let userObj = results[0]
+    //       let userPassword = userObj['Password']
+    //       if (userPassword == password) {
+    //         navigation.navigate('Home', { usernamePassed: username })
+    //       }
+    //       else {
+    //         console.log('Wrong Password')
+    //       }
+    //     }
+    //   },
+    //   (txObj, error) => console.log(error),
+    //   )
+    // })
   }
 
   const onSignUpPressed = () => {

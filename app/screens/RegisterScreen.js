@@ -22,7 +22,7 @@ function containsNumbers(str) {
 
 
 export default function RegisterScreen() {
-  const [username, setUsername] = useState('eee');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setpasswordConfirmation] = useState('');
