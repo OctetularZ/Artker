@@ -8,7 +8,8 @@ import CustomButton1 from '../components/CustomButton1'
 import { ScrollView } from 'react-native-gesture-handler'
 import SocialSignInButtons from '../components/SocialSignInButtons'
 import { useNavigation } from '@react-navigation/native'
-import * as SQLite from 'expo-sqlite'
+import { db as fbDB } from '../../firebase'
+import { getAllData } from '../database/dbScripts'
 
 function containsSpecialChars(str) {
   const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
@@ -21,69 +22,40 @@ function containsNumbers(str) {
 
 
 export default function RegisterScreen() {
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState('eee');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setpasswordConfirmation] = useState('');
 
-  const db = SQLite.openDatabase('Artker')
-
-  useEffect(() => {
-    db.transaction(tx => {
-      tx.executeSql('CREATE TABLE IF NOT EXISTS Account (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, Email TEXT, Password TEXT)')
-    });
-  })
-
   const navigation = useNavigation();
 
   const onRegisterPressed = () => {
-    db.transaction(tx => {
-      tx.executeSql(`SELECT Username FROM Account WHERE Username = '${username}'`,
-      null,
-      (txObj, resultSet) => {
-        let results = resultSet.rows._array
-        if (results.length == 0) {
-          db.transaction(tx => {
-            tx.executeSql(`SELECT Email FROM Account WHERE Email = '${email}'`,
-            null,
-            (txObj, resultSet) => {
-              let results = resultSet.rows._array
-              if (results.length == 0) {
-                if (password == passwordConfirmation) {
-                  if ((containsSpecialChars(password)) && (containsNumbers(password))) {
-                    if (email.includes('@')) {
-                      db.transaction(tx => {
-                        tx.executeSql(`INSERT INTO Account (Username, Email, Password) VALUES ('${username}', '${email}', '${password}')`)
-                        navigation.navigate('CreateProfile', {usernamePassed: username})
-                      })
-                    }
-                    else{
-                      console.log("Email doesn't seem right? Please check if you have written your email correctly.")
-                    }
-                  }
-                  else {
-                    console.log('Your password must contain at least one special character and number, i.e. lumoan029@')
-                  }
+    getAllData('username', username).then((data) => {
+      if (data.length == 0) {
+        getAllData('email', email).then((data) => {
+          if (data.length == 0) {
+            if (password == passwordConfirmation) {
+              if ((containsSpecialChars(password)) && (containsNumbers(password))) {
+                if (email.includes('@')) {
+                  fbDB.collection('Account').add({username, email, password})
+                  navigation.navigate('CreateProfile', {usernamePassed: username})
                 }
-                else {
-                  console.log('Passwords are not matching. Please check and make make sure password match.')
+                else{
+                  console.log("Email doesn't seem right? Please check if you have written your email correctly.")
                 }
-      
               }
-              else{
-                 console.log('Email already exists. You must already have an account. Try logging in.')
-               }
-              },
-              (txObj, error) => console.log(error)
-              )
-            })
-        }
-        else{
-          console.log('Username has already been taken.')
-        }
-      },
-      (txObj, error) => console.log(error)
-      )
+              else {
+                console.log('Your password must contain at least one special character and number, i.e. lumoan029@')
+              }
+            }
+            else {
+              console.log('Passwords are not matching. Please check and make make sure password match.')
+            }
+          }
+          else {console.log('Email already exists. You must already have an account. Try logging in.')}
+        })
+      }
+      else {console.log('Username has already been taken')}
     })
   }
 

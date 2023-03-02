@@ -19,4 +19,19 @@ else {
 }
 
 const db = app.firestore();
+
+let username = 'eee'
+let email = 'lals'
+let password = 'oool'
+
+// db.collection('Account').add({username, email, password})
+// db.collection('Account').get()
+//   .then((snapshot) => {
+//     const data = snapshot.docs.map((doc) => ({
+//       username: doc.id,
+//       ...doc.data(),
+//     }));
+//     console.log("All data in 'books' collection", data); 
+//     // [ { id: 'glMeZvPpTN1Ah31sKcnj', title: 'The Great Gatsby' } ]
+//   })
 export {db};
