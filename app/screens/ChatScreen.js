@@ -5,7 +5,7 @@ import colours from '../config/colours'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import { MaterialIcons, AntDesign, Feather } from '@expo/vector-icons'
-import { GiftedChat } from 'react-native-gifted-chat'
+import { GiftedChat, InputToolbar, Send } from 'react-native-gifted-chat'
 import { db as fbDB } from '../../firebase'
 import { getAllData, delDocs, getData } from '../database/dbScripts'
 
@@ -25,7 +25,6 @@ export default function ChatScreen({ route }) {
   recpientUsername = recpientUsername.replace(/"/g, '')
 
   const [username, setUsername] = useState(usernameApp);
-  console.log(username)
   const [name, setName] = useState(null);
   const [Pfp, setPfp] = useState(null);
   const [email, setEmail] = useState(null);
@@ -81,6 +80,26 @@ export default function ChatScreen({ route }) {
     });
   }, []);
 
+  const customInputToolbar = props => {
+    return (
+      <InputToolbar
+        {...props}
+        containerStyle={styles.textInputStyles}
+      />
+    );
+  };
+  
+  const renderSend = (sendProps) => {
+    if (sendProps.text.trim().length > 0) {
+      return (
+        <TouchableOpacity>
+          
+        </TouchableOpacity>
+      );
+    }
+    return null;
+  }
+
   useLayoutEffect(() => {
     const subscribe = fbDB.collection('chats').
     orderBy('CreatedAt', 'desc').
@@ -104,17 +123,39 @@ export default function ChatScreen({ route }) {
   }, [])
 
   return (
-    <GiftedChat
-      messages={messages}
-      showAvatarForEveryMessage={true}
-      onSend={messages => onSend(messages)}
-      user={{
-        _id: email, // MessageID from DB
-        name: username, // Users from DB
-        avatar: Pfp // Pfp from DB
-      }}
-    />
+    <View style={{flex: 1, backgroundColor: colours.primary}}>
+      <GiftedChat
+        messages={messages}
+        showAvatarForEveryMessage={true}
+        onSend={messages => onSend(messages)}
+        user={{
+          _id: email, // MessageID from DB
+          name: username, // Users from DB
+          avatar: Pfp // Pfp from DB
+        }}
+        multiline={true}
+        isTyping={true}
+        messagesContainerStyle={styles.messageContainerStyles}
+        renderInputToolbar={props => customInputToolbar(props)}
+      />
+    </View>
   )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  messageContainerStyles: {
+    backgroundColor: colours.primary,
+    flex: 1
+  },
+  textInputStyles: {
+    marginLeft: 25,
+    marginRight: 25,
+    borderRadius: 15,
+    backgroundColor: colours.secondaryBlack,
+    borderTopColor: colours.transparent,
+    shadowColor: 'black',
+    shadowRadius: 5,
+    shadowOpacity: 0.3,
+    shadowOffset: {height: 0, width: 0}
+  }
+})
