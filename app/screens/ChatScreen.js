@@ -25,6 +25,7 @@ export default function ChatScreen({ route }) {
   recpientUsername = recpientUsername.replace(/"/g, '')
 
   const [username, setUsername] = useState(usernameApp);
+  console.log(username)
   const [name, setName] = useState(null);
   const [Pfp, setPfp] = useState(null);
   const [email, setEmail] = useState(null);
@@ -51,7 +52,7 @@ export default function ChatScreen({ route }) {
         console.log('No results')
       }
       else{
-        let userEmail = data[0]['Email']
+        let userEmail = data[0]['email']
         setEmail(userEmail)
       }
     });
@@ -74,7 +75,7 @@ export default function ChatScreen({ route }) {
         console.log('No results')
       }
       else{
-        let userEmail = data[0]['Email']
+        let userEmail = data[0]['email']
         setReceiverEmail(userEmail)
       }
     });
@@ -98,6 +99,7 @@ export default function ChatScreen({ route }) {
     setMessages(previousMessages => GiftedChat.
     append(previousMessages, messages))
     const { _id, createdAt, text, user } = messages[0]
+    console.log(_id, createdAt, text, user)
     fbDB.collection('chats').add({_id, createdAt, text, user})
   }, [])
 
