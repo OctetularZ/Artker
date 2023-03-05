@@ -1,13 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Image } from 'react-native'
 import React, { useEffect, useLayoutEffect, useState, useCallback } from 'react'
 
 import colours from '../config/colours'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
-import { MaterialIcons, AntDesign, Feather } from '@expo/vector-icons'
-import { GiftedChat, InputToolbar, Send } from 'react-native-gifted-chat'
+import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'
+import { GiftedChat, InputToolbar, Send, Bubble } from 'react-native-gifted-chat'
 import { db as fbDB } from '../../firebase'
 import { getAllData, delDocs, getData } from '../database/dbScripts'
+import { getBottomSpace } from 'react-native-iphone-x-helper'
 
 //Add navigation to replace to ensure users can't slide screen back
 // navigation.canGoback to check if user has a back button or not then you can replace screen as above
@@ -84,20 +85,41 @@ export default function ChatScreen({ route }) {
     return (
       <InputToolbar
         {...props}
-        containerStyle={styles.textInputStyles}
+        primaryStyle={styles.textInputStyles}
+        containerStyle={{backgroundColor: colours.transparent, borderTopColor: colours.primary}}
       />
     );
   };
   
-  const renderSend = (sendProps) => {
-    if (sendProps.text.trim().length > 0) {
-      return (
-        <TouchableOpacity>
-          
-        </TouchableOpacity>
-      );
-    }
-    return null;
+  const renderSend = (props) => {
+    return (
+      <Send {...props}>
+        <View>
+          <MaterialCommunityIcons name='send-circle' size={40} color={colours.secondary} style={{marginBottom: 5, marginRight: 5}}/>
+        </View>
+      </Send>
+    )
+  }
+
+  const renderBubble = (props) => {
+    return (
+      <Bubble {...props}
+      wrapperStyle={{
+        right: {
+          marginRight: 5,
+          backgroundColor: colours.secondary
+        }
+      }}
+      textStyle={{
+        right: {
+          color: 'white'
+        },
+        left: {
+          color: 'white'
+        }
+      }}
+      />
+    )
   }
 
   useLayoutEffect(() => {
@@ -118,12 +140,18 @@ export default function ChatScreen({ route }) {
     setMessages(previousMessages => GiftedChat.
     append(previousMessages, messages))
     const { _id, createdAt, text, user } = messages[0]
-    console.log(_id, createdAt, text, user)
     fbDB.collection('chats').add({_id, createdAt, text, user})
   }, [])
 
   return (
     <View style={{flex: 1, backgroundColor: colours.primary}}>
+      <View style={{height: 100, backgroundColor: colours.secondaryBlack, shadowColor: 'black', shadowOffset: {height: 5, width: 0}, shadowOpacity: 0.5, shadowRadius: 10, flexDirection: 'row', alignItems: 'center'}}>
+        <Ionicons name='chevron-back' size={30} color='white' style={{marginTop: 30, marginRight: 50, marginLeft: 20}}/>
+        <Text style={{color: 'white', marginTop: 35, fontSize: 18, fontWeight: 'bold', marginLeft: 70, textDecorationLine: 'underline'}}>{receiverUsername}</Text>
+        <View style={{shadowColor: 'black', shadowOpacity: 0.5, shadowOffset: {height: 0, width: 0}, shadowRadius: 3}}>
+          <Image source={{uri: receiverPfp}} style={{width: 50, height: 50, marginTop: 30, marginLeft: 100, borderRadius: 25}}/>
+        </View>
+      </View>
       <GiftedChat
         messages={messages}
         showAvatarForEveryMessage={true}
@@ -137,6 +165,10 @@ export default function ChatScreen({ route }) {
         isTyping={true}
         messagesContainerStyle={styles.messageContainerStyles}
         renderInputToolbar={props => customInputToolbar(props)}
+        textInputStyle={{color: 'white', marginTop: 10}}
+        renderSend={renderSend}
+        renderBubble={renderBubble}
+        bottomOffset={getBottomSpace() - 10}
       />
     </View>
   )
@@ -144,18 +176,16 @@ export default function ChatScreen({ route }) {
 
 const styles = StyleSheet.create({
   messageContainerStyles: {
-    backgroundColor: colours.primary,
-    flex: 1
+    backgroundColor: colours.primary
   },
   textInputStyles: {
     marginLeft: 25,
     marginRight: 25,
     borderRadius: 15,
     backgroundColor: colours.secondaryBlack,
-    borderTopColor: colours.transparent,
     shadowColor: 'black',
     shadowRadius: 5,
     shadowOpacity: 0.3,
-    shadowOffset: {height: 0, width: 0}
+    shadowOffset: {height: 0, width: 0},
   }
 })
