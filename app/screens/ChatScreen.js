@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React, { useEffect, useLayoutEffect, useState, useCallback } from 'react'
 
 import colours from '../config/colours'
@@ -143,14 +143,18 @@ export default function ChatScreen({ route }) {
     fbDB.collection('chats').add({_id, createdAt, text, user})
   }, [])
 
+  const onBackPressed = () => {
+    navigation.navigate('UserDisp', {usernamePassed: receiverUsername, userUsernamePassed: username})
+  }
+
   return (
     <View style={{flex: 1, backgroundColor: colours.primary}}>
       <View style={{height: 100, backgroundColor: colours.secondaryBlack, shadowColor: 'black', shadowOffset: {height: 5, width: 0}, shadowOpacity: 0.5, shadowRadius: 10, flexDirection: 'row', alignItems: 'center'}}>
-        <Ionicons name='chevron-back' size={30} color='white' style={{marginTop: 30, marginRight: 50, marginLeft: 20}}/>
+        <Ionicons name='chevron-back' size={30} color='white' style={{marginTop: 30, marginRight: 50, marginLeft: 20}} onPress={onBackPressed}/>
         <Text style={{color: 'white', marginTop: 35, fontSize: 18, fontWeight: 'bold', marginLeft: 70, textDecorationLine: 'underline'}}>{receiverUsername}</Text>
-        <View style={{shadowColor: 'black', shadowOpacity: 0.5, shadowOffset: {height: 0, width: 0}, shadowRadius: 3}}>
+        <TouchableOpacity style={{shadowColor: 'black', shadowOpacity: 0.5, shadowOffset: {height: 0, width: 0}, shadowRadius: 3}}>
           <Image source={{uri: receiverPfp}} style={{width: 50, height: 50, marginTop: 30, marginLeft: 100, borderRadius: 25}}/>
-        </View>
+        </TouchableOpacity>
       </View>
       <GiftedChat
         messages={messages}
