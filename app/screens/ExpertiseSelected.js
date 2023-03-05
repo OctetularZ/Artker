@@ -23,26 +23,20 @@ import {
 
 import AppLoading from 'expo-app-loading';
 
-export default function HomeScreen({ route }) {
-    const { usernamePassed } = route.params;
+export default function ExpertiseSelected({ route }) {
+    const { usernamePassed, expSelected } = route.params;
     let username = JSON.stringify(usernamePassed)
     username = username.replace(/\\/g, '')
     username = username.replace(/"/g, '')
 
-    const [id, setID] = useState(null);
+    const [expertiseSelected, setExpertiseSelected] = useState(expSelected);
     const [usernameDB, setUsernameDB] = useState(username);
-    const [name, setName] = useState(null);
-    const [Pfp, setPfp] = useState(null);
-    const [nationality, setNationality] = useState(null);
-    const [userExpertises, setUserExpertises] = useState(null);
-    const [DOB, setDOB] = useState(null);
-    const [description, setDescription] = useState(null);
     const [homeUsersDisplay, setHomeUsersDisplay] = useState([])
 
     const mappedExpertises = expertises.map((element) => {return ({label: element, value: element})})
 
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(null);
+    const [value, setValue] = useState(expertiseSelected);
     const [items, setItems] = useState(mappedExpertises);
 
     const navigation = useNavigation();
@@ -89,7 +83,7 @@ export default function HomeScreen({ route }) {
     }
 
     useEffect(() => {
-      getData('Profiles').then((data) => {
+      getAllData('Profiles', 'Expertises', expertiseSelected).then((data) => { //Find a way to get only the users with expertise selected
         let randNumbArr = [];
         for (let i = 0; i < 10; i++) {
           randNumbArr.push(Math.floor((Math.random()) * (data.length)))
@@ -132,17 +126,9 @@ export default function HomeScreen({ route }) {
               labelStyle={styles.labels}
               theme='DARK'
               maxHeight={500}
-              onChangeValue={(value) => {navigation.navigate('ExpDisp', {usernamePassed: usernameDB, expSelected: value})}}
+              onChangeValue={(value) => {navigation.navigate('ExpDisp', {usernamePassed: usernameDB})}}
             />
           </View>
-          <AppCardsSeparatedDesc 
-            HGT={750} 
-            separator={true} 
-            separatorColour={colours.grey} 
-            separatorHeight={125}
-            headerText='WELCOME TO ARTKER!'
-            descText='An application where you can find artists who live around around a desired area and hire them all in the palm of your hands.'
-            />
             <FlatList
             data={homeUsersDisplay}
             renderItem={({item}) => <FlatlistItem value={item}/>}
