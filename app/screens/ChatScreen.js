@@ -108,6 +108,9 @@ export default function ChatScreen({ route }) {
         right: {
           marginRight: 5,
           backgroundColor: colours.secondary
+        },
+        left: {
+          backgroundColor: colours.secondaryBlack
         }
       }}
       textStyle={{
@@ -123,8 +126,8 @@ export default function ChatScreen({ route }) {
   }
 
   useLayoutEffect(() => {
-    const subscribe = fbDB.collection('chats').
-    orderBy('CreatedAt', 'desc').
+    const unsubscribe = fbDB.collection('chats').
+    orderBy('createdAt', 'desc').
     onSnapshot(snapshot => setMessages(
       snapshot.docs.map(doc => ({
         _id: doc.data()._id,
@@ -133,8 +136,8 @@ export default function ChatScreen({ route }) {
         user: doc.data().user
       }))
     ))
-    return subscribe;
-  }, []) // Need to style then done - remember to test
+    return unsubscribe;
+  }, [])
 
   const onSend = useCallback((messages = []) => {
     setMessages(previousMessages => GiftedChat.
