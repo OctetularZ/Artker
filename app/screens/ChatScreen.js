@@ -107,10 +107,18 @@ export default function ChatScreen({ route }) {
       wrapperStyle={{
         right: {
           marginRight: 5,
-          backgroundColor: colours.secondary
+          backgroundColor: '#A32CC4',
+          shadowColor: 'black',
+          shadowOpacity: 0.4,
+          shadowOffset: {height: 0, width: 0},
+          shadowRadius: 5
         },
         left: {
-          backgroundColor: colours.secondaryBlack
+          backgroundColor: colours.secondaryBlack,
+          shadowColor: 'black',
+          shadowOpacity: 0.4,
+          shadowOffset: {height: 0, width: 0},
+          shadowRadius: 5
         }
       }}
       textStyle={{
@@ -125,7 +133,7 @@ export default function ChatScreen({ route }) {
     )
   }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const unsubscribe = fbDB.collection('chats').
     orderBy('createdAt', 'desc').
     onSnapshot(snapshot => setMessages(
