@@ -83,26 +83,35 @@ export default function ExpertiseSelected({ route }) {
     }
 
     useEffect(() => {
-      getData('Profiles').then((data) => { //Find a way to get only the users with expertise selected
-        let filteredArray = [];
-        for (let user of data) {
-          let userExpertises = user['Expertises']
-          if (userExpertises.includes(expertiseSelected)) {
-            filteredArray.push(user)
+      getData('Profiles').then((data) => {
+        if (data.length === 0) {
+          console.log('No results')
+        }
+        else {
+          let filteredArray = [];
+          for (let user of data) {
+            let userExpertises = user['Expertises']
+            if (userExpertises.includes(expertiseSelected)) {
+              filteredArray.push(user)
+            }
+            else {}
           }
-          else {}
+          let randNumbArr = [];
+          for (let i = 0; i < 10; i++) {
+            randNumbArr.push(Math.floor((Math.random()) * (filteredArray.length)))
+          }
+          let randUsersArr = [];
+          for (const randNumbers of randNumbArr) {
+            randUsersArr.push(filteredArray[randNumbers])
+          }
+          setHomeUsersDisplay(randUsersArr)
         }
-        let randNumbArr = [];
-        for (let i = 0; i < 10; i++) {
-          randNumbArr.push(Math.floor((Math.random()) * (filteredArray.length)))
-        }
-        let randUsersArr = [];
-        for (const randNumbers of randNumbArr) {
-          randUsersArr.push(filteredArray[randNumbers])
-        }
-        setHomeUsersDisplay(randUsersArr)
       })
     }, []);
+
+    const onBackPressed = () => {
+      navigation.navigate('Home', {usernamePassed: usernameDB})
+    }
 
     const {width, height} = Dimensions.get('screen')
 
@@ -119,7 +128,7 @@ export default function ExpertiseSelected({ route }) {
       <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>
         <Screen style={styles.container}>
           <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 30, marginTop: 20}}>
-            <Ionicons name='chevron-back' size={30} color='white' style={{marginRight: 70, marginLeft: 20}}/>
+            <Ionicons name='chevron-back' size={30} color='white' style={{marginRight: 70, marginLeft: 20}} onPress={onBackPressed}/>
             <Text style={styles.title}>Artker Logo</Text>
           </View>
           <View style={{paddingHorizontal: 20, shadowColor: 'black', shadowOffset:{height: 0, width: 0}, shadowOpacity:0.4, zIndex: 1, elevation: 1}}>
