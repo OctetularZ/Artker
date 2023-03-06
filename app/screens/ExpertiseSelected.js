@@ -7,7 +7,7 @@ import DropDownPicker from 'react-native-dropdown-picker'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import { db as fbDB } from '../../firebase'
 import { getAllData, delDocs, getData } from '../database/dbScripts'
-import { AntDesign, Feather } from '@expo/vector-icons'
+import { AntDesign, Feather, Ionicons } from '@expo/vector-icons'
 
 import AppCards from '../components/AppCards'
 import Screen from '../components/Screen'
@@ -83,14 +83,22 @@ export default function ExpertiseSelected({ route }) {
     }
 
     useEffect(() => {
-      getAllData('Profiles', 'Expertises', expertiseSelected).then((data) => { //Find a way to get only the users with expertise selected
+      getData('Profiles').then((data) => { //Find a way to get only the users with expertise selected
+        let filteredArray = [];
+        for (let user of data) {
+          let userExpertises = user['Expertises']
+          if (userExpertises.includes(expertiseSelected)) {
+            filteredArray.push(user)
+          }
+          else {}
+        }
         let randNumbArr = [];
         for (let i = 0; i < 10; i++) {
-          randNumbArr.push(Math.floor((Math.random()) * (data.length)))
+          randNumbArr.push(Math.floor((Math.random()) * (filteredArray.length)))
         }
         let randUsersArr = [];
         for (const randNumbers of randNumbArr) {
-          randUsersArr.push(data[randNumbers])
+          randUsersArr.push(filteredArray[randNumbers])
         }
         setHomeUsersDisplay(randUsersArr)
       })
@@ -110,7 +118,10 @@ export default function ExpertiseSelected({ route }) {
       return (
       <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>
         <Screen style={styles.container}>
-          <Text style={styles.title}>Artker Logo</Text>
+          <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 30, marginTop: 20}}>
+            <Ionicons name='chevron-back' size={30} color='white' style={{marginRight: 70, marginLeft: 20}}/>
+            <Text style={styles.title}>Artker Logo</Text>
+          </View>
           <View style={{paddingHorizontal: 20, shadowColor: 'black', shadowOffset:{height: 0, width: 0}, shadowOpacity:0.4, zIndex: 1, elevation: 1}}>
             <DropDownPicker
               open={open}
@@ -126,7 +137,7 @@ export default function ExpertiseSelected({ route }) {
               labelStyle={styles.labels}
               theme='DARK'
               maxHeight={500}
-              onChangeValue={(value) => {navigation.navigate('ExpDisp', {usernamePassed: usernameDB})}}
+              onChangeValue={(value) => {navigation.push('ExpDisp', {usernamePassed: usernameDB, expSelected: value})}}
             />
           </View>
             <FlatList
@@ -148,8 +159,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 30,
-    textAlign: 'center',
-    paddingBottom: 50
+    textAlign: 'center'
   },
   dropdownText: {
     fontWeight: 'bold'
