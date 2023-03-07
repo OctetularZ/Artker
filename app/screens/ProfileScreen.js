@@ -1,12 +1,15 @@
-import { SafeAreaView, useWindowDimensions, StyleSheet, Text, TextInput, View, Image, TouchableOpacity } from 'react-native'
+import { SafeAreaView, useWindowDimensions, StyleSheet, Text, TextInput, View, Image, TouchableOpacity, Modal, FlatList, Pressable } from 'react-native'
 import React, { useState, useEffect } from 'react'
 
 import colours from '../config/colours'
 import { ScrollView } from 'react-native-gesture-handler'
+import {expertises} from './Expertise'
 import { db as fbDB } from '../../firebase'
 import { getAllData, delDocs, getData } from '../database/dbScripts'
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons' 
+import { Ionicons, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons' 
 import { useNavigation } from '@react-navigation/native'
+import {CountryPicker} from "react-native-country-codes-picker";
+import CustomInput from '../components/CustomInput'
 
 import {
   useFonts,
@@ -26,9 +29,13 @@ export default function ProfileScreen({ route }) {
   const [usernameDB, setUsernameDB] = useState(username);
   const [name, setName] = useState(null);
   const [Pfp, setPfp] = useState(null);
-  const [nationality, setNationality] = useState(null);
-  const [userExpertises, setUserExpertises] = useState(null);
-  const [description, setDescription] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [nationality, setNationality] = useState('')
+  let expertiseDisplay = ''
+  let expertiseList = []
+  const [description, setDescription] = useState('');
+  
+  const [show, setShow] = useState(false); // For modal state
 
   useEffect(() => {
     getAllData('Profiles', 'Username', usernameDB).then((data) => {
@@ -46,7 +53,6 @@ export default function ProfileScreen({ route }) {
         setName(name)
         setPfp(pfp)
         setNationality(nationality)
-        setUserExpertises(expertises)
         setDescription(description)
       }
     })
@@ -57,6 +63,55 @@ export default function ProfileScreen({ route }) {
   const editButtonPressed = (value) => {
     console.log(value)
     navigation.navigate('EditInfo', {usernamePassed: usernameDB, valueToChange: value})
+  }
+
+  const FlatlistItem = ({value}) => {
+    const [selected, setSelected] = useState(false);
+    if (selected) {
+      expertiseList.push(value)
+      expertiseDisplay = expertiseList.join(', ')
+      return(
+      <TouchableOpacity style={styles.flatlistItem} onPress={() => {(setSelected(false), console.log(selected))}}>
+        <Text style={styles.itemValue}>{value}</Text>
+        {selected && <AntDesign name='check' size={24} color='white' style={styles.checkStyles}/>}
+      </TouchableOpacity>
+      )
+      }
+    else {
+      let index = expertiseList.indexOf(value);
+      if (index !== -1) {
+        expertiseList.splice(index, 1);
+        expertiseDisplay = expertiseList.join(', ')
+      }
+      return(
+        <TouchableOpacity style={styles.flatlistItem} onPress={() => {(setSelected(true), console.log(selected))}}>
+          <Text style={styles.itemValue}>{value}</Text>
+          {selected && <AntDesign name='check' size={18} color='white'/>}
+        </TouchableOpacity>
+      )
+    }
+  }
+
+  const addCountryToDB = (countryPassed) => {
+    const updateQuery = fbDB.collection('Profiles').where('Username', '==', usernameDB);
+    updateQuery.get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+      doc.ref.update({
+        Nationality: countryPassed
+        })
+      })
+    })
+  }
+
+  const addExpertisesToDB = (expertisesPassed) => {
+    const updateQuery = fbDB.collection('Profiles').where('Username', '==', usernameDB);
+    updateQuery.get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+      doc.ref.update({
+        Expertises: expertisesPassed
+        })
+      })
+    })
   }
 
   let [fontsLoaded] = useFonts({
@@ -84,12 +139,12 @@ export default function ProfileScreen({ route }) {
             <Text style={{color: 'white', fontFamily: 'Poppins_500Medium', marginLeft: 15, fontSize: 15}}>Name</Text>
           </TouchableOpacity>
           <View style={{backgroundColor: colours.secondary, height: 2, marginTop: 10}}/>
-          <TouchableOpacity style={{flexDirection: 'row', marginTop: 10, marginLeft: 20, alignItems: 'center'}}>
+          <TouchableOpacity onPress={() => {setShow(true)}} style={{flexDirection: 'row', marginTop: 10, marginLeft: 20, alignItems: 'center'}}>
             <MaterialCommunityIcons name='rename-box' size={35} color={colours.secondary}/>
             <Text style={{color: 'white', fontFamily: 'Poppins_500Medium', marginLeft: 15, fontSize: 15}}>Nationality</Text>
           </TouchableOpacity>
           <View style={{backgroundColor: colours.secondary, height: 2, marginTop: 10}}/>
-          <TouchableOpacity style={{flexDirection: 'row', marginTop: 10, marginLeft: 20, alignItems: 'center'}}>
+          <TouchableOpacity onPress={() => {setModalVisible(true)}} style={{flexDirection: 'row', marginTop: 10, marginLeft: 20, alignItems: 'center'}}>
             <MaterialCommunityIcons name='rename-box' size={35} color={colours.secondary}/>
             <Text style={{color: 'white', fontFamily: 'Poppins_500Medium', marginLeft: 15, fontSize: 15}}>Expertises</Text>
           </TouchableOpacity>
@@ -100,6 +155,67 @@ export default function ProfileScreen({ route }) {
           </TouchableOpacity>
           <View style={{backgroundColor: colours.secondary, height: 2, marginTop: 10}}/>
         </View>
+          <CountryPicker
+          show={show}
+          style={{
+            modal: {
+              backgroundColor: colours.primary,
+              paddingTop: 50,
+              flex: 1
+            },
+            countryButtonStyles: {
+              backgroundColor: colours.secondaryBlack
+            },
+            line: {
+              backgroundColor: colours.primary
+            },
+            countryName: {
+              color: 'white'
+            },
+            dialCode: {
+              color: 'white'
+            },
+            countryMessageContainer: {
+              backgroundColor: colours.secondaryBlack
+            },
+            searchMessageText: {
+              color: 'white'
+            },
+            textInput: {
+              backgroundColor: colours.secondaryBlack,
+              paddingHorizontal: 25,
+              color: 'white'
+            }
+          }}
+          inputPlaceholder={'Select a country:'}
+          searchMessage={'Is there a typo? Country not found'}
+          // when picker button press you will get the country object with dial code
+          pickerButtonOnPress={(item) => {
+            let Nationality = item['name']['en'];
+            addCountryToDB(Nationality)
+            setShow(false);
+          }}
+        />
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            console.log('Modal has been closed.');
+            setModalVisible(!modalVisible);
+          }}>
+          <View style={styles.modalView}>
+            <Pressable
+              style={styles.closeModalButton}
+              onPress={() => (setModalVisible(!modalVisible), addExpertisesToDB(expertiseDisplay))}>
+              <Ionicons name='close-outline' size={30} color='white'/>
+            </Pressable>
+            <FlatList
+            data={expertises}
+            renderItem={({item}) => <FlatlistItem value={item}/>}
+            />
+          </View>
+        </Modal>
       </ScrollView>
     )
   }
@@ -110,5 +226,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     backgroundColor: colours.primary
+  },
+  modalView: {
+    backgroundColor: colours.primary,
+    flex: 1,
+    paddingTop: 50,
+    paddingLeft: 25
+  },
+  closeModalButton: {
+    paddingBottom: 15
+  },
+  flatlistItem: {
+    marginVertical: 10,
+    marginLeft: 10,
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  itemValue: {
+    color: 'white',
+    fontFamily: 'Poppins_400Regular'
+  },
+  checkStyles: {
+    marginLeft: 10
   }
 })
