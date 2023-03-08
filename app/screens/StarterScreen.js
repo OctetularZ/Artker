@@ -17,15 +17,29 @@ export default function StarterScreen({ route }) {
 
   const video = useRef(null);
   const [status, setStatus] = React.useState({});
-  const [active, setActive] = useState(true)
+  const [active, setActive] = useState([styles.indicator, styles.indicatorActive])
+  const [left, setLeft] = useState('true')
 
   const video2 = useRef(null);
   const [status2, setStatus2] = React.useState({});
-  const [active2, setActive2] = useState(false)
+  const [active2, setActive2] = useState([styles.indicator])
+  const [middle, setMiddle] = useState('false')
 
   const video3 = useRef(null);
   const [status3, setStatus3] = React.useState({});
-  const [active3, setActive3] = useState(false)
+  const [active3, setActive3] = useState([styles.indicator])
+  const [right, setRight] = useState('false')
+
+  const [scrollOffset, setScrollOffset] = useState(0)
+  const [scrollDirection, setScrollDirection] = useState(null)
+
+  const onScrollEvent = (event) => {
+    let currentOffset = event.nativeEvent.contentOffset.x;
+    let direction = currentOffset > scrollOffset ? 'right' : 'left';
+    setScrollOffset(currentOffset)
+    setScrollDirection(direction)
+    console.log(direction)
+  }
 
   const navigation = useNavigation();
 
@@ -34,8 +48,35 @@ export default function StarterScreen({ route }) {
   }
 
   const scrollIndicator = () => {
-    if (active === true) {
-      
+    if (active.length === 2) {
+      setActive([styles.indicator])
+      setActive2([styles.indicator, styles.indicatorActive])
+      setLeft('wasTrue')
+    }
+    else if (active2.length === 2) {
+      if (left == 'wasTrue' && scrollDirection == 'right') {
+        setActive2([styles.indicator])
+        setActive3([styles.indicator, styles.indicatorActive])
+        setLeft('false')
+        setRight('true')
+      }
+      else if (right == 'wasTrue' && scrollDirection == 'right') {
+        setActive2([styles.indicator])
+        setActive3([styles.indicator, styles.indicatorActive])
+        setLeft('false')
+        setRight('true')
+      }
+      else {
+        setActive2([styles.indicator])
+        setActive([styles.indicator, styles.indicatorActive])
+        setRight('false')
+        setLeft('true')
+      }
+    }
+    else if (active3.length === 2) {
+      setActive3([styles.indicator])
+      setActive2([styles.indicator, styles.indicatorActive])
+      setRight('wasTrue')
     }
   }
   
@@ -43,7 +84,7 @@ export default function StarterScreen({ route }) {
     <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>
       <StatusBar translucent backgroundColor={colours.transparent}/>
       <SafeAreaView style={{alignItems: 'center'}}>
-        <ScrollView horizontal={true} pagingEnabled={true} showsHorizontalScrollIndicator={false}>
+        <ScrollView horizontal={true} pagingEnabled={true} showsHorizontalScrollIndicator={false} onMomentumScrollBegin={scrollIndicator} onScroll={(event) => {onScrollEvent(event)}} bounces={false}>
           <Video
             ref={video}
             style={styles.video}
@@ -84,9 +125,9 @@ export default function StarterScreen({ route }) {
       </SafeAreaView>
       <Screen style={styles.container}>
         <View style={styles.indicatorContainer}>
-          <View style={styles.indicator}/>
-          <View style={styles.indicator}/>
-          <View style={[styles.indicator, styles.indicatorActive]}/>
+          <View style={active}/>
+          <View style={active2}/>
+          <View style={active3}/>
         </View>
         <View style={styles.textContainer}>
           <View>
