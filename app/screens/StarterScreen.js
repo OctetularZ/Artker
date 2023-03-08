@@ -1,8 +1,9 @@
 import { StatusBar, Dimensions, SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useRef } from 'react'
 import colours from '../config/colours'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
+import { Video, AVPlaybackStatus } from 'expo-av';
 
 import Screen from '../components/Screen'
 import CustomButton1 from '../components/CustomButton1'
@@ -14,8 +15,9 @@ export default function StarterScreen({ route }) {
   usernameDB = usernameDB.replace(/\\/g, '')
   usernameDB = usernameDB.replace(/"/g, '')
 
-  const HEIGHT = Dimensions.get('window').height;
-  const WIDTH = Dimensions.get('window').width;
+  const video = useRef(null);
+  const [status, setStatus] = React.useState({});
+
   const navigation = useNavigation();
 
   const onGetStartedPressed = () => {
@@ -25,8 +27,19 @@ export default function StarterScreen({ route }) {
   return (
     <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>
       <StatusBar translucent backgroundColor={colours.transparent}/>
-      <SafeAreaView>
-        <AppCards HGT={800}/>
+      <SafeAreaView style={{alignItems: 'center'}}>
+        <Video
+          ref={video}
+          style={styles.video}
+          source={{
+            uri: 'https://gdurl.com/Ydyg',
+          }}
+          useNativeControls={false}
+          resizeMode="contain"
+          isLooping
+          shouldPlay
+          onPlaybackStatusUpdate={status => setStatus(() => status)}
+        />
       </SafeAreaView>
       <Screen style={styles.container}>
         <View style={styles.indicatorContainer}>
@@ -56,6 +69,12 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colours.primary,
     alignItems: 'center'
+  },
+  video: {
+    height: 450,
+    width: 500,
+    marginTop: 20,
+    marginBottom: 30
   },
   indicatorContainer: {
     height: 10,
