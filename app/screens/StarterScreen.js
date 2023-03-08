@@ -1,5 +1,5 @@
 import { StatusBar, Dimensions, SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import colours from '../config/colours'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
@@ -17,29 +17,70 @@ export default function StarterScreen({ route }) {
 
   const video = useRef(null);
   const [status, setStatus] = React.useState({});
+  const [active, setActive] = useState(true)
+
+  const video2 = useRef(null);
+  const [status2, setStatus2] = React.useState({});
+  const [active2, setActive2] = useState(false)
+
+  const video3 = useRef(null);
+  const [status3, setStatus3] = React.useState({});
+  const [active3, setActive3] = useState(false)
 
   const navigation = useNavigation();
 
   const onGetStartedPressed = () => {
     navigation.navigate('Home', {usernamePassed: usernameDB})
   }
+
+  const scrollIndicator = () => {
+    if (active === true) {
+      
+    }
+  }
   
   return (
     <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>
       <StatusBar translucent backgroundColor={colours.transparent}/>
       <SafeAreaView style={{alignItems: 'center'}}>
-        <Video
-          ref={video}
-          style={styles.video}
-          source={{
-            uri: 'https://gdurl.com/Ydyg',
-          }}
-          useNativeControls={false}
-          resizeMode="contain"
-          isLooping
-          shouldPlay
-          onPlaybackStatusUpdate={status => setStatus(() => status)}
-        />
+        <ScrollView horizontal={true} pagingEnabled={true} showsHorizontalScrollIndicator={false}>
+          <Video
+            ref={video}
+            style={styles.video}
+            source={{
+              uri: 'https://gdurl.com/Ydyg',
+            }}
+            useNativeControls={false}
+            resizeMode="contain"
+            isLooping
+            shouldPlay
+            onPlaybackStatusUpdate={status => setStatus(() => status)}
+          />
+          <Video
+            ref={video2}
+            style={styles.video}
+            source={{
+              uri: 'https://gdurl.com/Ydyg',
+            }}
+            useNativeControls={false}
+            resizeMode="contain"
+            isLooping
+            shouldPlay
+            onPlaybackStatusUpdate={status => setStatus2(() => status)}
+          />
+          <Video
+            ref={video3}
+            style={styles.video}
+            source={{
+              uri: 'https://gdurl.com/Ydyg',
+            }}
+            useNativeControls={false}
+            resizeMode="contain"
+            isLooping
+            shouldPlay
+            onPlaybackStatusUpdate={status => setStatus3(() => status)}
+          />
+        </ScrollView>
       </SafeAreaView>
       <Screen style={styles.container}>
         <View style={styles.indicatorContainer}>
@@ -74,7 +115,9 @@ const styles = StyleSheet.create({
     height: 450,
     width: 500,
     marginTop: 20,
-    marginBottom: 30
+    marginBottom: 30,
+    marginLeft: -55,
+    marginRight: -54
   },
   indicatorContainer: {
     height: 10,
