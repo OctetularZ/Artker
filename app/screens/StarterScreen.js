@@ -89,7 +89,7 @@ export default function StarterScreen({ route }) {
             ref={video}
             style={styles.video}
             source={{
-              uri: 'https://gdurl.com/Ydyg',
+              uri: 'https://gdurl.com/Ydyg', // Change links then add description and title of videos, then lastly look into loading icon thing for createprofile pfp insert delay and video delay or look for time buffer for the first problem
             }}
             useNativeControls={false}
             resizeMode="contain"
