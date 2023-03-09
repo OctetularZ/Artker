@@ -105,6 +105,15 @@ export default function ExpertiseSelected({ route }) {
           for (const randNumbers of randNumbArr) {
             randUsersArr.push(filteredArray[randNumbers])
           }
+
+          console.log(randUsersArr)
+          randUsersArr = randUsersArr.filter((item, index) => randUsersArr.indexOf(item) === index)
+        for (let user of randUsersArr) {
+          if (user['Username'] == usernameDB) {
+            let index = randUsersArr.indexOf(user);
+            randUsersArr.splice(index, 1)
+          }
+        }
           setHomeUsersDisplay(randUsersArr)
         }
       })
