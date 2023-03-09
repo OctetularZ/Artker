@@ -99,6 +99,13 @@ export default function HomeScreen({ route }) {
         for (const randNumbers of randNumbArr) {
           randUsersArr.push(data[randNumbers])
         }
+        randUsersArr = randUsersArr.filter((item, index) => randUsersArr.indexOf(item) === index)
+        for (let user of randUsersArr) {
+          if (user['Username'] == usernameDB) {
+            let index = randUsersArr.indexOf(user);
+            randUsersArr.splice(index, 1)
+          }
+        }
         setHomeUsersDisplay(randUsersArr)
       })
     }, []);
@@ -115,11 +122,9 @@ export default function HomeScreen({ route }) {
     }
     else {
       return (
-      <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false} bounces={false}>
+      <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>
         <Screen style={styles.container}>
-          <View style={{alignItems: 'center', marginBottom: 20, marginTop: 5}}>
-            <Image source={Logo} style={{width: 50, height: 50}}/>
-          </View>
+          <View style={{height: 30}}/>
           <View style={{paddingHorizontal: 20, shadowColor: 'black', shadowOffset:{height: 0, width: 0}, shadowOpacity:0.4, zIndex: 1, elevation: 1}}>
             <DropDownPicker
               open={open}
@@ -145,12 +150,14 @@ export default function HomeScreen({ route }) {
             separatorHeight={125}
             headerText='WELCOME TO ARTKER!'
             descText='An application where you can find artists who live around around a desired area and hire them all in the palm of your hands.'
-            />
-            <FlatList
-            data={homeUsersDisplay}
-            renderItem={({item}) => <FlatlistItem value={item}/>}
-            keyExtractor={(item, index) => index.toString()}
-            />
+          >
+            <Image source={Logo} style={{width: 150, height: 150}}/>
+          </AppCardsSeparatedDesc>
+          <FlatList
+          data={homeUsersDisplay}
+          renderItem={({item}) => <FlatlistItem value={item}/>}
+          keyExtractor={(item, index) => index.toString()}
+          />
         </Screen>
       </ScrollView>
     )

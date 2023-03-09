@@ -47,6 +47,7 @@ export default function LoginScreen() {
   return (
     <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>
       <Screen style={styles.container}>
+        
         <Image source={Logo} style={[styles.logo, {height: 125, marginBottom: 60, marginTop: 35}]} resizeMode='contain'/>
 
         <CustomInput placeholder='Username' value={username} setValue={setUsername}/>

@@ -127,11 +127,11 @@ export default function ProfileScreen({ route }) {
       <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>
         <View style={{flexDirection: 'column', marginTop: 80, shadowColor: 'black', shadowOpacity: 0.8, shadowOffset: {width: 0, height: 0}, shadowRadius: 10}}>
           <View style={{alignItems: 'center'}}>
-            <Text style={{color: colours.secondary, fontFamily: 'Poppins_500Medium', fontSize: 30, marginBottom: 30, marginTop: -20}}>Profile</Text>
+            <Text style={{color: colours.secondary, fontFamily: 'Poppins_500Medium', fontSize: 30, marginBottom: 30, marginTop: -20, textDecorationLine: 'underline'}}>Profile</Text>
             <TouchableOpacity onPress={() => {navigation.navigate('ImgurL2', {usernamePassed: usernameDB})}}>
               <Image source={{uri: Pfp}} style={{width: 200, height: 200, borderRadius: 100}}/>
             </TouchableOpacity>
-            <Text style={{color: 'white', fontFamily: 'Poppins_500Medium', fontSize: 22, marginTop: 15, textDecorationLine: 'underline'}}>{usernameDB}</Text>
+            <Text style={{color: 'white', fontFamily: 'Poppins_500Medium', fontSize: 22, marginTop: 15}}>{usernameDB}</Text>
           </View>
           <View style={{backgroundColor: colours.secondary, height: 2, marginTop: 50}}/>
           <TouchableOpacity onPress={() => editButtonPressed('Name')} style={{flexDirection: 'row', marginTop: 10, marginLeft: 20, alignItems: 'center'}}>

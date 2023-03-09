@@ -14,6 +14,7 @@ import Screen from '../components/Screen'
 import AppCardsSeparated from '../components/AppCardsSeparated'
 import AppCardsSeparatedDesc from '../components/AppCardsSeperatedDescription'
 import { expertises } from './Expertise'
+import Logo from '../assets/artker_logo.png'
 
 import {
   useFonts,
@@ -127,9 +128,11 @@ export default function ExpertiseSelected({ route }) {
       return (
       <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>
         <Screen style={styles.container}>
-          <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 30, marginTop: 20}}>
+          <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 20, marginTop: 10}}>
             <Ionicons name='chevron-back' size={30} color='white' style={{marginRight: 70, marginLeft: 20}} onPress={onBackPressed}/>
-            <Text style={styles.title}>Artker Logo</Text>
+            <View style={{alignItems: 'center'}}>
+              <Image source={Logo} style={{width: 50, height: 50, marginLeft: 50}}/>
+            </View>
           </View>
           <View style={{paddingHorizontal: 20, shadowColor: 'black', shadowOffset:{height: 0, width: 0}, shadowOpacity:0.4, zIndex: 1, elevation: 1}}>
             <DropDownPicker
