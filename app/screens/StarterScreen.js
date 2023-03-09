@@ -89,7 +89,7 @@ export default function StarterScreen({ route }) {
             ref={video}
             style={styles.video}
             source={{
-              uri: 'https://gdurl.com/Ydyg', // Change links then add description and title of videos, then lastly look into loading icon thing for createprofile pfp insert delay and video delay or look for time buffer for the first problem
+              uri: 'https://gdurl.com/WIl1', // Change links then add description and title of videos, then lastly look into loading icon thing for createprofile pfp insert delay and video delay or look for time buffer for the first problem
             }}
             useNativeControls={false}
             resizeMode="contain"
@@ -101,7 +101,7 @@ export default function StarterScreen({ route }) {
             ref={video2}
             style={styles.video}
             source={{
-              uri: 'https://gdurl.com/Ydyg',
+              uri: 'https://gdurl.com/CqCN',
             }}
             useNativeControls={false}
             resizeMode="contain"
@@ -113,7 +113,7 @@ export default function StarterScreen({ route }) {
             ref={video3}
             style={styles.video}
             source={{
-              uri: 'https://gdurl.com/Ydyg',
+              uri: 'https://gdurl.com/a6ZP',
             }}
             useNativeControls={false}
             resizeMode="contain"
@@ -131,12 +131,15 @@ export default function StarterScreen({ route }) {
         </View>
         <View style={styles.textContainer}>
           <View>
-            <Text style={styles.titleStyle}>Tutorial #1</Text>
-            <Text style={styles.titleStyle}>More title space</Text>
+            <Text style={styles.titleStyle}>Welcome To Artker!</Text>
           </View>
           <View style={{marginTop: 10, marginBottom: 30}}>
-            <Text style={styles.descriptionStyle}>Tutorial #1's description and more text test</Text>
-            <Text style={styles.descriptionStyle}>More description space</Text>
+            <Text style={styles.descriptionStyle}>Artker is an application which allows musicians</Text>
+            <Text style={styles.descriptionStyle}>to display their services so people who are</Text>
+            <Text style={styles.descriptionStyle}>interested in such services can negogiate</Text>
+            <Text style={styles.descriptionStyle}>and come to an agreement on the price.</Text>
+            <Text style={styles.descriptionStyle}>Above are a few examples of the features</Text>
+            <Text style={styles.descriptionStyle}>this app entails.</Text>
           </View>
         </View>
         <CustomButton1 onPress={onGetStartedPressed} text='GET STARTED!' type='Primary' fontSZ={18}/>
