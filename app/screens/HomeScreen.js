@@ -11,6 +11,7 @@ import { AntDesign, Feather } from '@expo/vector-icons'
 
 import AppCards from '../components/AppCards'
 import Screen from '../components/Screen'
+import Logo from '../assets/artker_logo.png'
 import AppCardsSeparated from '../components/AppCardsSeparated'
 import AppCardsSeparatedDesc from '../components/AppCardsSeperatedDescription'
 import { expertises } from './Expertise'
@@ -114,9 +115,11 @@ export default function HomeScreen({ route }) {
     }
     else {
       return (
-      <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false} bounces={false}>
         <Screen style={styles.container}>
-          <Text style={styles.title}>Artker Logo</Text>
+          <View style={{alignItems: 'center', marginBottom: 20, marginTop: 5}}>
+            <Image source={Logo} style={{width: 50, height: 50}}/>
+          </View>
           <View style={{paddingHorizontal: 20, shadowColor: 'black', shadowOffset:{height: 0, width: 0}, shadowOpacity:0.4, zIndex: 1, elevation: 1}}>
             <DropDownPicker
               open={open}

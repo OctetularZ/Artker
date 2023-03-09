@@ -1,6 +1,6 @@
 import { SafeAreaView, useWindowDimensions, StyleSheet, Text, TextInput, View, Image } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import Logo from '../assets/app_logo_test.png'
+import Logo from '../assets/artker_logo.png'
 
 import Screen from '../components/Screen'
 import colours from '../config/colours'
@@ -47,7 +47,7 @@ export default function LoginScreen() {
   return (
     <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>
       <Screen style={styles.container}>
-        <Image source={Logo} style={[styles.logo, {height: height * 0.3}]} resizeMode='contain'/>
+        <Image source={Logo} style={[styles.logo, {height: 125, marginBottom: 60, marginTop: 35}]} resizeMode='contain'/>
 
         <CustomInput placeholder='Username' value={username} setValue={setUsername}/>
         <CustomInput placeholder='Password' value={password} setValue={setPassword} secureTextEntry={true}/>
