@@ -106,7 +106,6 @@ export default function ExpertiseSelected({ route }) {
             randUsersArr.push(filteredArray[randNumbers])
           }
 
-          console.log(randUsersArr)
           randUsersArr = randUsersArr.filter((item, index) => randUsersArr.indexOf(item) === index)
         for (let user of randUsersArr) {
           if (user['Username'] == usernameDB) {

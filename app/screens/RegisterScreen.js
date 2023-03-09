@@ -5,6 +5,7 @@ import Screen from '../components/Screen'
 import colours from '../config/colours'
 import CustomInput from '../components/CustomInput'
 import CustomButton1 from '../components/CustomButton1'
+import { oneButtonAlert } from '../components/customAlert'
 import { ScrollView } from 'react-native-gesture-handler'
 import SocialSignInButtons from '../components/SocialSignInButtons'
 import { useNavigation } from '@react-navigation/native'
@@ -41,21 +42,25 @@ export default function RegisterScreen() {
                   navigation.navigate('CreateProfile', {usernamePassed: username})
                 }
                 else{
-                  console.log("Email doesn't seem right? Please check if you have written your email correctly.")
+                  oneButtonAlert("Email doesn't seem right?", "Please check if you have written your email correctly", 'OK')
                 }
               }
               else {
-                console.log('Your password must contain at least one special character and number, i.e. lumoan029@')
+                oneButtonAlert('Invalid Password', "Your password must contain at least one special character and number, i.e. lumoan029@", 'OK')
               }
             }
             else {
-              console.log('Passwords are not matching. Please check and make make sure password match.')
+              oneButtonAlert('Password are not matching?', "Please check and make sure passwords match", 'OK')
             }
           }
-          else {console.log('Email already exists. You must already have an account. Try logging in.')}
+          else {
+            oneButtonAlert('Email already exists?', "Check if you have an account with this emaii", 'OK')
+          }
         })
       }
-      else {console.log('Username has already been taken')}
+      else {
+        oneButtonAlert('Username already in use', 'Try entering a different username', 'OK')
+      }
     })
   }
 
@@ -64,11 +69,11 @@ export default function RegisterScreen() {
   }
 
   const onTermsOfUsePressed = () => {
-    console.warn('TermsOfUse')
+    console.log('TermsOfUse')
   }
 
   const onPrivacyPolicyPressed = () => {
-    console.warn('PrivacyPolicy')
+    console.log('PrivacyPolicy')
   }
 
   return (

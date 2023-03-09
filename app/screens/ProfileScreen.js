@@ -61,7 +61,6 @@ export default function ProfileScreen({ route }) {
   const navigation = useNavigation();
 
   const editButtonPressed = (value) => {
-    console.log(value)
     navigation.navigate('EditInfo', {usernamePassed: usernameDB, valueToChange: value})
   }
 

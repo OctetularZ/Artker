@@ -6,6 +6,7 @@ import colours from '../config/colours'
 import CustomInput from '../components/CustomInput'
 import CustomButton1 from '../components/CustomButton1'
 import { ScrollView } from 'react-native-gesture-handler'
+import { oneButtonAlert } from '../components/customAlert'
 import { useNavigation } from '@react-navigation/native'
 import { db as fbDB } from '../../firebase'
 import { getAllData, delDocs } from '../database/dbScripts'
@@ -39,7 +40,7 @@ export default function ImgurLink({ route }) {
       navigation.navigate('CreateProfile', { usernamePassed: usernameDB });
     }
     else {
-      console.log('invalid')
+      oneButtonAlert('Invalid link', 'Try entering a different link', 'OK')
     }
   }
 

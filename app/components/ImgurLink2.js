@@ -8,6 +8,7 @@ import CustomButton1 from '../components/CustomButton1'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import { db as fbDB } from '../../firebase'
+import { oneButtonAlert } from '../components/customAlert'
 import { getAllData, delDocs } from '../database/dbScripts'
 
 
@@ -39,7 +40,7 @@ export default function ImgurLinkTwo({ route }) {
       navigation.goBack();
     }
     else {
-      console.log('invalid')
+      oneButtonAlert('Invalid link', 'Try entering a different link', 'OK')
     }
   }
 

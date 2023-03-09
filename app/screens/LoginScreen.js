@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import Logo from '../assets/artker_logo.png'
 
 import Screen from '../components/Screen'
+import { oneButtonAlert } from '../components/customAlert'
 import colours from '../config/colours'
 import CustomInput from '../components/CustomInput'
 import CustomButton1 from '../components/CustomButton1'
@@ -22,7 +23,7 @@ export default function LoginScreen() {
   const onSignInPressed = () => {
     getAllData('Account', 'username', username).then((data) => {
       if (data.length == 0) {
-        console.log('No results')
+        oneButtonAlert('Account not found', 'Invalid username or password', 'OK')
       }
       else{
         let userPassword = data[0]['password']
@@ -30,7 +31,7 @@ export default function LoginScreen() {
           navigation.navigate('Home', { usernamePassed: username })
         }
         else {
-          console.log('Wrong Password')
+          oneButtonAlert('Wrong Password', 'Try entering a different password', 'OK')
         }
       }
     })

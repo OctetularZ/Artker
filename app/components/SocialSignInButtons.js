@@ -10,15 +10,15 @@ import CustomButton1 from './CustomButton1';
 export default function SocialSignInButtons() {
 
   const onSignInGoogle = () => {
-    console.warn('Google');
+    console.log('Google');
   }
 
   const onSignInApple = () => {
-    console.warn('Apple');
+    console.log('Apple');
   }
 
   const onSignInFacebook = () => {
-    console.warn('Facebook');
+    console.log('Facebook');
   }
 
   return (
