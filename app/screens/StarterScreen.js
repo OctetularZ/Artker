@@ -38,7 +38,6 @@ export default function StarterScreen({ route }) {
     let direction = currentOffset > scrollOffset ? 'right' : 'left';
     setScrollOffset(currentOffset)
     setScrollDirection(direction)
-    console.log(direction)
   }
 
   const navigation = useNavigation();
