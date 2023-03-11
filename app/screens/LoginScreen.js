@@ -8,7 +8,6 @@ import colours from '../config/colours'
 import CustomInput from '../components/CustomInput'
 import CustomButton1 from '../components/CustomButton1'
 import { ScrollView } from 'react-native-gesture-handler'
-import SocialSignInButtons from '../components/SocialSignInButtons'
 import { useNavigation } from '@react-navigation/native'
 import { getAllData } from '../database/dbScripts'
 
@@ -53,8 +52,6 @@ export default function LoginScreen() {
         <CustomButton1 onPress={onSignInPressed} text='Sign In' type='Primary'/>
 
         <View style={styles.bottomButtons}>
-          <SocialSignInButtons/>
-
           <CustomButton1 onPress={onSignUpPressed} text="Don't have an account? Create one" type='Tertiary'/>
         </View>
       </Screen>

@@ -7,7 +7,6 @@ import CustomInput from '../components/CustomInput'
 import CustomButton1 from '../components/CustomButton1'
 import { oneButtonAlert } from '../components/customAlert'
 import { ScrollView } from 'react-native-gesture-handler'
-import SocialSignInButtons from '../components/SocialSignInButtons'
 import { useNavigation } from '@react-navigation/native'
 import { db as fbDB } from '../../firebase'
 import { getAllData } from '../database/dbScripts'
@@ -91,8 +90,6 @@ export default function RegisterScreen() {
         <Text style={styles.text}>By registering, you confirm that you accept our <Text style={styles.link} onPress={onTermsOfUsePressed}>Terms of Use</Text> and <Text style={styles.link} onPress={onPrivacyPolicyPressed}>Privacy Policy</Text></Text>
 
         <View style={styles.bottomButtons}>
-          <SocialSignInButtons/>
-
           <CustomButton1 onPress={onSignInPressed} text="Already have an account? Sign in" type='Tertiary'/>
         </View>
       </Screen>
