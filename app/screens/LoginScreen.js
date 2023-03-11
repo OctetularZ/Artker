@@ -41,10 +41,6 @@ export default function LoginScreen() {
     navigation.navigate('Register')
   }
 
-  const onForgotPasswordPressed = () => {
-    navigation.navigate('ForgotPassword')
-  }
-
   return (
     <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>
       <Screen style={styles.container}>
@@ -55,7 +51,6 @@ export default function LoginScreen() {
         <CustomInput placeholder='Password' value={password} setValue={setPassword} secureTextEntry={true}/>
 
         <CustomButton1 onPress={onSignInPressed} text='Sign In' type='Primary'/>
-        <CustomButton1 onPress={onForgotPasswordPressed} text='Forgot Password?' type='Tertiary'/>
 
         <View style={styles.bottomButtons}>
           <SocialSignInButtons/>
