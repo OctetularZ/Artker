@@ -14,7 +14,7 @@ export default function PfpDisplay({ username }) {
   const [pfpBool, setpfpBool] = useState(false);
 
   const onAvatarIconPressed = () => {
-    navigation.navigate('ImgurL', {usernamePassed: username})
+    navigation.navigate('ImageL', {usernamePassed: username})
   }
 
   const ProfilePictureCheck = () => {

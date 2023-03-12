@@ -9,11 +9,11 @@ import HomeScreen from '../screens/HomeScreen';
 import CreateProfileScreen from '../screens/CreateProfileScreen';
 import StarterScreen from '../screens/StarterScreen';
 import AppBottomBarNavigation from '../components/AppBottomBarNavigation';
-import ImgurLink from '../components/ImgurLink';
+import ImageLink from '../components/ImageLink';
 import UserFullDisplay from '../screens/UserFullDisplay';
 import ChatScreen from '../screens/ChatScreen';
 import ExpertiseSelected from '../screens/ExpertiseSelected';
-import ImgurLinkTwo from '../components/ImgurLink2';
+import ImageLinkTwo from '../components/ImageLink2';
 import EditInfo from '../screens/EditInfo';
 
 const Stack = createStackNavigator();
@@ -27,11 +27,11 @@ export default function Navigation() {
         <Stack.Screen name='Home' component={AppBottomBarNavigation}/>
         <Stack.Screen name='StarterScreen' component={StarterScreen}/>
         <Stack.Screen name='CreateProfile' component={CreateProfileScreen}/>
-        <Stack.Screen name='ImgurL' component={ImgurLink}/>
+        <Stack.Screen name='ImageL' component={ImageLink}/>
         <Stack.Screen name='UserDisp' component={UserFullDisplay}/>
         <Stack.Screen name='Chat' component={ChatScreen}/>
         <Stack.Screen name='ExpDisp' component={ExpertiseSelected}/>
-        <Stack.Screen name='ImgurL2' component={ImgurLinkTwo}/>
+        <Stack.Screen name='ImageL2' component={ImageLinkTwo}/>
         <Stack.Screen name='EditInfo' component={EditInfo}/>
     </Stack.Navigator>
     </NavigationContainer>

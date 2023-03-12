@@ -1,18 +1,18 @@
 import { SafeAreaView, useWindowDimensions, StyleSheet, Text, TextInput, View, Image } from 'react-native'
 import React, { useState } from 'react'
 
-import Screen from '../components/Screen'
+import Screen from './Screen'
 import colours from '../config/colours'
-import CustomInput from '../components/CustomInput'
-import CustomButton1 from '../components/CustomButton1'
+import CustomInput from './CustomInput'
+import CustomButton1 from './CustomButton1'
 import { ScrollView } from 'react-native-gesture-handler'
-import { oneButtonAlert } from '../components/customAlert'
 import { useNavigation } from '@react-navigation/native'
 import { db as fbDB } from '../../firebase'
+import { oneButtonAlert } from './customAlert'
 import { getAllData, delDocs } from '../database/dbScripts'
 
 
-export default function ImgurLink({ route }) {
+export default function ImageLinkTwo({ route }) {
   const { usernamePassed } = route.params;
   let usernameDB = JSON.stringify(usernamePassed)
   usernameDB = usernameDB.replace(/\\/g, '')
@@ -37,7 +37,7 @@ export default function ImgurLink({ route }) {
           })
         })
       })
-      navigation.navigate('CreateProfile', { usernamePassed: usernameDB });
+      navigation.goBack();
     }
     else {
       oneButtonAlert('Invalid link', 'Try entering a different link', 'OK')
@@ -45,7 +45,7 @@ export default function ImgurLink({ route }) {
   }
 
   const onBackToProfilePressed = () => {
-    navigation.navigate('CreateProfile', { usernamePassed: usernameDB });
+    navigation.goBack();
   }
 
   return (
