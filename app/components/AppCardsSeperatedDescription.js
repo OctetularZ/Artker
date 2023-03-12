@@ -5,13 +5,13 @@ import colours from '../config/colours'
 import {
   useFonts,
   Poppins_600SemiBold
-} from '@expo-google-fonts/poppins';
+} from '@expo-google-fonts/poppins'; // This is how importing a font looks like
 
 import {
   Montserrat_500Medium
 } from '@expo-google-fonts/montserrat';
 
-import AppLoading from 'expo-app-loading';
+import AppLoading from 'expo-app-loading'; // This is for if the font fails to load - this will be displayed
 
 const HEIGHT = Dimensions.get('window').height
 const WIDTH = Dimensions.get('window').width
@@ -19,16 +19,18 @@ const WIDTH = Dimensions.get('window').width
 /*
 This functions will generate a card-like display where certain types of information will be displayed
 to the user. This will be used very commonly as it'll be a method of displaying information.
+However, this AppCard component will be split in half but to allow an image on the top half and a
+header and description on the bottom half. 
 */
 
-export default function AppCardsSeparatedDesc({HGT, separatorHeight, separatorColour, headerText, descText, children}) {
-  let [fontsLoaded] = useFonts({
+export default function AppCardsSeparatedDesc({HGT, separatorHeight, separatorColour, headerText, descText, children}) { // HGT, separatorHeight and separatorColour are all the same. (children too)
+  let [fontsLoaded] = useFonts({ // headerText - Text for the header/title of the text, descText - Text for the description part of the text
     Montserrat_500Medium,
     Poppins_600SemiBold
-  });
+  }); // Loads the font onto the app
   
-  if (!fontsLoaded) {
-    return <AppLoading />;
+  if (!fontsLoaded) { // Checks if the fonts loaded successfully and returns the AppLoading component (loading screen) if not loaded but returns the main component if the font(s) are loaded successfully
+    return <AppLoading />; // Returns a loading screen
   }
   else {
     return (
@@ -43,7 +45,7 @@ export default function AppCardsSeparatedDesc({HGT, separatorHeight, separatorCo
       </View>
     )
   }
-}
+} // Returns an AppCardSeparatedDescription component
 
 const styles = StyleSheet.create({
   cardsStyle: {

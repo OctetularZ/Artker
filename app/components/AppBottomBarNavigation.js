@@ -8,7 +8,7 @@ import { Entypo, Feather, AntDesign, FontAwesome5, MaterialCommunityIcons } from
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import colours from '../config/colours';
 
-const Bar = createMaterialBottomTabNavigator();
+const Bar = createMaterialBottomTabNavigator(); // Creates the bottom tab navigator component
 
 /*
 This function contains a template which will be used to create a bottom tab navigator in which users can navigate and
@@ -17,15 +17,15 @@ modern user experience. This will be displayed on almost every screen, as it's t
 logging in/signing up.
 */
 
-export default function AppBottomBarNavigation({ route }) {
-  const { usernamePassed } = route.params;
+export default function AppBottomBarNavigation({ route }) { //route is a refernce to the navigation
+  const { usernamePassed } = route.params; // Gets the username of the user which was passed from the previous screen
   let username = JSON.stringify(usernamePassed)
   username = username.replace(/\\/g, '')
-  username = username.replace(/"/g, '')
+  username = username.replace(/"/g, '') // 2 lines above - Converting the username to a string without the extra forward slashes and quotation marks from when the username is retreived
 
-  const navigation = useNavigation();
+  const navigation = useNavigation(); // Refernces to the navigation component of this app
 
-  return (
+  return ( // Returns a custom bottom bar navigator
       <Bar.Navigator shifting={true} activeColor={colours.secondary} inactiveColor={colours.secondary} barStyle={styles.bottomBar}>
         <Bar.Screen name="Home" component={HomeScreen} initialParams={{ usernamePassed: username }} options={{
           tabBarLabel: 'Home',

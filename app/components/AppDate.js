@@ -5,14 +5,14 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import colours from '../config/colours';
 
-export default function AppDate({ value, onDateChange }) {
+export default function AppDate({ value, onDateChange }) { // value - Current value of the date inputted, onDateChange - Function triggered for when the 'value' changes (when the date inputted changes)
   return (
     <TouchableOpacity style={styles.container}>
       <Text style={styles.DOBStyle}>Date of birth:</Text>
       <DateTimePicker mode='date' value={value} themeVariant='dark' style={styles.pickerStyle} onChange={onDateChange}/>
     </TouchableOpacity>
   )
-}
+} // Returns a custom date picker component
 
 const styles = StyleSheet.create({
   container: {
@@ -32,5 +32,5 @@ const styles = StyleSheet.create({
     color: '#8a8a8a',
     textAlign: 'center',
     paddingBottom: 10
-  }
+  } // Styles used on the date of birth input title
 })

@@ -8,13 +8,13 @@ This function creates a custom button for easy reproduceability. This will mainl
 and screens related to these screens. Multiple instances of conditions are used to allow/extend functionality.
 */
 
-export default function CustomButton1({ onPress, text, type, bgColour, fgColour, fontSZ, marginLeft }) {
+export default function CustomButton1({ onPress, text, type, bgColour, fgColour, fontSZ, marginLeft }) { // text - Text displayed on the button, type - what type of button will it be, bgColour - Background colour of the button, fgColour - Colour of the button's text, fontSZ - Size of the text's font, marginLeft - How much margin should be added horizonatally to the left if need be
   return (
     <TouchableOpacity onPress={onPress} style={[styles.container, styles[`container${type}`], bgColour ? {backgroundColor: bgColour} : {}, marginLeft ? {marginLeft: marginLeft} : {}]}>
       <Text style={[styles.text, styles[`text${type}`], fgColour ? {color: fgColour} : {}, fontSZ ? {fontSize: fontSZ} : {}]}>{text}</Text>
     </TouchableOpacity>
   )
-}
+} // Returns a custom Button component
 
 const styles = StyleSheet.create({
   container: {
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
   containerTertiary: {
 
-  },
+  }, // container styles will be applied depending on the 'type' of button
   text: {
     fontWeight: 'bold',
     color: colours.white
@@ -44,5 +44,5 @@ const styles = StyleSheet.create({
   },
   textSecondary: {
     color: colours.white
-  }
+  } // text styles will be applied depending on the 'type' of button
 })

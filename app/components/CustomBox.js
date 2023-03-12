@@ -4,17 +4,16 @@ import colours from '../config/colours'
 
 /*
 This function will be used to take inputs from the users and will mainly be used on the login and signup screens,
-and screens related to those. Security is also used on the password to ensure safety (password is blocked out).
+and screens related to those.
 */
 
-export default function CustomBox({placeholder, onPress}) {
-  // Make both functions to work on the onPress function
+export default function CustomBox({placeholder, onPress}) { // placeholder - The text which will be used as a placeholder when nothing has been selected/inputted
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <Text style={styles.placeholderText}>{placeholder}</Text>
     </TouchableOpacity>
   )
-}
+} // Returns a CustomBox component
 
 const styles = StyleSheet.create({
   container: {
