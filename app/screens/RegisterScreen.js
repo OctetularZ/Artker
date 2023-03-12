@@ -87,7 +87,7 @@ export default function RegisterScreen() {
 
 
         <CustomButton1 onPress={onRegisterPressed} text='Register' type='Primary'/>
-        <Text style={styles.text}>By registering, you confirm that you accept our <Text style={styles.link} onPress={onTermsOfUsePressed}>Terms of Use</Text> and <Text style={styles.link} onPress={onPrivacyPolicyPressed}>Privacy Policy</Text></Text>
+        <Text style={styles.text}>By registering, you confirm that you accept our <Text style={styles.link}>Terms of Use</Text> and <Text style={styles.link}>Privacy Policy</Text></Text>
 
         <View style={styles.bottomButtons}>
           <CustomButton1 onPress={onSignInPressed} text="Already have an account? Sign in" type='Tertiary'/>
