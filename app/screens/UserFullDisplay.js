@@ -104,7 +104,7 @@ export default function UserFullDisplay({ route }) {
         <Text style={styles.usernameBelowPfp}>{username}</Text>
         <Text style={styles.nameBelowPfp}>{name}</Text>
         <View style={styles.bottomHalfView}>
-          <ScrollView style={styles.bottomHalfScroll} contentContainerStyle={{alignItems: 'stretch'}}>
+          <ScrollView style={styles.bottomHalfScroll} contentContainerStyle={{alignItems: 'stretch'}} showsVerticalScrollIndicator={false}>
             <View style={{marginLeft: 20, marginBottom: 10}}>
               <Text style={styles.userDescTitle}>Description:</Text>
               <Text style={styles.userDesc}>{description}</Text>

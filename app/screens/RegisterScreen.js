@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   bottomButtons: {
     width: '100%',
     alignItems: 'center',
-    marginTop: 60
+    bottom: -300
   },
   text: {
     color: 'grey',
