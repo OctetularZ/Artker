@@ -30,15 +30,15 @@ export default function ExpertiseSelected({ route }) {
     username = username.replace(/\\/g, '')
     username = username.replace(/"/g, '')
 
-    const [expertiseSelected, setExpertiseSelected] = useState(expSelected);
+    const [expertiseSelected, setExpertiseSelected] = useState(expSelected); // expertiseSelected - Holds the expertise selected by the user from the dropdown menu
     const [usernameDB, setUsernameDB] = useState(username);
-    const [homeUsersDisplay, setHomeUsersDisplay] = useState([])
+    const [homeUsersDisplay, setHomeUsersDisplay] = useState([]) // homeUsersDisplay - Holds a list of the user profiles who will be displayed on the screen
 
-    const mappedExpertises = expertises.map((element) => {return ({label: element, value: element})})
+    const mappedExpertises = expertises.map((element) => {return ({label: element, value: element})}) // Returns a new array with objects containing a label and value
 
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(expertiseSelected);
-    const [items, setItems] = useState(mappedExpertises);
+    const [open, setOpen] = useState(false); // open - holds a boolean value on whether the modal is open or not
+    const [value, setValue] = useState(expertiseSelected); // value - Used to store the value selected by the user from the dropdown menu
+    const [items, setItems] = useState(mappedExpertises); // items - Holds the values displayed to the user in the dropdown menu
 
     const navigation = useNavigation();
 
@@ -53,7 +53,7 @@ export default function ExpertiseSelected({ route }) {
         let firstIndexOfComma = expertises.indexOf(',')
         if (firstIndexOfComma === -1) {}
         else {
-          expertises = expertises.substr(0, (firstIndexOfComma))
+          expertises = expertises.substr(0, (firstIndexOfComma)) // Gets the first item from a user's expertise list in Profile DB
         }
       }
       return(
@@ -77,7 +77,7 @@ export default function ExpertiseSelected({ route }) {
           </View>
         </AppCards>
       )
-    }
+    } // Returns an AppCard component
 
     const onCardPressed = (username) => {
       navigation.navigate('UserDisp', {usernamePassed: username, userUsernamePassed: usernameDB})
@@ -93,17 +93,17 @@ export default function ExpertiseSelected({ route }) {
           for (let user of data) {
             let userExpertises = user['Expertises']
             if (userExpertises.includes(expertiseSelected)) {
-              filteredArray.push(user)
+              filteredArray.push(user) // The above filters the array to only include users who have the selected expertise then adds it to a new array
             }
             else {}
           }
           let randNumbArr = [];
           for (let i = 0; i < 10; i++) {
-            randNumbArr.push(Math.floor((Math.random()) * (filteredArray.length)))
+            randNumbArr.push(Math.floor((Math.random()) * (filteredArray.length))) // The above adds random number to a new array
           }
           let randUsersArr = [];
           for (const randNumbers of randNumbArr) {
-            randUsersArr.push(filteredArray[randNumbers])
+            randUsersArr.push(filteredArray[randNumbers]) // The above adds a group of random users to a new array
           }
 
           randUsersArr = randUsersArr.filter((item, index) => randUsersArr.indexOf(item) === index)
@@ -112,7 +112,7 @@ export default function ExpertiseSelected({ route }) {
             let index = randUsersArr.indexOf(user);
             randUsersArr.splice(index, 1)
           }
-        }
+        } // Ensures that the current user of the app isn't included in the random users array
           setHomeUsersDisplay(randUsersArr)
         }
       })

@@ -102,11 +102,11 @@ export default function CreateProfileScreen({ route }) {
         Description: description
         })
       })
-    })
+    }) // Updates the values of a user's profile in the 'Profiles' database
     navigation.navigate('StarterScreen', {usernamePassed: usernameDB})
   }
 
-  const onDateChange = (event, selectedDate) => {
+  const onDateChange = (event, selectedDate) => { // event - Holds some information for when the date input changes, selectedDate - The date selected by the user
     const currentDate = selectedDate;
     console.log(currentDate)
     setShow(false);
@@ -198,8 +198,6 @@ export default function CreateProfileScreen({ route }) {
         </View>
       </Modal>
     </ScrollView>
-    // Navigate to the 'StarterScreen' when done designing
-    // Custombutton1 may need to be modified if not in correct position
     )
   }
 }
@@ -210,7 +208,7 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: colours.primary
   },
-  modalView: {
+  modalView: { // Styles for the container of a modal
     backgroundColor: colours.primary,
     flex: 1,
     paddingTop: 50,
@@ -219,13 +217,13 @@ const styles = StyleSheet.create({
   closeModalButton: {
     paddingBottom: 15
   },
-  flatlistItem: {
+  flatlistItem: { // Styles for the container of a flatlist Item
     marginVertical: 10,
     marginLeft: 10,
     display: 'flex',
     flexDirection: 'row'
   },
-  itemValue: {
+  itemValue: { // Styles of the flatlistem items text
     color: 'white',
     fontFamily: 'Poppins_400Regular'
   },

@@ -49,7 +49,7 @@ export default function EditInfo({ route }) {
       })
     }
     navigation.goBack();
-  }
+  } // Updates the user's name or description based on the whichever one the user selected in the previous screen
 
   const onBackToProfilePressed = () => {
     navigation.goBack();
