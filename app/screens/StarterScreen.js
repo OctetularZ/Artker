@@ -15,27 +15,27 @@ export default function StarterScreen({ route }) {
   usernameDB = usernameDB.replace(/\\/g, '')
   usernameDB = usernameDB.replace(/"/g, '')
 
-  const video = useRef(null);
-  const [status, setStatus] = React.useState({});
-  const [active, setActive] = useState([styles.indicator, styles.indicatorActive])
-  const [left, setLeft] = useState('true')
+  const video = useRef(null); // Refernce to the video
+  const [status, setStatus] = React.useState({}); // Holds the current status of the video (is it paused? how much has the user watched?)
+  const [active, setActive] = useState([styles.indicator, styles.indicatorActive]) // Holds the styles used on whether an indicator is active or not
+  const [left, setLeft] = useState('true') // Holds a value to indicate whether the user is on the left video, was on the left video or is not
 
   const video2 = useRef(null);
   const [status2, setStatus2] = React.useState({});
   const [active2, setActive2] = useState([styles.indicator])
-  const [middle, setMiddle] = useState('false')
+  const [middle, setMiddle] = useState('false') // Holds a value to indicate whether the user is on the middle video or not
 
   const video3 = useRef(null);
   const [status3, setStatus3] = React.useState({});
   const [active3, setActive3] = useState([styles.indicator])
-  const [right, setRight] = useState('false')
+  const [right, setRight] = useState('false') // Holds a value to indicate whether the user is on the right video, was on the right video or is not
 
-  const [scrollOffset, setScrollOffset] = useState(0)
-  const [scrollDirection, setScrollDirection] = useState(null)
+  const [scrollOffset, setScrollOffset] = useState(0) // Holds a numerical value for how much of the screen the user has scrolled away from the origin
+  const [scrollDirection, setScrollDirection] = useState(null) // Hold a value to indicate which direction the user scrolled the screen
 
   const onScrollEvent = (event) => {
-    let currentOffset = event.nativeEvent.contentOffset.x;
-    let direction = currentOffset > scrollOffset ? 'right' : 'left';
+    let currentOffset = event.nativeEvent.contentOffset.x; // How far the user has scrolled from origin
+    let direction = currentOffset > scrollOffset ? 'right' : 'left'; // Which direction the user has scrolled
     setScrollOffset(currentOffset)
     setScrollDirection(direction)
   }
@@ -77,7 +77,7 @@ export default function StarterScreen({ route }) {
       setActive2([styles.indicator, styles.indicatorActive])
       setRight('wasTrue')
     }
-  }
+  } // Returns different styles on the scroll indicators depending on which was the user scrolled and what videot they are currently on
   
   return (
     <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>

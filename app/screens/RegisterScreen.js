@@ -39,40 +39,37 @@ export default function RegisterScreen() {
                 if (email.includes('@')) {
                   fbDB.collection('Account').add({username, email, password})
                   navigation.navigate('CreateProfile', {usernamePassed: username})
-                }
+                } // The above adds the user's profile details to the database if they manage to pass all the verification/authentication checks to ensure the account doesn't exist, etc
                 else{
                   oneButtonAlert("Email doesn't seem right?", "Please check if you have written your email correctly", 'OK')
+                  // Returns an alert if the email passed by the user is not a valid email (doesn't contain an '@', etc)
                 }
               }
               else {
                 oneButtonAlert('Invalid Password', "Your password must contain at least one special character and number, i.e. lumoan029@", 'OK')
+                // Returns an alert if the password passed by the user is not secure enough (not containing any number or special symbols)
               }
             }
             else {
               oneButtonAlert('Password are not matching?', "Please check and make sure passwords match", 'OK')
+              // Returns an alert if the password text input doesn't match the confirm password text input
             }
           }
           else {
             oneButtonAlert('Email already exists?', "Check if you have an account with this emaii", 'OK')
+            // Returns an alert if the email passed by the user already exists in the database (they already have an account)
           }
         })
       }
       else {
         oneButtonAlert('Username already in use', 'Try entering a different username', 'OK')
+        // Returns an alert if the username passed by the user already exists in the database (they already have an account)
       }
     })
   }
 
   const onSignInPressed = () => {
     navigation.navigate('Login')
-  }
-
-  const onTermsOfUsePressed = () => {
-    console.log('TermsOfUse')
-  }
-
-  const onPrivacyPolicyPressed = () => {
-    console.log('PrivacyPolicy')
   }
 
   return (

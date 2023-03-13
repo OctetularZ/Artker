@@ -33,9 +33,9 @@ export default function ProfileScreen({ route }) {
   const [nationality, setNationality] = useState('')
   let expertiseDisplay = ''
   let expertiseList = []
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState(''); // All the above except modalVisible and expertiseList and Display are holding information about the user in the Profiles database. All the others are used for the user inputs in selectable flatlist and and/or text inputs
   
-  const [show, setShow] = useState(false); // For modal state
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     getAllData('Profiles', 'Username', usernameDB).then((data) => {
@@ -60,7 +60,7 @@ export default function ProfileScreen({ route }) {
     
   const navigation = useNavigation();
 
-  const editButtonPressed = (value) => {
+  const editButtonPressed = (value) => { // value regarding which option the user chose to edit
     navigation.navigate('EditInfo', {usernamePassed: usernameDB, valueToChange: value})
   }
 
@@ -100,7 +100,7 @@ export default function ProfileScreen({ route }) {
         })
       })
     })
-  }
+  } // Updates the country value of a user's Profile in the database
 
   const addExpertisesToDB = (expertisesPassed) => {
     const updateQuery = fbDB.collection('Profiles').where('Username', '==', usernameDB);
@@ -111,7 +111,7 @@ export default function ProfileScreen({ route }) {
         })
       })
     })
-  }
+  } // Updates the expertise value of a user's Profile in the database
 
   let [fontsLoaded] = useFonts({
     Poppins_400Regular,

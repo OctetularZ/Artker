@@ -14,27 +14,27 @@ import { getAllData } from '../database/dbScripts'
 
 export default function LoginScreen() {
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState(''); //Holds the current password input in the text input
 
-  const {height} = useWindowDimensions();
+  const {height} = useWindowDimensions(); // Gets height of the user's screens
   const navigation = useNavigation();
 
   const onSignInPressed = () => {
     getAllData('Account', 'username', username).then((data) => {
       if (data.length == 0) {
-        oneButtonAlert('Account not found', 'Invalid username or password', 'OK')
+        oneButtonAlert('Account not found', 'Invalid username or password', 'OK') // Returns an alert on the user's screen if the account (username) doesn't exist in the database
       }
       else{
         let userPassword = data[0]['password']
         if (userPassword == password) {
-          navigation.navigate('Home', { usernamePassed: username })
+          navigation.navigate('Home', { usernamePassed: username }) // The user is navigated to the home screen if the password matches the username specified in the text input as in the database
         }
         else {
-          oneButtonAlert('Wrong Password', 'Try entering a different password', 'OK')
+          oneButtonAlert('Wrong Password', 'Try entering a different password', 'OK') // Returns an alert if the password is wrong
         }
       }
     })
-  }
+  } // This function authenicates the user to ensure they have an account in the database and if they do, they must enter the correct password.
 
   const onSignUpPressed = () => {
     navigation.navigate('Register')
@@ -65,12 +65,12 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: colours.primary
   },
-  logo: {
+  logo: { // Styles used on the logo
     width: '70%',
     maxWidth: 300,
     maxHeight: 200
   },
-  bottomButtons: {
+  bottomButtons: { // Styles used on the buttons at the bottom of the screen
     width: '100%',
     alignItems: 'center',
     bottom: -300

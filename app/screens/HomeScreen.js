@@ -30,17 +30,11 @@ export default function HomeScreen({ route }) {
     username = username.replace(/\\/g, '')
     username = username.replace(/"/g, '')
 
-    const [id, setID] = useState(null);
-    const [usernameDB, setUsernameDB] = useState(username);
-    const [name, setName] = useState(null);
-    const [Pfp, setPfp] = useState(null);
-    const [nationality, setNationality] = useState(null);
-    const [userExpertises, setUserExpertises] = useState(null);
-    const [DOB, setDOB] = useState(null);
-    const [description, setDescription] = useState(null);
-    const [homeUsersDisplay, setHomeUsersDisplay] = useState([])
+    const [usernameDB, setUsernameDB] = useState(username); // UsernameDB - Holds the username of the user
+    const [homeUsersDisplay, setHomeUsersDisplay] = useState([]) // homeUsersDisplay - Holds an array of random users whose profiles will be displayed on the home screen
 
-    const mappedExpertises = expertises.map((element) => {return ({label: element, value: element})})
+    const mappedExpertises = expertises.map((element) => {return ({label: element, value: element})}) // Returns an array with a label and value property.
+    // label - Represents the label on the dropdown menu items, value - represents the value which is returned from when an item is selected from the list.
 
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);

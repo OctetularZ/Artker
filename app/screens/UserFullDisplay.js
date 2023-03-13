@@ -22,10 +22,10 @@ export default function UserFullDisplay({ route }) {
   const { usernamePassed, userUsernamePassed } = route.params;
   let usernameDB = JSON.stringify(usernamePassed)
   usernameDB = usernameDB.replace(/\\/g, '')
-  usernameDB = usernameDB.replace(/"/g, '')
+  usernameDB = usernameDB.replace(/"/g, '') // usernameDB - Username of the user whose profile was clicked
   let usernameApp = JSON.stringify(userUsernamePassed)
   usernameApp = usernameApp.replace(/\\/g, '')
-  usernameApp = usernameApp.replace(/"/g, '')
+  usernameApp = usernameApp.replace(/"/g, '') // usernameApp - Username of the user who is currently using the app
 
   const navigation = useNavigation();
 
@@ -36,7 +36,7 @@ export default function UserFullDisplay({ route }) {
   const [expertises, setExpertises] = useState(null);
   const [DOB, setDOB] = useState(null);
   const [description, setDescription] = useState(null);
-  const [email, setEmail] = useState(null);
+  const [email, setEmail] = useState(null); // All the above contain information about the user clicked on from the previous screen which is in the Profile database
 
   useEffect(() => {
     getAllData('Profiles', 'Username', username).then((data) => {
@@ -50,7 +50,7 @@ export default function UserFullDisplay({ route }) {
         let description = userInfo['Description']
         let dobNeedMod = userInfo['Dob']
         dobNeedMod = dobNeedMod.toDate()
-        dobNeedMod = dobNeedMod.toString()
+        dobNeedMod = dobNeedMod.toString() // Holds a converted version of the user date of birth to a string
 
         let dob = dobNeedMod.substr(4, 11)
 
