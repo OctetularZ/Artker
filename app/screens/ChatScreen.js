@@ -157,7 +157,7 @@ export default function ChatScreen({ route }) {
       //   }
       // })
     ))
-    return unsubscribe;
+    return unsubscribe; // Returns a listener to the database which will trigger the useEffect function whenever there is a change to the database
   }, [])
 
   const onSend = useCallback((messages = []) => {
@@ -165,7 +165,7 @@ export default function ChatScreen({ route }) {
     append(previousMessages, messages))
     const { _id, createdAt, text, user } = messages[0]
     fbDB.collection('chats').add({_id, createdAt, text, user})
-  }, [])
+  }, []) // This function will trigger whenever a user sends a message and will add that message to the database along with some other info about the message
 
   const onBackPressed = () => {
     navigation.navigate('UserDisp', {usernamePassed: receiverUsername, userUsernamePassed: username})
@@ -203,10 +203,10 @@ export default function ChatScreen({ route }) {
 }
 
 const styles = StyleSheet.create({
-  messageContainerStyles: {
+  messageContainerStyles: { // Styles for the background of the text input
     backgroundColor: colours.primary
   },
-  textInputStyles: {
+  textInputStyles: { // Styles for the text input box at the bottom of the screen
     marginLeft: 25,
     marginRight: 25,
     borderRadius: 15,

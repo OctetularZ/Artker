@@ -16,7 +16,7 @@ import ExpertiseSelected from '../screens/ExpertiseSelected';
 import ImageLinkTwo from '../components/ImageLink2';
 import EditInfo from '../screens/EditInfo';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator(); // Initialises/Creates a stack navigator
 
 export default function Navigation() {
   return (

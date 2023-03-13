@@ -32,18 +32,18 @@ export default function CreateProfileScreen({ route }) {
   const navigation = useNavigation();
 
   const [Name, setName] = useState('');
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false); // modalVisible - Holds a boolen value for whether a modal is open or closed
   const [DOB, setDOB] = useState(new Date());
-  let expertiseDisplay = ''
-  let expertiseList = []
+  let expertiseDisplay = '' // Temporary string which holds all the user expertises as a string
+  let expertiseList = [] // List for the selected user expertises
   const [skills, setSkills] = useState('Expertises - The first one selected will be your primary expertise and will be displayed on the short-hand of your profile');
   const [country, setCountry] = useState('Nationality');
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState(''); // All the other above are holders for the values inputted by the user unless epecified otherwise
   
-  const [show, setShow] = useState(false); // For modal state
+  const [show, setShow] = useState(false); // show - Holds a boolen value for whether a modal is open or closed
 
-  const [amountX, setAmountX] = useState(0);
-  const [amountY, setAmountY] = useState(0);
+  const [amountX, setAmountX] = useState(0); // amountX - Amount to move the screen on the x-axis
+  const [amountY, setAmountY] = useState(0); // amountY - Amount to move the screen on the y-axis
 
   useEffect(() => {
     let Username = usernameDB
@@ -55,15 +55,15 @@ export default function CreateProfileScreen({ route }) {
     let Nationality = 'none'
 
     fbDB.collection('Profiles').add({Username, Dob, Description, Expertises, Name, Pfp, Nationality})
-  }, [])
+  }, []) // Adds all the base information to the database (Profiles) for a user
 
   const textInputFocused = (x, y) => {
     setAmountX(x);
     setAmountY(y);
-  }
+  } // Changes the value of amountX and amountY
 
   const FlatlistItem = ({value}) => {
-    const [selected, setSelected] = useState(false);
+    const [selected, setSelected] = useState(false); // Holds a boolean for whether the user has selected the option in the flatlist or not
     if (selected) {
       expertiseList.push(value)
       expertiseDisplay = expertiseList.join(', ')
@@ -78,7 +78,7 @@ export default function CreateProfileScreen({ route }) {
     let index = expertiseList.indexOf(value);
     if (index !== -1) {
       expertiseList.splice(index, 1);
-      expertiseDisplay = expertiseList.join(', ')
+      expertiseDisplay = expertiseList.join(', ') // The above removes the value of a flatlist item for expertiseList and expertiseDisplay when the user deselects an item
     }
     return(
       <TouchableOpacity style={styles.flatlistItem} onPress={() => {(setSelected(true), console.log(selected))}}>

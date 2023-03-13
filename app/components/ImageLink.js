@@ -18,14 +18,14 @@ export default function ImageLink({ route }) {
   usernameDB = usernameDB.replace(/\\/g, '')
   usernameDB = usernameDB.replace(/"/g, '')
   
-  const [link, setLink] = useState('');
+  const [link, setLink] = useState(''); // link - holds the current text in the text input, setLink - used to update the value of link
 
   const navigation = useNavigation();
 
   const isUrl = (URLstring) => { // From: https://stackoverflow.com/questions/1701898/how-to-detect-whether-a-string-is-in-url-format-using-javascript
     var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
-    return regexp.test(URLstring);
-  }
+    return regexp.test(URLstring); // Returns a boolean value
+  } // This function is used to check whether a piece of text is a URL or not
 
   const onSubmit = () => {
     if (isUrl(link)) {
@@ -34,10 +34,10 @@ export default function ImageLink({ route }) {
       querySnapshot.forEach(function(doc) {
         doc.ref.update({
           Pfp: link
-          })
+          }) // This updates the user's profile picture link in the database
         })
       })
-      navigation.navigate('CreateProfile', { usernamePassed: usernameDB });
+      navigation.navigate('CreateProfile', { usernamePassed: usernameDB }); // Navigates the user to the screen in the first arguement and passes the object in the second argument to the next screen
     }
     else {
       oneButtonAlert('Invalid link', 'Try entering a different link', 'OK')

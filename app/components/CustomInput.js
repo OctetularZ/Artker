@@ -14,7 +14,7 @@ export default function CustomInput({value, setValue, placeholder, secureTextEnt
       <TextInput value={value} onChangeText={setValue} placeholder={placeholder} style={styles.input} secureTextEntry={secureTextEntry} placeholderTextColor='grey' onFocus={onFocus} onBlur={onBlur} multiline={multiline} maxLength={maxLength}/>
     </TouchableOpacity>
   )
-}
+} // Returns a custpm text input component
 
 const styles = StyleSheet.create({
   container: {

@@ -12,11 +12,11 @@ export default function Screen({children, style}) { // How you allow other style
         {children}
     </SafeAreaView>
   )
-}
+} // Returns a Screen component which is basically a safeAreaView but for android as well
 
 const styles = StyleSheet.create({
     screen: {
-        paddingTop: Constants.statusBarHeight,
+        paddingTop: Constants.statusBarHeight, // height of the user's mobile status bar
         flex: 1
     }
 })

@@ -45,7 +45,7 @@ export default function ImageLinkTwo({ route }) {
   }
 
   const onBackToProfilePressed = () => {
-    navigation.goBack();
+    navigation.goBack(); // Goes back to the previous screen
   }
 
   return (

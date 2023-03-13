@@ -7,3 +7,4 @@ export default {
   grey: '#2C2F33',
   transparent: 'rgba(0,0,0,0)'
 }
+// Some colors which I will be including in my app in hex code

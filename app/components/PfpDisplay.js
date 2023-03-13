@@ -7,11 +7,11 @@ import { db as fbDB } from '../../firebase'
 import { getAllData, delDocs } from '../database/dbScripts'
 import { useNavigation } from '@react-navigation/native'
 
-export default function PfpDisplay({ username }) {
+export default function PfpDisplay({ username }) { // username - Whose profile picutre will be retreived from the database
   const navigation = useNavigation();
 
-  const [pfpLink, setPfpLink] = useState('');
-  const [pfpBool, setpfpBool] = useState(false);
+  const [pfpLink, setPfpLink] = useState(''); // pfpLink - Current input of a text input
+  const [pfpBool, setpfpBool] = useState(false); // pfpBool - Holds a boolean for whether the user has a profile picture set or not
 
   const onAvatarIconPressed = () => {
     navigation.navigate('ImageL', {usernamePassed: username})
@@ -24,8 +24,8 @@ export default function PfpDisplay({ username }) {
         setpfpBool(false)
       }
       else {
-        let userPfp = data[0]['Pfp']
-        if (userPfp == 'none') {
+        let userPfp = data[0]['Pfp'] // Gets the link of the user's profile picture
+        if (userPfp == 'none') { // Also checks if the user has set a profile picture or not
           console.log('None')
           setpfpBool(false)
         }
@@ -44,10 +44,10 @@ export default function PfpDisplay({ username }) {
       {!pfpBool ? <AntDesign name='plus' size={40} color='grey'/> : <Image source={{uri: pfpLink}} style={styles.imagePfp}/>}
     </TouchableOpacity>
   )
-}
+} // Returns a PfpDisplay component
 
 const styles = StyleSheet.create({
-  pfp: {
+  pfp: { // Styles for the background of the pfp
     height: 200,
     width: 200,
     backgroundColor: colours.secondaryBlack,
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  imagePfp:{
+  imagePfp:{ //Styles for the pfp image
     resizeMode: 'contain',
     width: 200,
     height: 200,
