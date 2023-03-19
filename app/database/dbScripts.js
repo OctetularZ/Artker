@@ -11,6 +11,7 @@ export async function getAllData(db, whereClause, identifier) { // db - The data
     })); //Sets the requested data from the database query
   return data // Returns the requested data from the database query
 }
+
 export async function getData(db) { // All variables have the same purpose as in getAllData
   const acc = collection(fbDB, db);
   const querySnapshot = await getDocs(acc);
