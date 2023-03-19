@@ -72,7 +72,6 @@ const styles = StyleSheet.create({
   },
   bottomButtons: { // Styles used on the buttons at the bottom of the screen
     width: '100%',
-    alignItems: 'center',
-    bottom: -300
+    alignItems: 'center'
   }
 })

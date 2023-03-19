@@ -108,8 +108,7 @@ const styles = StyleSheet.create({
   },
   bottomButtons: {
     width: '100%',
-    alignItems: 'center',
-    bottom: -300
+    alignItems: 'center'
   },
   text: {
     color: 'grey',
