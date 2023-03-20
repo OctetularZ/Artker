@@ -131,6 +131,7 @@ export default function StarterScreen({ route }) {
         <View style={styles.textContainer}>
           <View>
             <Text style={styles.titleStyle}>Welcome To Artker!</Text>
+            <View style={{backgroundColor: 'white', width: '100%', height: 1, marginTop: 10}}></View>
           </View>
           <View style={{marginTop: 10, marginBottom: 30}}>
             <Text style={styles.descriptionStyle}>Artker is an application which allows musicians</Text>
