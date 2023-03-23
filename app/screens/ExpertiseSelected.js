@@ -108,7 +108,6 @@ export default function ExpertiseSelected({ route }) {
           console.log(randUsersArr)
           randUsersArr = randUsersArr.filter((item, index) => randUsersArr.indexOf(item) === index)
         for (let user of randUsersArr) {
-          console.log(user)
           if (user['Username'] == usernameDB) {
             let index = randUsersArr.indexOf(user);
             randUsersArr.splice(index, 1)
@@ -134,41 +133,78 @@ export default function ExpertiseSelected({ route }) {
       return <AppLoading />;
     }
     else {
-      return (
-      <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>
-        <Screen style={styles.container}>
-          <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 20, marginTop: 10}}>
-            <Ionicons name='chevron-back' size={30} color='white' style={{marginRight: 70, marginLeft: 20}} onPress={onBackPressed}/>
-            <View style={{alignItems: 'center'}}>
-              <Image source={Logo} style={{width: 50, height: 50, marginLeft: 50}}/>
+      if (homeUsersDisplay[0] === undefined) {
+        return (
+            <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>
+            <Screen style={styles.container}>
+              <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 20, marginTop: 10}}>
+                <Ionicons name='chevron-back' size={30} color='white' style={{marginRight: 70, marginLeft: 20}} onPress={onBackPressed}/>
+                <View style={{alignItems: 'center'}}>
+                  <Image source={Logo} style={{width: 50, height: 50, marginLeft: 50}}/>
+                </View>
+              </View>
+              <View style={{paddingHorizontal: 20, shadowColor: 'black', shadowOffset:{height: 0, width: 0}, shadowOpacity:0.4, zIndex: 1, elevation: 1}}>
+                <DropDownPicker
+                  open={open}
+                  value={value}
+                  items={items}
+                  setOpen={setOpen}
+                  setValue={setValue}
+                  setItems={setItems}
+                  style={styles.dropdownOuter}
+                  containerStyle={styles.containerStyle}
+                  disabledStyle={{opacity: 0.5}}
+                  textStyle={styles.dropdownText}
+                  labelStyle={styles.labels}
+                  theme='DARK'
+                  maxHeight={500}
+                  onChangeValue={(value) => {navigation.push('ExpDisp', {usernamePassed: usernameDB, expSelected: value})}}
+                />
+              </View>
+                <View style={{height: 200, width: 300, backgroundColor: colours.secondaryBlack, alignItems: 'center', marginHorizontal: 50, marginTop: 50
+              , shadowColor: 'black', shadowOpacity: 0.5, shadowRadius: 10, shadowOffset: {height: 0, width: 0}, justifyContent: 'center'}}><Text style={{color: 'white', 
+              textAlign: 'center', fontWeight: '500', fontFamily: 'Poppins_500Medium'}}>No one has this expertise yet  :/</Text></View>
+            </Screen>
+          </ScrollView>
+          )
+        }
+      else {
+        return (
+        <ScrollView style={{backgroundColor: colours.primary}} showsVerticalScrollIndicator={false}>
+          <Screen style={styles.container}>
+            <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 20, marginTop: 10}}>
+              <Ionicons name='chevron-back' size={30} color='white' style={{marginRight: 70, marginLeft: 20}} onPress={onBackPressed}/>
+              <View style={{alignItems: 'center'}}>
+                <Image source={Logo} style={{width: 50, height: 50, marginLeft: 50}}/>
+              </View>
             </View>
-          </View>
-          <View style={{paddingHorizontal: 20, shadowColor: 'black', shadowOffset:{height: 0, width: 0}, shadowOpacity:0.4, zIndex: 1, elevation: 1}}>
-            <DropDownPicker
-              open={open}
-              value={value}
-              items={items}
-              setOpen={setOpen}
-              setValue={setValue}
-              setItems={setItems}
-              style={styles.dropdownOuter}
-              containerStyle={styles.containerStyle}
-              disabledStyle={{opacity: 0.5}}
-              textStyle={styles.dropdownText}
-              labelStyle={styles.labels}
-              theme='DARK'
-              maxHeight={500}
-              onChangeValue={(value) => {navigation.push('ExpDisp', {usernamePassed: usernameDB, expSelected: value})}}
-            />
-          </View>
-            <FlatList
-            data={homeUsersDisplay}
-            renderItem={({item}) => <FlatlistItem value={item}/>}
-            keyExtractor={(item, index) => index.toString()}
-            />
-        </Screen>
-      </ScrollView>
-    )
+            <View style={{paddingHorizontal: 20, shadowColor: 'black', shadowOffset:{height: 0, width: 0}, shadowOpacity:0.4, zIndex: 1, elevation: 1}}>
+              <DropDownPicker
+                open={open}
+                value={value}
+                items={items}
+                setOpen={setOpen}
+                setValue={setValue}
+                setItems={setItems}
+                style={styles.dropdownOuter}
+                containerStyle={styles.containerStyle}
+                disabledStyle={{opacity: 0.5}}
+                textStyle={styles.dropdownText}
+                labelStyle={styles.labels}
+                theme='DARK'
+                maxHeight={500}
+                onChangeValue={(value) => {navigation.push('ExpDisp', {usernamePassed: usernameDB, expSelected: value})}}
+              />
+            </View>
+              <FlatList
+              data={homeUsersDisplay}
+              renderItem={({item}) => <FlatlistItem value={item}/>}
+              keyExtractor={(item, index) => index.toString()}
+              />
+          </Screen>
+        </ScrollView>
+      )
+    }
   }
 }
 
