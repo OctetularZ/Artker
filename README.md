@@ -1,7 +1,7 @@
 # 🎵 Artker – Music Freelancer Marketplace (Mobile App)
 
 
-![Artker Home Screen](./assets/artker-home.jpg)
+![Artker Home Screen](./artker-home.jpg)
 
 
 **Technologies:** `React`, `React Native`, `JavaScript`, `Firebase`
